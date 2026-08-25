@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://coh24671bqrt1"]
+
+[ext_resource type="Script" uid="uid://r1ln74rer63n" path="res://Scenes/Autoload/enemy_mouse.gd" id="1_nvjdi"]
+[ext_resource type="Texture2D" uid="uid://t08vpsmx1h20" path="res://Assets/Sprites/TheGuy.png" id="2_e848x"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kvjxa"]
+size = Vector2(60, 57)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1ndb7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_e848x")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1ndb7"]
+size = Vector2(56, 54)
+
+[node name="EnemyMouse" type="CharacterBody2D" unique_id=1152602573 groups=["hittable"]]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_nvjdi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1639327769]
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_kvjxa")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=29908297]
+sprite_frames = SubResource("SpriteFrames_1ndb7")
+
+[node name="WallRayCast" type="RayCast2D" parent="." unique_id=1478833176]
+target_position = Vector2(8, 0)
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=1737365804]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=843354287]
+shape = SubResource("RectangleShape2D_1ndb7")
+debug_color = Color(0.9641985, 0, 0.4970621, 0.41960785)
