@@ -17,6 +17,7 @@ var direction := Input.get_axis("Left", "Right")
 @export var air_friction: float = 80.0
 const JUMP_VELOCITY = -200
 const JUMP_CUT = 2.5
+const SHOOT_COOLDOWN = 0.5
 
 @export var has_hammer = true
 @export var hammer_damage = 1
@@ -71,12 +72,12 @@ var is_invincible: bool = false
 var invincibility_timer: float = 0.0
 var blink_timer: float = 0.0
 var blink_tween: Tween
-
 var hitstop_active: bool = false
-
+var shoot_timer = 0.0
 func _ready() -> void:
 	animate()
 	was_on_floor = is_on_floor()
+	
 
 func _physics_process(delta: float) -> void:
 	movement(delta)
@@ -85,19 +86,21 @@ func _physics_process(delta: float) -> void:
 	#	velocity.y = JUMP_VELOCITY
 	jump()
 	move_and_slide()
+	shoot_timer -= delta
 
 func _input(event: InputEvent) -> void:
-	if Input.is_action_just_pressed("Bubble"):
+	if Input.is_action_pressed("Bubble") and shoot_timer <= 0.0:
 		fish_sprite.frame = 1
+		shoot_timer = SHOOT_COOLDOWN
 		fisshe_bubble(-1 if sprite.flip_h else 1)
 	else:
 		fish_sprite.frame = 0
-	if Input.is_action_just_pressed("Restart"):
-		get_tree().reload_current_scene()
+	#if Input.is_action_just_pressed("Restart"):
+	#	get_tree().reload_current_scene()
 	if not has_hammer:
 		return
-	if Input.is_action_just_pressed("Fire"):
-		hammer_hit()
+	#if Input.is_action_just_pressed("Fire"):
+   #	hammer_hit()
 
 func determine_state():
 	if not is_on_floor():
