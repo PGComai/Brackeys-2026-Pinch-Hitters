@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://coh24671bqrt1"]
 
-[ext_resource type="Script" uid="uid://r1ln74rer63n" path="res://Scenes/Autoload/enemy_mouse.gd" id="1_nvjdi"]
+[ext_resource type="Script" uid="uid://r1ln74rer63n" path="res://Scenes/Enemies/enemy.gd" id="1_nvjdi"]
 [ext_resource type="Texture2D" uid="uid://t08vpsmx1h20" path="res://Assets/Sprites/TheGuy.png" id="2_e848x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kvjxa"]
@@ -12,7 +12,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("2_e848x")
 }],
-"loop": 1,
+"loop": true,
 "name": &"default",
 "speed": 5.0
 }]

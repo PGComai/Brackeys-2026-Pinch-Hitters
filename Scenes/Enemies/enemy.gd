@@ -1,6 +1,17 @@
 class_name Enemy
 extends CharacterBody2D
 
+const COLLIDER_SIZE: Vector2 = Vector2(60.0, 57.0)
+const COLLIDER_OFFSET: Vector2 = Vector2(0.0, 1.5)
+const COLLIDER_SIZE_HURTBOX: Vector2 = Vector2(56.0, 54.0)
+const WALL_RAYCAST_TARGET_POS: Vector2 = Vector2(8.0, 0.0)
+const DEBUG_COLOR_HURTBOX: Color = Color("f6007f6b")
+const COLLISION_LAYER_VALUES: Array[int] = [2]
+const COLLISION_MASK_VALUES: Array[int] = [3]
+const COLLISION_LAYER_VALUES_HURTBOX: Array[int] = [2]
+const COLLISION_MASK_VALUES_HURTBOX: Array[int] = [1]
+
+
 enum State { PATROL, PROJECTILE, BUBBLED, STUNNED }
 
 @export var max_hp: int = 3
@@ -14,8 +25,6 @@ enum State { PATROL, PROJECTILE, BUBBLED, STUNNED }
 @export var bubble_duration: float = 3.0
 @export var ledge_probe: float = 8.0
 
-@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var hurtbox: Area2D = $Hurtbox
 
 var hp: int
 var state: State = State.PATROL
@@ -25,11 +34,28 @@ var touch_timer: float = 0.0
 var bubble_timer: float = 0.0
 var stun_timer: float = 0.0
 
+
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var wall_ray_cast: RayCast2D = $WallRayCast
+@onready var hurtbox: Area2D = $Hurtbox
+
+
 func _ready() -> void:
 	hp = max_hp
 	add_to_group("hittable")
 	motion_mode = CharacterBody2D.MOTION_MODE_GROUNDED
 	hurtbox.body_entered.connect(_on_hurtbox_body_entered)
+
+
+func clear_physics_layer_values(coll_obj: CollisionObject2D) -> void:
+	for i: int in 16:
+		coll_obj.set_collision_layer_value(i, false)
+
+
+func clear_physics_mask_values(coll_obj: CollisionObject2D) -> void:
+	for i: int in 16:
+		coll_obj.set_collision_mask_value(i, false)
+
 
 func _physics_process(delta: float) -> void:
 	if touch_timer > 0.0:
