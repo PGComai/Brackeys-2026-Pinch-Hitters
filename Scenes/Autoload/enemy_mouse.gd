@@ -1,7 +1,7 @@
 class_name Enemy
 extends CharacterBody2D
 
-enum State { PATROL, PROJECTILE, BUBBLED }
+enum State { PATROL, PROJECTILE, BUBBLED, STUNNED }
 
 @export var max_hp: int = 3
 
@@ -23,6 +23,7 @@ var direction: int = 1
 var can_damage: bool = false
 var touch_timer: float = 0.0
 var bubble_timer: float = 0.0
+var stun_timer: float = 0.0
 
 func _ready() -> void:
 	hp = max_hp
@@ -46,6 +47,10 @@ func _physics_process(delta: float) -> void:
 			move_projectile(delta)
 		State.BUBBLED:
 			process_bubbled(delta)
+		State.STUNNED:
+			stun_timer -= delta
+			if stun_timer < 0:
+				state = State.PATROL
 
 	if state != State.BUBBLED:
 		check_hurtbox_overlaps()
@@ -62,13 +67,20 @@ func check_hurtbox_overlaps() -> void:
 			try_damage_player(body)
 
 func _on_hurtbox_body_entered(body: Node2D) -> void:
-	if state == State.BUBBLED:
-		return
 	if body is Player:
-		try_damage_player(body)
+		if body.velocity.y > 0.01:
+			stun()
+			body.velocity.y = -abs(body.velocity.y)
+		else:
+			try_damage_player(body)
+
+func stun():
+	state = State.STUNNED
+	stun_timer = 5.0
+	modulate = Color.YELLOW
 
 func try_damage_player(player: Player) -> void:
-	if touch_timer > 0.0:
+	if touch_timer > 0.0 or state == State.STUNNED:
 		return
 	if not player.has_method("hit"):
 		return
