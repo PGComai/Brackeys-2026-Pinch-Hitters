@@ -20,7 +20,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1ndb7"]
 size = Vector2(56, 54)
 
-[node name="EnemyMouse" type="CharacterBody2D" unique_id=1152602573 groups=["hittable"]]
+[node name="EnemyDog" type="CharacterBody2D" unique_id=1152602573 groups=["hittable"]]
 collision_layer = 2
 collision_mask = 4
 script = ExtResource("1_nvjdi")

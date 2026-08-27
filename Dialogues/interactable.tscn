@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://immhh8kc3bfh"]
+
+[ext_resource type="Script" uid="uid://ccp0wj6jv6wnt" path="res://Dialogues/interactable.gd" id="1_pmsje"]
+[ext_resource type="Resource" uid="uid://buevfiweljd8g" path="res://Dialogues/untitled.dialogue" id="2_73reo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g4v7s"]
+size = Vector2(64, 64)
+
+[node name="Interactable" type="Area2D" unique_id=2121583328]
+collision_layer = 0
+script = ExtResource("1_pmsje")
+dialogue_resource = ExtResource("2_73reo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1544629744]
+shape = SubResource("RectangleShape2D_g4v7s")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

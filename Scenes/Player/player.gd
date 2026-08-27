@@ -9,6 +9,8 @@ extends CharacterBody2D
 
 var hp = 5
 
+var direction := Input.get_axis("Left", "Right")
+
 @export var speed: float = 250.0
 @export var acceleration: float = 800.0
 @export var friction: float = 1200.0
@@ -30,8 +32,9 @@ const NO_AIM = -999.0
 
 @onready var animation: AnimationPlayer = $AnimationPlayer
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var spritel: AnimatedSprite2D = $MirrorSpriteL
-@onready var spriter: AnimatedSprite2D = $MirrorSpriteR
+
+@onready var fish_helper: Node2D = $FishHelper
+@onready var fish_sprite: AnimatedSprite2D = $FishHelper/FishSprite
 
 @onready var death_animation: AnimationPlayer = $DeathAnimation
 
@@ -42,6 +45,7 @@ const NO_AIM = -999.0
 @onready var game_over: AudioStreamPlayer = $SFX/GameOver
 
 const LANDPARTICLES = preload("res://Scenes/Player/land_particles.tscn")
+const PROJBUBBLE = preload("res://Scenes/Player/proj_bubble.tscn")
 
 enum State { IDLE, WALKING, JUMPING, FALLING, SKIDDING }
 var current_state = State.IDLE
@@ -106,7 +110,6 @@ func _physics_process(delta: float) -> void:
 
 	movement(delta)
 	jump()
-	hammer_input()
 	move_and_slide()
 
 	for i in get_slide_collision_count():
@@ -135,8 +138,17 @@ func _physics_process(delta: float) -> void:
 	frames += 1
 
 func _input(event: InputEvent) -> void:
+	if Input.is_action_just_pressed("Bubble"):
+		fish_sprite.frame = 1
+		fisshe_bubble(-1 if sprite.flip_h else 1)
+	else:
+		fish_sprite.frame = 0
 	if Input.is_action_just_pressed("Restart"):
 		get_tree().reload_current_scene()
+	if not has_hammer:
+		return
+	if Input.is_action_just_pressed("Fire"):
+		hammer_hit()
 
 func determine_state():
 	if not is_on_floor():
@@ -182,18 +194,18 @@ func update_hammer_rotation() -> void:
 		hammer_time.scale.x = 1
 
 func get_aim_angle(up: bool, down: bool, left: bool, right: bool) -> float:
-	if up and right:
-		return deg_to_rad(-45)
-	elif up and left:
-		return deg_to_rad(-135)
-	elif down and right:
-		return deg_to_rad(45)
-	elif down and left:
-		return deg_to_rad(135)
-	elif up:
+	#if up and right:
+		#return deg_to_rad(-45)
+	#elif up and left:
+		#return deg_to_rad(-135)
+	#elif down and right:
+		#return deg_to_rad(45)
+	#elif down and left:
+		#return deg_to_rad(135)
+	if up:
 		return deg_to_rad(-90)
-	elif down:
-		return deg_to_rad(90)
+	#elif down:
+		#return deg_to_rad(90)
 	elif left:
 		return deg_to_rad(180)
 	elif right:
@@ -205,12 +217,6 @@ func get_hammer_aim_direction() -> Vector2:
 	var facing_sign := hammer_time.scale.x
 	var local_dir := Vector2(facing_sign, 0).rotated(hammer_time.rotation)
 	return local_dir.normalized()
-
-func hammer_input() -> void:
-	if not has_hammer:
-		return
-	if Input.is_action_just_pressed("Fire"):
-		hammer_hit()
 
 func hammer_hit() -> void:
 	if not hammer_hitbox:
@@ -279,6 +285,8 @@ func land_particles() -> void:
 	p.emitting = true
 
 func animate():
+	fisshe_animate()
+	
 	var just_landed = is_on_floor() and not was_on_floor and frames > 2
 	if just_landed:
 		animation.play("land")
@@ -357,10 +365,6 @@ func _on_death_animation_animation_finished(anim_name: StringName) -> void:
 			get_tree().current_scene.pausable = true
 			get_tree().paused = false
 
-			if secret_cam:
-				secret_cam.enabled = false
-				camera.enabled = true
-
 			modulate = Color.WHITE
 
 			position = spawn_point.position
@@ -369,3 +373,22 @@ func _on_death_animation_animation_finished(anim_name: StringName) -> void:
 		else:
 			get_tree().paused = false
 			get_tree().reload_current_scene()
+
+func fisshe_bubble(direction):
+	var bubble = PROJBUBBLE.instantiate()
+	bubble.direction = direction
+	bubble.z_index = z_index - 1
+	get_parent().add_child(bubble)
+	bubble.global_position = fish_helper.global_position
+	bubble.global_position.y = fish_helper.global_position.y - 6
+
+func fisshe_animate():
+	var facing_sign = -1 if sprite.flip_h else 1
+	var duration = 0.15
+	
+	var tween = create_tween()
+	tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tween.set_parallel(true)
+	
+	tween.tween_property(fish_helper, "scale:x", facing_sign, duration)
+	tween.tween_property(fish_helper, "position:x", -facing_sign * 42.0, duration)

@@ -7,11 +7,14 @@ extends Node2D
 @export var end_with_transition: bool = true
 @export var ui_visible: bool = true
 
-# Called when the node enters the scene tree for the first time.
+@onready var transition_player: AnimationPlayer = $UserInterface/TransitionPlayer
+
 func _ready() -> void:
-	pass # Replace with function body.
+	if start_with_transition:
+		transition_player.play("new_animation")
+		get_tree().paused = true
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func _on_transition_player_animation_finished(anim_name: StringName) -> void:
+	if start_with_transition:
+		if anim_name == "new_animation":
+			get_tree().paused = false
