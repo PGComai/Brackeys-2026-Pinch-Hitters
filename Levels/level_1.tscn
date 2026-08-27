@@ -10,6 +10,7 @@
 [ext_resource type="Material" uid="uid://08cwywbch6c2" path="res://neat_shader_material.tres" id="7_f4pg2"]
 [ext_resource type="PackedScene" uid="uid://dsb6purr30obl" path="res://Scenes/chest.tscn" id="8_77x7w"]
 [ext_resource type="PackedScene" uid="uid://tee0qdvvv8wu" path="res://Scenes/shroom_item.tscn" id="9_xoyoh"]
+[ext_resource type="PackedScene" uid="uid://fac3sonbjr15" path="res://Scenes/Enemies/enemy_shield_guy.tscn" id="10_f4pg2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n0qsc"]
 size = Vector2(16, 16)
@@ -139,5 +140,8 @@ position = Vector2(480, 264)
 [node name="ShroomItem" parent="." unique_id=740810509 instance=ExtResource("9_xoyoh")]
 position = Vector2(384, 208)
 collision_layer = 0
+
+[node name="EnemyShieldGuy" parent="." unique_id=134276589 instance=ExtResource("10_f4pg2")]
+position = Vector2(544, 258)
 
 [connection signal="animation_finished" from="UserInterface/TransitionPlayer" to="." method="_on_transition_player_animation_finished"]

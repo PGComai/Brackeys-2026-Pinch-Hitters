@@ -25,6 +25,11 @@ enum EnemyStateEnum { PATROL, PROJECTILE, BUBBLED, STUNNED }
 @export var bubble_duration: float = 3.0
 @export var ledge_probe: float = 8.0
 
+@export_category("Nodes")
+@export var sprite: AnimatedSprite2D
+@export var wall_ray_cast: RayCast2D
+@export var hurtbox: Area2D
+
 
 var hp: int
 var state: EnemyStateEnum = EnemyStateEnum.PATROL
@@ -33,11 +38,6 @@ var can_damage: bool = false
 var touch_timer: float = 0.0
 var bubble_timer: float = 0.0
 var stun_timer: float = 0.0
-
-
-@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var wall_ray_cast: RayCast2D = $WallRayCast
-@onready var hurtbox: Area2D = $Hurtbox
 
 
 func _ready() -> void:
