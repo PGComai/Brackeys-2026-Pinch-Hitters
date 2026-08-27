@@ -25,11 +25,11 @@ func input(_event)
 @abstract
 func unhandled_input(_event)
 
-## Treat this the same as [Node._update].
+## Treat this the same as [Node._process].
 @abstract
 func update(_delta)
 
-## Treat this the same as [Node._physics_update].
+## Treat this the same as [Node._physics_process].
 @abstract
 func physics_update(_delta)
 
