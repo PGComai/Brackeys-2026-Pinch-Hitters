@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://fac3sonbjr15"]
 
-[ext_resource type="Script" uid="uid://r1ln74rer63n" path="res://Scenes/Enemies/enemy.gd" id="1_d4ell"]
+[ext_resource type="Script" uid="uid://cnoeu6e0s6fat" path="res://Scenes/Enemies/enemy_shield_guy.gd" id="1_n5wax"]
 [ext_resource type="Texture2D" uid="uid://doub6jtnb8eqq" path="res://Assets/Sprites/shield-guy.png" id="2_n5wax"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k8cv1"]
@@ -41,7 +41,7 @@ size = Vector2(50, 50)
 [node name="EnemyShieldGuy" type="CharacterBody2D" unique_id=134276589 node_paths=PackedStringArray("sprite", "wall_ray_cast", "hurtbox")]
 collision_layer = 2
 collision_mask = 4
-script = ExtResource("1_d4ell")
+script = ExtResource("1_n5wax")
 sprite = NodePath("AnimatedSprite2D")
 wall_ray_cast = NodePath("RayCast2D")
 hurtbox = NodePath("Hurtbox")
