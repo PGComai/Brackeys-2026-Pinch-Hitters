@@ -1,7 +1,7 @@
 class_name Player
 extends CharacterBody2D
 
-@export var gravity: float = 500.0
+@export var gravity: float = 250.0
 @export var inverted = false
 
 @export var on_the_space_level = false
@@ -15,7 +15,7 @@ var direction := Input.get_axis("Left", "Right")
 @export var acceleration: float = 800.0
 @export var friction: float = 1200.0
 @export var air_friction: float = 80.0
-const JUMP_VELOCITY = -350
+const JUMP_VELOCITY = -200
 const JUMP_CUT = 2.5
 
 @export var has_hammer = true
@@ -79,63 +79,12 @@ func _ready() -> void:
 	was_on_floor = is_on_floor()
 
 func _physics_process(delta: float) -> void:
-	var gravity_force := gravity if !inverted else -gravity
-
-	if inverted:
-		up_direction = Vector2.DOWN
-	else:
-		up_direction = Vector2.UP
-
-	if not is_on_floor():
-		if on_the_space_level:
-			if not Input.is_action_just_pressed("Jump"):
-				velocity.y = lerp(velocity.y, 0.0, 0.1)
-				velocity.y += gravity_force * JUMP_CUT * delta
-			else:
-				velocity.y += gravity_force * delta
-			velocity.y = clamp(velocity.y, -240, 240)
-		else:
-			if velocity.y < 0 and not Input.is_action_pressed("Jump"):
-				velocity.y = lerp(velocity.y, 0.0, 0.1)
-				velocity.y += gravity_force * JUMP_CUT * delta
-			else:
-				velocity.y += gravity_force * delta
-			if gravity_force > 0:
-				velocity.y = min(velocity.y, 240)
-			else:
-				velocity.y = max(velocity.y, -240)
-
-		if (!inverted and is_on_ceiling()) or (inverted and is_on_floor()):
-			velocity.y += sign(gravity_force) * 50
-
 	movement(delta)
+	velocity.y += delta * gravity
+	#if Input.is_action_pressed("Jump"):
+	#	velocity.y = JUMP_VELOCITY
 	jump()
 	move_and_slide()
-
-	for i in get_slide_collision_count():
-		var collision = get_slide_collision(i)
-		var collider = collision.get_collider()
-
-		if collider is RigidBody2D:
-			collider.apply_central_impulse(-collision.get_normal() * 30)
-
-	if was_on_floor and not is_on_floor():
-		coyote_timer.start()
-
-	for i in get_slide_collision_count():
-		var collision := get_slide_collision(i)
-		var collider := collision.get_collider()
-		if collider.is_in_group("deadly"):
-			die()
-			return
-
-	determine_state()
-	previous_state = current_state
-	animate()
-	update_invincibility(delta)
-
-	was_on_floor = is_on_floor()
-	frames += 1
 
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("Bubble"):
@@ -260,16 +209,17 @@ func apply_hitstop() -> void:
 	)
 
 func jump():
-	if not on_the_space_level:
-		if Input.is_action_just_pressed("Jump"):
-			jump_buffer_timer.start()
-
-	if jump_buffer_timer.time_left > 0:
-		if is_on_floor() or coyote_timer.time_left > 0:
+	#if not on_the_space_level:
+	#	if Input.is_action_just_pressed("Jump"):
+	#		jump_buffer_timer.start()
+	#if is_on_floor():
+	#	coyote_timer.start()
+	#if jump_buffer_timer.time_left > 0:
+	if Input.is_action_just_pressed("Jump") and is_on_floor(): #  and coyote_timer.time_left > 0:
 			velocity.y = JUMP_VELOCITY
-			jump_buffer_timer.stop()
-			coyote_timer.stop()
-			jump_sound.play()
+			#jump_buffer_timer.stop()
+	#		coyote_timer.stop()
+	#		jump_sound.play()
 
 func land_particles() -> void:
 	Input.start_joy_vibration(0, 0.2, 0.0, 0.2)
