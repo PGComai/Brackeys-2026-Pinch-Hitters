@@ -103,7 +103,7 @@ func clean_normal(normal: Vector2) -> Vector2:
 	else:
 		return Vector2(0, sign(normal.y))
 
-func hit(_damage: int, knockback: Vector2) -> void:
+func hit(damage: int, knockback: Vector2) -> void:
 	take_damage(1)
 	state = State.PROJECTILE
 	motion_mode = CharacterBody2D.MOTION_MODE_GROUNDED
@@ -111,10 +111,7 @@ func hit(_damage: int, knockback: Vector2) -> void:
 	can_damage = true
 
 func bubble() -> void:
-	state = State.BUBBLED
-	bubble_timer = bubble_duration
-	velocity = Vector2.ZERO
-	modulate = Color.DEEP_PINK
+	take_damage(1)
 
 func process_bubbled(delta: float) -> void:
 	bubble_timer -= delta
