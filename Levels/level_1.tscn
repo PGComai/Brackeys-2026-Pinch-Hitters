@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://dfso14lopsgdp" path="res://icon.svg" id="3_3mhv4"]
 [ext_resource type="Shader" uid="uid://b0trosxtwv6cs" path="res://Scenes/transition.gdshader" id="6_0urlm"]
 [ext_resource type="PackedScene" uid="uid://immhh8kc3bfh" path="res://Dialogues/interactable.tscn" id="6_rfktq"]
+[ext_resource type="PackedScene" uid="uid://dsb6purr30obl" path="res://Scenes/chest.tscn" id="8_77x7w"]
+[ext_resource type="PackedScene" uid="uid://tee0qdvvv8wu" path="res://Scenes/shroom_item.tscn" id="9_xoyoh"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_syshm"]
 texture = ExtResource("1_rf6l5")
@@ -299,5 +301,12 @@ position = Vector2(112, 272)
 script = null
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="." unique_id=732474548]
+
+[node name="Chest" parent="." unique_id=729216827 instance=ExtResource("8_77x7w")]
+position = Vector2(480, 264)
+
+[node name="ShroomItem" parent="." unique_id=740810509 instance=ExtResource("9_xoyoh")]
+position = Vector2(384, 208)
+collision_layer = 0
 
 [connection signal="animation_finished" from="UserInterface/TransitionPlayer" to="." method="_on_transition_player_animation_finished"]

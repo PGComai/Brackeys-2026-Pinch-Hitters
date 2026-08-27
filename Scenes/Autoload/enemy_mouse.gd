@@ -1,9 +1,10 @@
 class_name Enemy
 extends CharacterBody2D
 
-enum State { PATROL, PROJECTILE, KNOCKED, BUBBLED }
+enum State { PATROL, PROJECTILE, BUBBLED }
 
 @export var max_hp: int = 3
+
 @export var patrol_speed: float = 40.0
 @export var gravity: float = 400.0
 @export var touch_damage: int = 1
@@ -11,7 +12,7 @@ enum State { PATROL, PROJECTILE, KNOCKED, BUBBLED }
 @export var touch_cooldown: float = 0.5
 
 @export var bubble_duration: float = 3.0
-@export var ledge_probe: float = 8.0  # how far ahead of center to check for ground
+@export var ledge_probe: float = 8.0
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var hurtbox: Area2D = $Hurtbox
@@ -113,12 +114,12 @@ func bubble() -> void:
 	state = State.BUBBLED
 	bubble_timer = bubble_duration
 	velocity = Vector2.ZERO
-	modulate = Color(1.0, 0.45, 0.85)
+	modulate = Color.DEEP_PINK
 
 func process_bubbled(delta: float) -> void:
 	bubble_timer -= delta
 	if bubble_timer <= 0.0:
-		modulate = Color(1, 1, 1)
+		modulate = Color.WHITE
 		state = State.PATROL
 
 func take_damage(amount: int) -> void:

@@ -237,8 +237,6 @@ func hammer_hit() -> void:
 			elif body is RigidBody2D:
 				body.apply_central_impulse(aim_direction * hammer_knockback)
 				hit_something = true
-		#elif body is StaticBody2D or body is TileMap or body is TileMapLayer:
-			#apply_hammer_recoil()
 
 	var areas := hammer_hitbox.get_overlapping_areas()
 	for area in areas:

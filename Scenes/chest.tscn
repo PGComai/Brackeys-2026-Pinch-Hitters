@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://dsb6purr30obl"]
+
+[ext_resource type="Script" uid="uid://muktdcl0rn8f" path="res://Scenes/chest.gd" id="1_cjfl1"]
+[ext_resource type="Texture2D" uid="uid://3ly86r7cynh4" path="res://Assets/Sprites/Chests.png" id="1_lyb87"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cjfl1"]
+atlas = ExtResource("1_lyb87")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bagqn"]
+atlas = ExtResource("1_lyb87")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g4v7s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cjfl1")
+}],
+"loop": 1,
+"name": &"dont",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bagqn")
+}],
+"loop": 1,
+"name": &"love",
+"speed": 5.0
+}]
+
+[node name="Chest" type="Area2D" unique_id=729216827]
+script = ExtResource("1_cjfl1")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=863777213]
+sprite_frames = SubResource("SpriteFrames_g4v7s")
+animation = &"dont"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2012159422]

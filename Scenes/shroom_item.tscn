@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://tee0qdvvv8wu"]
 
 [ext_resource type="Texture2D" uid="uid://b20wy7pmejs4f" path="res://Assets/Sprites/Shroom.png" id="1_jtw45"]
+[ext_resource type="Script" uid="uid://be2xd12grtimm" path="res://Scenes/shroom_item.gd" id="1_on0qk"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_yf5fn"]
 animations = [{
@@ -55,6 +56,7 @@ _data = {
 }
 
 [node name="ShroomItem" type="Area2D" unique_id=740810509]
+script = ExtResource("1_on0qk")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=258132609]
 sprite_frames = SubResource("SpriteFrames_yf5fn")
@@ -64,3 +66,5 @@ shape = SubResource("RectangleShape2D_g4v7s")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=290777197]
 libraries/ = SubResource("AnimationLibrary_44m2c")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

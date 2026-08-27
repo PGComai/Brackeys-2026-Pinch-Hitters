@@ -1,0 +1,93 @@
+[gd_scene format=3 uid="uid://onrf4ydasxcd"]
+
+[ext_resource type="Texture2D" uid="uid://djnrgf25son3a" path="res://Assets/Sprites/Cannon.png" id="1_5i7xi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dmyjf"]
+atlas = ExtResource("1_5i7xi")
+region = Rect2(0, 0, 44, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6v3vv"]
+atlas = ExtResource("1_5i7xi")
+region = Rect2(44, 0, 44, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sx7o5"]
+atlas = ExtResource("1_5i7xi")
+region = Rect2(0, 76, 44, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b7bwi"]
+atlas = ExtResource("1_5i7xi")
+region = Rect2(44, 76, 44, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cc5qr"]
+atlas = ExtResource("1_5i7xi")
+region = Rect2(0, 38, 44, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wf1gd"]
+atlas = ExtResource("1_5i7xi")
+region = Rect2(44, 38, 44, 38)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g4v7s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dmyjf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6v3vv")
+}],
+"loop": 1,
+"name": &"facing_front",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sx7o5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b7bwi")
+}],
+"loop": 1,
+"name": &"facing_up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cc5qr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wf1gd")
+}],
+"loop": 1,
+"name": &"facing_up_front",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g4v7s"]
+size = Vector2(32, 36)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yf5fn"]
+size = Vector2(208, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_57qmd"]
+size = Vector2(208, 64)
+
+[node name="EnemyCannon" type="CharacterBody2D" unique_id=1129418410]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1431022221]
+sprite_frames = SubResource("SpriteFrames_g4v7s")
+animation = &"facing_up_front"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1667707872]
+shape = SubResource("RectangleShape2D_g4v7s")
+
+[node name="UpCollision" type="Area2D" parent="." unique_id=1873400952]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UpCollision" unique_id=359824413]
+position = Vector2(120, -64)
+shape = SubResource("RectangleShape2D_yf5fn")
+
+[node name="RightCollision" type="Area2D" parent="." unique_id=1162091238]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightCollision" unique_id=1457183142]
+position = Vector2(120, 0)
+shape = SubResource("RectangleShape2D_57qmd")
