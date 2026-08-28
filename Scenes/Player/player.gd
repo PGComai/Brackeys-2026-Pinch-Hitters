@@ -64,7 +64,6 @@ var blink_tween: Tween
 var hitstop_active: bool = false
 var shoot_timer = 0.0
 func _ready() -> void:
-	animate()
 	was_on_floor = is_on_floor()
 	
 
@@ -78,6 +77,7 @@ func _physics_process(delta: float) -> void:
 
 func _process(delta: float) -> void:
 	update_hammer_rotation()
+	fisshe_animate()
 	shoot_timer -= delta
 
 
@@ -85,7 +85,7 @@ func _input(_event: InputEvent) -> void:
 	if Input.is_action_pressed("Bubble") and shoot_timer <= 0.0:
 		fish_sprite.frame = 1
 		shoot_timer = SHOOT_COOLDOWN
-		fisshe_bubble(-1 if sprite.flip_h else 1)
+		fisshe_bubble(-1 if visual.scale.x < 0 else 1)
 	else:
 		fish_sprite.frame = 0
 	#if Input.is_action_just_pressed("Restart"):
@@ -226,10 +226,6 @@ func land_particles() -> void:
 	p.emitting = true
 
 
-func animate():
-	fisshe_animate()
-
-
 func hit(damage: int, knockback: Vector2) -> void:
 	if is_invincible:
 		return
@@ -303,17 +299,17 @@ func _on_death_animation_animation_finished(anim_name: StringName) -> void:
 			get_tree().reload_current_scene()
 
 func fisshe_bubble(direction):
-	var bubble = PROJBUBBLE.instantiate()
+	var bubble := PROJBUBBLE.instantiate() as Node2D
 	bubble.direction = direction
-	bubble.z_index = z_index - 1
 	add_sibling(bubble)
+	bubble.z_index = z_index + 1
 	bubble.global_position = fish.global_position
 	bubble.global_position.y = fish.global_position.y - 6
 
 
 func fisshe_animate():
-	var facing_sign = -1 if sprite.flip_h else 1
-	var duration = 0.15
+	var facing_sign = visual.scale.x
+	var duration = 0.05
 	
 	var tween = create_tween()
 	tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)

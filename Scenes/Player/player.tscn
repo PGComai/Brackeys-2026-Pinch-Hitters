@@ -369,6 +369,8 @@ autoplay = &"new_animation"
 
 [node name="Sprite" type="AnimatedSprite2D" parent="Fish" unique_id=179344346]
 sprite_frames = SubResource("SpriteFrames_g4v7s")
+frame = 1
+frame_progress = 0.70940226
 flip_h = true
 
 [node name="HammerTime" type="Node2D" parent="." unique_id=2046948035]
