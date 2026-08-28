@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://m32ggmldw4rb"]
+
+[ext_resource type="Texture2D" uid="uid://dfcsxgvsa45j4" path="res://Assets/Sprites/Dizzy_Stars.png" id="1_djuw8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8d8jk"]
+atlas = ExtResource("1_djuw8")
+region = Rect2(0, 0, 31, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_54qp2"]
+atlas = ExtResource("1_djuw8")
+region = Rect2(31, 0, 31, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dtnbb"]
+atlas = ExtResource("1_djuw8")
+region = Rect2(62, 0, 31, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b5lef"]
+atlas = ExtResource("1_djuw8")
+region = Rect2(93, 0, 31, 14)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bfghh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8d8jk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_54qp2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dtnbb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b5lef")
+}],
+"loop": true,
+"name": &"dizzy",
+"speed": 5.0
+}]
+
+[node name="AnimTest" type="Node2D" unique_id=1554527907]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=145497062]
+sprite_frames = SubResource("SpriteFrames_bfghh")
+animation = &"dizzy"
+frame = 1
+frame_progress = 0.99594724

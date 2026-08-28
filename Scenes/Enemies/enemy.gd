@@ -1,7 +1,18 @@
 class_name Enemy
 extends CharacterBody2D
 
-enum State { PATROL, PROJECTILE, BUBBLED }
+const COLLIDER_SIZE: Vector2 = Vector2(60.0, 57.0)
+const COLLIDER_OFFSET: Vector2 = Vector2(0.0, 1.5)
+const COLLIDER_SIZE_HURTBOX: Vector2 = Vector2(56.0, 54.0)
+const WALL_RAYCAST_TARGET_POS: Vector2 = Vector2(8.0, 0.0)
+const DEBUG_COLOR_HURTBOX: Color = Color("f6007f6b")
+const COLLISION_LAYER_VALUES: Array[int] = [2]
+const COLLISION_MASK_VALUES: Array[int] = [3]
+const COLLISION_LAYER_VALUES_HURTBOX: Array[int] = [2]
+const COLLISION_MASK_VALUES_HURTBOX: Array[int] = [1]
+
+
+enum State { PATROL, PROJECTILE, BUBBLED, STUNNED }
 
 @export var max_hp: int = 3
 
@@ -14,8 +25,6 @@ enum State { PATROL, PROJECTILE, BUBBLED }
 @export var bubble_duration: float = 3.0
 @export var ledge_probe: float = 8.0
 
-@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var hurtbox: Area2D = $Hurtbox
 
 var hp: int
 var state: State = State.PATROL
@@ -23,12 +32,30 @@ var direction: int = 1
 var can_damage: bool = false
 var touch_timer: float = 0.0
 var bubble_timer: float = 0.0
+var stun_timer: float = 0.0
+
+
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var wall_ray_cast: RayCast2D = $WallRayCast
+@onready var hurtbox: Area2D = $Hurtbox
+
 
 func _ready() -> void:
 	hp = max_hp
 	add_to_group("hittable")
 	motion_mode = CharacterBody2D.MOTION_MODE_GROUNDED
 	hurtbox.body_entered.connect(_on_hurtbox_body_entered)
+
+
+func clear_physics_layer_values(coll_obj: CollisionObject2D) -> void:
+	for i: int in 16:
+		coll_obj.set_collision_layer_value(i, false)
+
+
+func clear_physics_mask_values(coll_obj: CollisionObject2D) -> void:
+	for i: int in 16:
+		coll_obj.set_collision_mask_value(i, false)
+
 
 func _physics_process(delta: float) -> void:
 	if touch_timer > 0.0:
@@ -46,6 +73,10 @@ func _physics_process(delta: float) -> void:
 			move_projectile(delta)
 		State.BUBBLED:
 			process_bubbled(delta)
+		State.STUNNED:
+			stun_timer -= delta
+			if stun_timer < 0:
+				state = State.PATROL
 
 	if state != State.BUBBLED:
 		check_hurtbox_overlaps()
@@ -62,13 +93,20 @@ func check_hurtbox_overlaps() -> void:
 			try_damage_player(body)
 
 func _on_hurtbox_body_entered(body: Node2D) -> void:
-	if state == State.BUBBLED:
-		return
 	if body is Player:
-		try_damage_player(body)
+		if body.velocity.y > 0.01:
+			stun()
+			body.velocity.y = -abs(body.velocity.y)
+		else:
+			try_damage_player(body)
+
+func stun():
+	state = State.STUNNED
+	stun_timer = 5.0
+	modulate = Color.YELLOW
 
 func try_damage_player(player: Player) -> void:
-	if touch_timer > 0.0:
+	if touch_timer > 0.0 or state == State.STUNNED:
 		return
 	if not player.has_method("hit"):
 		return
@@ -103,7 +141,7 @@ func clean_normal(normal: Vector2) -> Vector2:
 	else:
 		return Vector2(0, sign(normal.y))
 
-func hit(_damage: int, knockback: Vector2) -> void:
+func hit(damage: int, knockback: Vector2) -> void:
 	take_damage(1)
 	state = State.PROJECTILE
 	motion_mode = CharacterBody2D.MOTION_MODE_GROUNDED
@@ -111,10 +149,7 @@ func hit(_damage: int, knockback: Vector2) -> void:
 	can_damage = true
 
 func bubble() -> void:
-	state = State.BUBBLED
-	bubble_timer = bubble_duration
-	velocity = Vector2.ZERO
-	modulate = Color.DEEP_PINK
+	take_damage(1)
 
 func process_bubbled(delta: float) -> void:
 	bubble_timer -= delta

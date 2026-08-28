@@ -83,7 +83,6 @@ shape = SubResource("RectangleShape2D_n0qsc")
 [node name="EnemyMouse" parent="." unique_id=1152602573 instance=ExtResource("2_dilhk")]
 process_mode = 1
 position = Vector2(208, 256)
-max_hp = 99
 
 [node name="Icon" type="Sprite2D" parent="." unique_id=222042269]
 visible = false
