@@ -32,3 +32,9 @@ func increment_level_idx() -> bool:
 		return false
 	current_level_idx += 1
 	return true
+
+
+func _on_current_level_end_reached() -> void:
+	if increment_level_idx():
+		unload_current_level()
+		load_level()

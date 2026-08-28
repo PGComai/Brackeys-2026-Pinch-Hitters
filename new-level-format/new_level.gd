@@ -2,6 +2,9 @@ extends Node2D
 class_name NewLevel
 
 
+signal end_reached
+
+
 const PLAYER = preload("uid://buvdkp3gc6t3a")
 const DEFAULT_PLAYER_SPAWN := Vector2(104.0, 256.0)
 
