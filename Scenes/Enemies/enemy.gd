@@ -12,7 +12,7 @@ const COLLISION_LAYER_VALUES_HURTBOX: Array[int] = [2]
 const COLLISION_MASK_VALUES_HURTBOX: Array[int] = [1]
 
 
-enum State { PATROL, PROJECTILE, BUBBLED, STUNNED }
+enum EnemyStateEnum { PATROL, PROJECTILE, BUBBLED, STUNNED }
 
 @export var max_hp: int = 3
 
@@ -27,7 +27,7 @@ enum State { PATROL, PROJECTILE, BUBBLED, STUNNED }
 
 
 var hp: int
-var state: State = State.PATROL
+var state: EnemyStateEnum = EnemyStateEnum.PATROL
 var direction: int = 1
 var can_damage: bool = false
 var touch_timer: float = 0.0
@@ -62,23 +62,23 @@ func _physics_process(delta: float) -> void:
 		touch_timer -= delta
 
 	match state:
-		State.PATROL:
+		EnemyStateEnum.PATROL:
 			velocity.y += gravity * delta
 			velocity.x = direction * patrol_speed
 			move_and_slide()
 			if is_on_wall() or (is_on_floor() and not sees_ground_ahead()):
 				direction *= -1
 				sprite.flip_h = direction < 0
-		State.PROJECTILE:
+		EnemyStateEnum.PROJECTILE:
 			move_projectile(delta)
-		State.BUBBLED:
+		EnemyStateEnum.BUBBLED:
 			process_bubbled(delta)
-		State.STUNNED:
+		EnemyStateEnum.STUNNED:
 			stun_timer -= delta
 			if stun_timer < 0:
-				state = State.PATROL
+				state = EnemyStateEnum.PATROL
 
-	if state != State.BUBBLED:
+	if state != EnemyStateEnum.BUBBLED:
 		check_hurtbox_overlaps()
 
 func sees_ground_ahead() -> bool:
@@ -101,12 +101,12 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 			try_damage_player(body)
 
 func stun():
-	state = State.STUNNED
+	state = EnemyStateEnum.STUNNED
 	stun_timer = 5.0
 	modulate = Color.YELLOW
 
 func try_damage_player(player: Player) -> void:
-	if touch_timer > 0.0 or state == State.STUNNED:
+	if touch_timer > 0.0 or state == EnemyStateEnum.STUNNED:
 		return
 	if not player.has_method("hit"):
 		return
@@ -143,7 +143,7 @@ func clean_normal(normal: Vector2) -> Vector2:
 
 func hit(damage: int, knockback: Vector2) -> void:
 	take_damage(1)
-	state = State.PROJECTILE
+	state = EnemyStateEnum.PROJECTILE
 	motion_mode = CharacterBody2D.MOTION_MODE_GROUNDED
 	velocity = knockback
 	can_damage = true
@@ -155,7 +155,7 @@ func process_bubbled(delta: float) -> void:
 	bubble_timer -= delta
 	if bubble_timer <= 0.0:
 		modulate = Color.WHITE
-		state = State.PATROL
+		state = EnemyStateEnum.PATROL
 
 func take_damage(amount: int) -> void:
 	modulate.r += 0.5

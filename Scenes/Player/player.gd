@@ -5,11 +5,8 @@ extends CharacterBody2D
 @export var inverted = false
 
 @export var on_the_space_level = false
-@onready var collision_shape_2d_2: CollisionShape2D = $CollisionShape2D2
 
 var hp = 5
-
-var direction := Input.get_axis("Left", "Right")
 
 @export var speed: float = 250.0
 @export var acceleration: float = 800.0
@@ -31,26 +28,18 @@ const SHOOT_COOLDOWN = 0.5
 
 const NO_AIM = -999.0
 
-@onready var animation: AnimationPlayer = $AnimationPlayer
-@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var visual: Node2D = $Visual
+@onready var sprite: AnimatedSprite2D = $Visual/Sprite
+@onready var fish: Node2D = $Fish
+@onready var fish_sprite: AnimatedSprite2D = $Fish/Sprite
 
-@onready var fish_helper: Node2D = $FishHelper
-@onready var fish_sprite: AnimatedSprite2D = $FishHelper/FishSprite
-
-@onready var death_animation: AnimationPlayer = $DeathAnimation
+@onready var anim_player: AnimationPlayer = $Visual/AnimationPlayer
 
 @onready var jump_sound: AudioStreamPlayer = $JumpSound
-@onready var land_sound: AudioStreamPlayer2D = $SFX/LandSound
-@onready var hurt_sound: AudioStreamPlayer2D = $SFX/HurtSound
-
-@onready var game_over: AudioStreamPlayer = $SFX/GameOver
 
 const LANDPARTICLES = preload("res://Scenes/Player/land_particles.tscn")
 const PROJBUBBLE = preload("res://Scenes/Player/proj_bubble.tscn")
 
-enum State { IDLE, WALKING, JUMPING, FALLING, SKIDDING }
-var current_state = State.IDLE
-var previous_state = State.IDLE
 var was_on_floor = true
 
 @onready var coyote_timer: Timer = $CoyoteTimer
@@ -63,9 +52,9 @@ var was_on_floor = true
 
 var frames := 0
 
-@onready var spawn_point: Node2D = $"../SpawnPoint"
+@onready var spawn_point: Vector2 = global_position
+
 @onready var user_interface: CanvasLayer = $"../UserInterface"
-@onready var secret_cam: Camera2D = $SecretCam
 @onready var music_player: AudioStreamPlayer = $"../MusicPlayer"
 
 var is_invincible: bool = false
@@ -80,15 +69,19 @@ func _ready() -> void:
 	
 
 func _physics_process(delta: float) -> void:
-	movement(delta)
 	velocity.y += delta * gravity
 	#if Input.is_action_pressed("Jump"):
 	#	velocity.y = JUMP_VELOCITY
-	jump()
+	#jump()
 	move_and_slide()
+
+
+func _process(delta: float) -> void:
+	update_hammer_rotation()
 	shoot_timer -= delta
 
-func _input(event: InputEvent) -> void:
+
+func _input(_event: InputEvent) -> void:
 	if Input.is_action_pressed("Bubble") and shoot_timer <= 0.0:
 		fish_sprite.frame = 1
 		shoot_timer = SHOOT_COOLDOWN
@@ -102,33 +95,24 @@ func _input(event: InputEvent) -> void:
 	#if Input.is_action_just_pressed("Fire"):
    #	hammer_hit()
 
-func determine_state():
-	if not is_on_floor():
-		current_state = State.FALLING if velocity.y > 0 else State.JUMPING
-		return
-	if abs(velocity.x) > 0:
-		current_state = State.WALKING
-	else:
-		current_state = State.IDLE
 
-func movement(delta):
-	var direction := Input.get_axis("Left", "Right")
-
-	if direction < 0:
-		sprite.flip_h = true
-	elif direction > 0:
-		sprite.flip_h = false
-
-	update_hammer_rotation()
-
-	if direction:
-		velocity.x += direction * acceleration * delta
+func ground_movement(delta: float, dir: float) -> void:
+	if not is_zero_approx(dir):
+		set_facing(dir < 0)
+		velocity.x += dir * acceleration * delta
 		velocity.x = clamp(velocity.x, -speed, speed)
 	else:
-		if is_on_floor():
-			velocity.x = move_toward(velocity.x, 0, friction * delta)
-		else:
-			velocity.x = move_toward(velocity.x, 0, air_friction * delta)
+		velocity.x = move_toward(velocity.x, 0, friction * delta)
+
+
+func air_movement(delta: float, dir: float) -> void:
+	if not is_zero_approx(dir):
+		set_facing(dir < 0)
+		velocity.x += dir * acceleration * delta
+		velocity.x = clamp(velocity.x, -speed, speed)
+	else:
+		velocity.x = move_toward(velocity.x, 0, air_friction * delta)
+
 
 func update_hammer_rotation() -> void:
 	var up := Input.is_action_pressed("Up")
@@ -144,6 +128,7 @@ func update_hammer_rotation() -> void:
 	else:
 		hammer_time.rotation = angle
 		hammer_time.scale.x = 1
+
 
 func get_aim_angle(up: bool, down: bool, left: bool, right: bool) -> float:
 	#if up and right:
@@ -165,10 +150,12 @@ func get_aim_angle(up: bool, down: bool, left: bool, right: bool) -> float:
 	else:
 		return NO_AIM
 
+
 func get_hammer_aim_direction() -> Vector2:
 	var facing_sign := hammer_time.scale.x
 	var local_dir := Vector2(facing_sign, 0).rotated(hammer_time.rotation)
 	return local_dir.normalized()
+
 
 func hammer_hit() -> void:
 	if not hammer_hitbox:
@@ -200,6 +187,7 @@ func hammer_hit() -> void:
 	if hit_something:
 		apply_hitstop()
 
+
 func apply_hitstop() -> void:
 	if hitstop_active:
 		return
@@ -211,18 +199,20 @@ func apply_hitstop() -> void:
 		hitstop_active = false
 	)
 
-func jump():
+
+#func jump():
 	#if not on_the_space_level:
 	#	if Input.is_action_just_pressed("Jump"):
 	#		jump_buffer_timer.start()
 	#if is_on_floor():
 	#	coyote_timer.start()
 	#if jump_buffer_timer.time_left > 0:
-	if Input.is_action_just_pressed("Jump") and is_on_floor(): #  and coyote_timer.time_left > 0:
-			velocity.y = JUMP_VELOCITY
+	#if Input.is_action_just_pressed("Jump") and is_on_floor(): #  and coyote_timer.time_left > 0:
+			#velocity.y = JUMP_VELOCITY
 			#jump_buffer_timer.stop()
 	#		coyote_timer.stop()
 	#		jump_sound.play()
+
 
 func land_particles() -> void:
 	Input.start_joy_vibration(0, 0.2, 0.0, 0.2)
@@ -235,30 +225,16 @@ func land_particles() -> void:
 	p.z_index = z_index + 1
 	p.emitting = true
 
+
 func animate():
 	fisshe_animate()
-	
-	var just_landed = is_on_floor() and not was_on_floor and frames > 2
-	if just_landed:
-		animation.play("land")
-		land_particles()
 
-	match current_state:
-		State.IDLE:
-			sprite.play("idle")
-		State.WALKING:
-			sprite.play("walk")
-		State.JUMPING:
-			sprite.play("jump")
-		State.FALLING:
-			sprite.play("fall")
 
 func hit(damage: int, knockback: Vector2) -> void:
 	if is_invincible:
 		return
-
-	if hp > 1:
-		hp -= 1
+	hp = max(hp - damage, 0)
+	if hp:
 		start_invincibility()
 	else:
 		die()
@@ -267,9 +243,10 @@ func hit(damage: int, knockback: Vector2) -> void:
 	velocity.x = push_dir * abs(hammer_knockback)
 	#hurt_sound.play()
 
+
 func start_invincibility() -> void:
-	is_invincible = true
 	invincibility_timer = invincibility_duration
+	is_invincible = true
 
 	if blink_tween:
 		blink_tween.kill()
@@ -279,11 +256,12 @@ func start_invincibility() -> void:
 	blink_tween.tween_property(sprite, "self_modulate", Color.DIM_GRAY, blink_interval)
 	blink_tween.tween_property(sprite, "self_modulate", Color.WHITE, blink_interval)
 
+
 func update_invincibility(delta: float) -> void:
-	if not is_invincible:
+	if invincibility_timer <= 0.0:
 		return
 
-	invincibility_timer -= delta
+	invincibility_timer = max(invincibility_timer - delta, 0.0)
 
 	if invincibility_timer <= 0.0:
 		is_invincible = false
@@ -295,7 +273,7 @@ func die() -> void:
 	get_tree().reload_current_scene()
 
 	#hurt_sound.play()
-	#animation.play("RESET")
+	#anim_player.play("RESET")
 	#death_animation.play("death")
 	#game_over.play()
 	#
@@ -306,9 +284,8 @@ func die() -> void:
 
 func _on_death_animation_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "death":
-		if spawn_point:
-			animation.play("RESET")
-			death_animation.play("RESET")
+		if spawn_point != Vector2.INF:
+			anim_player.play("RESET")
 
 			if music_player:
 				music_player.stream_paused = true
@@ -318,7 +295,7 @@ func _on_death_animation_animation_finished(anim_name: StringName) -> void:
 
 			modulate = Color.WHITE
 
-			position = spawn_point.position
+			position = spawn_point
 			inverted = false
 			velocity = Vector2(0, 0)
 		else:
@@ -329,9 +306,10 @@ func fisshe_bubble(direction):
 	var bubble = PROJBUBBLE.instantiate()
 	bubble.direction = direction
 	bubble.z_index = z_index - 1
-	get_parent().add_child(bubble)
-	bubble.global_position = fish_helper.global_position
-	bubble.global_position.y = fish_helper.global_position.y - 6
+	add_sibling(bubble)
+	bubble.global_position = fish.global_position
+	bubble.global_position.y = fish.global_position.y - 6
+
 
 func fisshe_animate():
 	var facing_sign = -1 if sprite.flip_h else 1
@@ -341,5 +319,22 @@ func fisshe_animate():
 	tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	tween.set_parallel(true)
 	
-	tween.tween_property(fish_helper, "scale:x", facing_sign, duration)
-	tween.tween_property(fish_helper, "position:x", -facing_sign * 42.0, duration)
+	tween.tween_property(fish, "scale:x", facing_sign, duration)
+	tween.tween_property(fish, "position:x", -facing_sign * 42.0, duration)
+
+
+func set_facing(left: bool) -> void:
+	visual.scale.x = -1 if left else 1
+
+
+func play_animation(anim_name: StringName) -> void:
+	# TODO: Animation player should change AnimatedSprite2D's animation.
+	anim_player.play(anim_name)
+
+
+func get_movement_axis() -> float:
+	return Input.get_axis(&"Left", &"Right")
+
+
+func is_jump_pressed() -> bool:
+	return Input.is_action_just_pressed(&"Jump")

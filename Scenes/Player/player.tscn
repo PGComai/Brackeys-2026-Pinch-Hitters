@@ -4,6 +4,109 @@
 [ext_resource type="Texture2D" uid="uid://dfso14lopsgdp" path="res://icon.svg" id="2_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://bl56jtrqamaw1" path="res://Assets/Sprites/Sweedish_Fish.png" id="2_mtuoh"]
 [ext_resource type="Texture2D" uid="uid://bimoggv1kbnb7" path="res://Assets/Sprites/Main_Character_Sheet.png" id="3_xpcdj"]
+[ext_resource type="Script" uid="uid://drr22sgdamrsa" path="res://Scripts/Types/state_machine.gd" id="5_jhyir"]
+[ext_resource type="Script" uid="uid://bt708i1ai5oab" path="res://Scenes/Player/States/idle.gd" id="6_74mp2"]
+[ext_resource type="Script" uid="uid://tn15ujhpor8g" path="res://Scenes/Player/States/walk.gd" id="7_oikmp"]
+[ext_resource type="Script" uid="uid://cic4xb685wwbi" path="res://Scenes/Player/States/jump.gd" id="8_06tpx"]
+[ext_resource type="Script" uid="uid://ywmnrtc18s1u" path="res://Scenes/Player/States/fall.gd" id="9_7g0yx"]
+[ext_resource type="Script" uid="uid://bw80gp1gu7x6j" path="res://Scenes/Player/States/skid.gd" id="10_dey5f"]
+[ext_resource type="FontFile" uid="uid://boxvhat0jgchp" path="res://Assets/Fonts/alagard.ttf" id="11_74mp2"]
+
+[sub_resource type="Animation" id="Animation_jhyir"]
+resource_name = "fall"
+
+[sub_resource type="Animation" id="Animation_7g0yx"]
+resource_name = "idle"
+
+[sub_resource type="Animation" id="Animation_74mp2"]
+resource_name = "jump"
+
+[sub_resource type="Animation" id="Animation_a3d8c"]
+resource_name = "land"
+
+[sub_resource type="Animation" id="Animation_oikmp"]
+resource_name = "skid"
+
+[sub_resource type="Animation" id="Animation_06tpx"]
+resource_name = "walk"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xpcdj"]
+_data = {
+&"fall": SubResource("Animation_jhyir"),
+&"idle": SubResource("Animation_7g0yx"),
+&"jump": SubResource("Animation_74mp2"),
+&"land": SubResource("Animation_a3d8c"),
+&"skid": SubResource("Animation_oikmp"),
+&"walk": SubResource("Animation_06tpx")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xpcdj"]
+atlas = ExtResource("3_xpcdj")
+region = Rect2(0, 64, 96, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kvjxa"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xpcdj")
+}],
+"loop": true,
+"name": &"fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xpcdj")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xpcdj")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_0u5uq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_jlvik"]
+resource_name = "new_animation"
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, -2), Vector2(0, 2)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gk6dx"]
+_data = {
+&"RESET": SubResource("Animation_0u5uq"),
+&"new_animation": SubResource("Animation_jlvik")
+}
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_htcer"]
 atlas = ExtResource("2_mtuoh")
@@ -22,107 +125,56 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_dd0ac")
 }],
-"loop": 1,
+"loop": true,
 "name": &"default",
 "speed": 5.0
 }]
 
-[sub_resource type="Animation" id="Animation_0u5uq"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("FishSprite:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_jlvik"]
-resource_name = "new_animation"
-loop_mode = 2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("FishSprite:position")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0, -2), Vector2(0, 2)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_gk6dx"]
-_data = {
-&"RESET": SubResource("Animation_0u5uq"),
-&"new_animation": SubResource("Animation_jlvik")
-}
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1ndb7"]
 size = Vector2(72, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xpcdj"]
-atlas = ExtResource("3_xpcdj")
-region = Rect2(0, 64, 96, 64)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_kvjxa"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xpcdj")
-}],
-"loop": 1,
-"name": &"fall",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xpcdj")
-}],
-"loop": 1,
-"name": &"idle",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xpcdj")
-}],
-"loop": 1,
-"name": &"jump",
-"speed": 5.0
-}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kvjxa"]
 size = Vector2(20, 56)
 
-[sub_resource type="Animation" id="Animation_a3d8c"]
-resource_name = "land"
+[sub_resource type="LabelSettings" id="LabelSettings_oikmp"]
+font = ExtResource("11_74mp2")
+font_color = Color(1, 1, 0, 1)
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_xpcdj"]
-_data = {
-&"land": SubResource("Animation_a3d8c")
-}
+[sub_resource type="GDScript" id="GDScript_06tpx"]
+script/source = "extends Label
+
+@export var state_machine: StateMachine
+
+func _process(delta: float) -> void:
+	if state_machine:
+		text = state_machine.get_state_path_name()
+"
 
 [node name="Player" type="CharacterBody2D" unique_id=479796262 groups=["Player"]]
 collision_mask = 4
 script = ExtResource("1_v0iea")
 
-[node name="FishHelper" type="Node2D" parent="." unique_id=1308272739]
+[node name="Visual" type="Node2D" parent="." unique_id=1315353103]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Visual" unique_id=845261753]
+root_node = NodePath("../..")
+libraries/ = SubResource("AnimationLibrary_xpcdj")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Visual" unique_id=1000360803]
+sprite_frames = SubResource("SpriteFrames_kvjxa")
+animation = &"idle"
+frame_progress = 0.45921943
+
+[node name="Fish" type="Node2D" parent="." unique_id=1308272739]
 position = Vector2(-40, 0)
 
-[node name="FishSprite" type="AnimatedSprite2D" parent="FishHelper" unique_id=179344346]
-sprite_frames = SubResource("SpriteFrames_g4v7s")
-flip_h = true
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="FishHelper" unique_id=1213634975]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Fish" unique_id=1213634975]
 libraries/ = SubResource("AnimationLibrary_gk6dx")
 autoplay = &"new_animation"
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Fish" unique_id=179344346]
+sprite_frames = SubResource("SpriteFrames_g4v7s")
+flip_h = true
 
 [node name="HammerTime" type="Node2D" parent="." unique_id=2046948035]
 
@@ -139,15 +191,6 @@ position = Vector2(36, 0)
 scale = Vector2(0.5625, 0.375)
 texture = ExtResource("2_cvnsp")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1000360803]
-sprite_frames = SubResource("SpriteFrames_kvjxa")
-animation = &"jump"
-frame_progress = 0.28426445
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1283723794]
-position = Vector2(0, 4)
-shape = SubResource("RectangleShape2D_kvjxa")
-
 [node name="CoyoteTimer" type="Timer" parent="." unique_id=1677229009]
 wait_time = 0.1
 one_shot = true
@@ -156,7 +199,52 @@ one_shot = true
 wait_time = 0.2
 one_shot = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=845261753]
-libraries/ = SubResource("AnimationLibrary_xpcdj")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1283723794]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_kvjxa")
 
 [node name="JumpSound" type="AudioStreamPlayer" parent="." unique_id=667999448]
+
+[node name="StateMachine" type="Node" parent="." unique_id=827472277 node_paths=PackedStringArray("default_state")]
+script = ExtResource("5_jhyir")
+default_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine" unique_id=1820360236]
+script = ExtResource("6_74mp2")
+metadata/_custom_type_script = "uid://d1piufhpnx5rw"
+
+[node name="Walk" type="Node" parent="StateMachine" unique_id=1959778632]
+script = ExtResource("7_oikmp")
+metadata/_custom_type_script = "uid://d1piufhpnx5rw"
+
+[node name="Jump" type="Node" parent="StateMachine" unique_id=424916849]
+script = ExtResource("8_06tpx")
+metadata/_custom_type_script = "uid://d1piufhpnx5rw"
+
+[node name="Fall" type="Node" parent="StateMachine" unique_id=1521569739]
+script = ExtResource("9_7g0yx")
+metadata/_custom_type_script = "uid://d1piufhpnx5rw"
+
+[node name="Skid" type="Node" parent="StateMachine" unique_id=1304672851]
+script = ExtResource("10_dey5f")
+metadata/_custom_type_script = "uid://d1piufhpnx5rw"
+
+[node name="StateLabel" type="Label" parent="." unique_id=1744306636 node_paths=PackedStringArray("state_machine")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.0
+offset_top = -54.0
+offset_right = 53.0
+offset_bottom = -31.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "[state label]"
+label_settings = SubResource("LabelSettings_oikmp")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = SubResource("GDScript_06tpx")
+state_machine = NodePath("../StateMachine")

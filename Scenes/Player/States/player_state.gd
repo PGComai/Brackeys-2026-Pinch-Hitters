@@ -1,7 +1,7 @@
 class_name PlayerState
 extends State
 
-@onready var player := state_machine.get_parent() as Player
+@onready var player := owner as Player
 
 @warning_ignore("unused_parameter")
 func on_start(msg := {}) -> void:
