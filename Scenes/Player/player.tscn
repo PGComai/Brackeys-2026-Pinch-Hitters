@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dfso14lopsgdp" path="res://icon.svg" id="2_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://bl56jtrqamaw1" path="res://Assets/Sprites/Sweedish_Fish.png" id="2_mtuoh"]
 [ext_resource type="Texture2D" uid="uid://bimoggv1kbnb7" path="res://Assets/Sprites/Main_Character_Sheet.png" id="3_xpcdj"]
+[ext_resource type="PackedScene" uid="uid://dhag7tgyi27al" path="res://new-level-format/camera_boundary_detector.tscn" id="5_htcer"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_htcer"]
 atlas = ExtResource("2_mtuoh")
@@ -161,10 +162,5 @@ libraries/ = SubResource("AnimationLibrary_xpcdj")
 
 [node name="JumpSound" type="AudioStreamPlayer" parent="." unique_id=667999448]
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1604666281]
-limit_left = 0
-limit_top = 0
-limit_right = 1472
-limit_bottom = 352
-position_smoothing_enabled = true
-position_smoothing_speed = 8.0
+[node name="CameraBoundaryDetector" parent="." unique_id=1729657486 node_paths=PackedStringArray("player") instance=ExtResource("5_htcer")]
+player = NodePath("..")

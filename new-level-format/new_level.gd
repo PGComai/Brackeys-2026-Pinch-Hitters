@@ -10,6 +10,7 @@ const DEFAULT_PLAYER_SPAWN := Vector2(104.0, 256.0)
 
 
 var player: Player
+var camera_man := CameraMan.new()
 
 
 func _ready() -> void:
@@ -23,3 +24,5 @@ func spawn_player() -> void:
 		player.global_position = player_spawn.global_position
 	else:
 		player.global_position = DEFAULT_PLAYER_SPAWN
+	add_child(camera_man)
+	player.camera_man = camera_man

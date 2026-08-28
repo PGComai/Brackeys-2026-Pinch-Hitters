@@ -8,7 +8,7 @@ const PHYSICS_LAYER: int = 6
 const PHYSICS_MASK: int = 6
 
 
-@export var size_override := Vector2(640.0, 352.0):
+@export var size_override := DEFAULT_RECT_SIZE:
 	set(value):
 		if size_override != value:
 			size_override = value
@@ -43,7 +43,7 @@ func _enter_tree() -> void:
 		collision_shape = CollisionShape2D.new()
 		rect_shape = RectangleShape2D.new()
 	add_child(collision_shape)
-	rect_shape.size = DEFAULT_RECT_SIZE
+	rect_shape.size = size_override
 	collision_shape.shape = rect_shape
 
 
