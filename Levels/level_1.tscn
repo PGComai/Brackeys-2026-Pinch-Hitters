@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://buvdkp3gc6t3a" path="res://Scenes/Player/player.tscn" id="1_n0qsc"]
 [ext_resource type="Script" uid="uid://lr7h2egw54pn" path="res://Levels/level.gd" id="1_syshm"]
-[ext_resource type="PackedScene" uid="uid://coh24671bqrt1" path="res://Scenes/enemy_mouse.tscn" id="2_dilhk"]
+[ext_resource type="PackedScene" uid="uid://coh24671bqrt1" path="res://Scenes/Enemies/enemy_mouse.tscn" id="2_dilhk"]
 [ext_resource type="TileSet" uid="uid://b0bpeg1j8o6y5" path="res://level-gen-testing/gen_tileset.tres" id="2_f4pg2"]
 [ext_resource type="Texture2D" uid="uid://dfso14lopsgdp" path="res://icon.svg" id="3_3mhv4"]
 [ext_resource type="TileSet" uid="uid://darw0lk61gky0" path="res://level-gen-testing/gen_tileset_16.tres" id="3_62b6n"]
