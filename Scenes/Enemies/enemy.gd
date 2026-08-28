@@ -45,7 +45,8 @@ var stars: Node2D
 
 func _ready() -> void:
 	stars = STUN_STARS.instantiate()
-	#stars.visible = false
+	add_child(stars)
+	stars.visible = false
 	stars.position.y = -45
 	hp = max_hp
 	add_to_group("hittable")
