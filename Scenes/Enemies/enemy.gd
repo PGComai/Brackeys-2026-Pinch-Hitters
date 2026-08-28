@@ -1,6 +1,8 @@
 class_name Enemy
 extends CharacterBody2D
 
+const STUN_STARS = preload("uid://m32ggmldw4rb")
+
 const COLLIDER_SIZE: Vector2 = Vector2(60.0, 57.0)
 const COLLIDER_OFFSET: Vector2 = Vector2(0.0, 1.5)
 const COLLIDER_SIZE_HURTBOX: Vector2 = Vector2(56.0, 54.0)
@@ -38,9 +40,13 @@ var can_damage: bool = false
 var touch_timer: float = 0.0
 var bubble_timer: float = 0.0
 var stun_timer: float = 0.0
+var stars: Node2D
 
 
 func _ready() -> void:
+	stars = STUN_STARS.instantiate()
+	#stars.visible = false
+	stars.position.y = -45
 	hp = max_hp
 	add_to_group("hittable")
 	motion_mode = CharacterBody2D.MOTION_MODE_GROUNDED
@@ -76,7 +82,8 @@ func _physics_process(delta: float) -> void:
 		EnemyStateEnum.STUNNED:
 			stun_timer -= delta
 			if stun_timer < 0:
-				state = EnemyStateEnum.PATROL
+				EnemyStateEnum.PATROL
+				stars.visible = false
 
 	if state != EnemyStateEnum.BUBBLED:
 		check_hurtbox_overlaps()
@@ -96,14 +103,14 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 	if body is Player:
 		if body.velocity.y > 0.01:
 			stun()
-			body.velocity.y = -abs(body.velocity.y)
+			body.velocity.y = -abs(body.velocity.y) - 2
 		else:
 			try_damage_player(body)
 
 func stun():
 	state = EnemyStateEnum.STUNNED
 	stun_timer = 5.0
-	modulate = Color.YELLOW
+	stars.visible = true
 
 func try_damage_player(player: Player) -> void:
 	if touch_timer > 0.0 or state == EnemyStateEnum.STUNNED:
