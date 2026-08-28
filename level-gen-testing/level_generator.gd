@@ -22,3 +22,19 @@ func _ready() -> void:
 	tilemap_layer.tile_set = GEN_TILESET
 	add_child(tilemap_layer_16)
 	tilemap_layer_16.tile_set = GEN_TILESET_16
+
+
+#func build() -> void:
+	#clear()
+	#var terrain_zone: Array[Vector2i] = []
+	#for x: int in map_size.x:
+		#for y: int in map_size.y:
+			#var nval: float = map_noise.get_noise_2d(x, y)
+			#if nval > map_noise_threshold:
+				#set_cell(Vector2i(x, y), 0, Vector2i(0, 0))
+				#terrain_zone.append(Vector2i(x, y))
+			#else:
+				#set_cell(Vector2i(x, y), 0, Vector2i(0, 4))
+	#set_cells_terrain_connect(terrain_zone, 0, 0, false)
+	#camera_2d.position = gps(map_size / 2)
+	#cam_pos_target = camera_2d.position
