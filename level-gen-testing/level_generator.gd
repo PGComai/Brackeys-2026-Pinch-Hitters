@@ -12,9 +12,12 @@ var gen_seed: int = 0
 var difficulty_factor: float = 1.0
 var tilemap_layer := TileMapLayer.new()
 var tilemap_layer_16 := TileMapLayer.new()
+var level_rng := RandomNumberGenerator.new()
 
 
 func _ready() -> void:
+	level_rng.seed = hash(gen_seed)
+	
 	add_child(tilemap_layer)
 	tilemap_layer.tile_set = GEN_TILESET
 	add_child(tilemap_layer_16)
