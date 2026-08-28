@@ -1,7 +1,7 @@
 class_name Player
 extends CharacterBody2D
 
-@export var gravity: float = 250.0
+@export var gravity: float = 500.0
 @export var inverted = false
 
 @export var on_the_space_level = false
@@ -12,7 +12,7 @@ var hp = 5
 @export var acceleration: float = 800.0
 @export var friction: float = 1200.0
 @export var air_friction: float = 80.0
-const JUMP_VELOCITY = -200
+const JUMP_VELOCITY = -300
 const JUMP_CUT = 2.5
 const SHOOT_COOLDOWN = 0.5
 

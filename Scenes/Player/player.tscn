@@ -3,7 +3,8 @@
 [ext_resource type="Script" uid="uid://cgtppruwdu8nx" path="res://Scenes/Player/player.gd" id="1_v0iea"]
 [ext_resource type="Texture2D" uid="uid://dfso14lopsgdp" path="res://icon.svg" id="2_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://bl56jtrqamaw1" path="res://Assets/Sprites/Sweedish_Fish.png" id="2_mtuoh"]
-[ext_resource type="Texture2D" uid="uid://bimoggv1kbnb7" path="res://Assets/Sprites/Main_Character_Sheet.png" id="3_xpcdj"]
+[ext_resource type="Texture2D" uid="uid://dwg2p1472bmf8" path="res://Assets/Sprites/PlayerWalk.png" id="2_oikmp"]
+[ext_resource type="Texture2D" uid="uid://bimoggv1kbnb7" path="res://Assets/Sprites/PlayerIdle.png" id="3_xpcdj"]
 [ext_resource type="Script" uid="uid://drr22sgdamrsa" path="res://Scripts/Types/state_machine.gd" id="5_jhyir"]
 [ext_resource type="Script" uid="uid://bt708i1ai5oab" path="res://Scenes/Player/States/idle.gd" id="6_74mp2"]
 [ext_resource type="Script" uid="uid://tn15ujhpor8g" path="res://Scenes/Player/States/walk.gd" id="7_oikmp"]
@@ -12,26 +13,180 @@
 [ext_resource type="Script" uid="uid://bw80gp1gu7x6j" path="res://Scenes/Player/States/skid.gd" id="10_dey5f"]
 [ext_resource type="FontFile" uid="uid://boxvhat0jgchp" path="res://Assets/Fonts/alagard.ttf" id="11_74mp2"]
 
+[sub_resource type="Animation" id="Animation_dey5f"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
 [sub_resource type="Animation" id="Animation_jhyir"]
 resource_name = "fall"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"fall"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
 
 [sub_resource type="Animation" id="Animation_7g0yx"]
 resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
 [sub_resource type="Animation" id="Animation_74mp2"]
 resource_name = "jump"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"jump"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
 [sub_resource type="Animation" id="Animation_a3d8c"]
 resource_name = "land"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
 [sub_resource type="Animation" id="Animation_oikmp"]
 resource_name = "skid"
 
 [sub_resource type="Animation" id="Animation_06tpx"]
 resource_name = "walk"
+length = 0.8
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"walk"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 1]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xpcdj"]
 _data = {
+&"RESET": SubResource("Animation_dey5f"),
 &"fall": SubResource("Animation_jhyir"),
 &"idle": SubResource("Animation_7g0yx"),
 &"jump": SubResource("Animation_74mp2"),
@@ -40,15 +195,42 @@ _data = {
 &"walk": SubResource("Animation_06tpx")
 }
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_oikmp"]
+atlas = ExtResource("2_oikmp")
+region = Rect2(54, 0, 54, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_06tpx"]
+atlas = ExtResource("2_oikmp")
+region = Rect2(108, 0, 54, 62)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_xpcdj"]
 atlas = ExtResource("3_xpcdj")
 region = Rect2(0, 64, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7g0yx"]
+atlas = ExtResource("2_oikmp")
+region = Rect2(0, 0, 54, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dey5f"]
+atlas = ExtResource("2_oikmp")
+region = Rect2(0, 0, 54, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r5xpd"]
+atlas = ExtResource("2_oikmp")
+region = Rect2(54, 0, 54, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ks1b7"]
+atlas = ExtResource("2_oikmp")
+region = Rect2(108, 0, 54, 62)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_kvjxa"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_xpcdj")
+"texture": SubResource("AtlasTexture_oikmp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_06tpx")
 }],
 "loop": true,
 "name": &"fall",
@@ -64,10 +246,24 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_xpcdj")
+"texture": SubResource("AtlasTexture_7g0yx")
 }],
 "loop": true,
 "name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dey5f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r5xpd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ks1b7")
+}],
+"loop": true,
+"name": &"walk",
 "speed": 5.0
 }]
 
@@ -163,7 +359,6 @@ libraries/ = SubResource("AnimationLibrary_xpcdj")
 [node name="Sprite" type="AnimatedSprite2D" parent="Visual" unique_id=1000360803]
 sprite_frames = SubResource("SpriteFrames_kvjxa")
 animation = &"idle"
-frame_progress = 0.45921943
 
 [node name="Fish" type="Node2D" parent="." unique_id=1308272739]
 position = Vector2(-40, 0)
@@ -187,6 +382,7 @@ shape = SubResource("RectangleShape2D_1ndb7")
 debug_color = Color(0.9878606, 0, 0.31348816, 0.41960785)
 
 [node name="Icon" type="Sprite2D" parent="HammerTime/HammerHitbox" unique_id=1994683769]
+visible = false
 position = Vector2(36, 0)
 scale = Vector2(0.5625, 0.375)
 texture = ExtResource("2_cvnsp")

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bimoggv1kbnb7"
-path="res://.godot/imported/Main_Character_Sheet.png-07abd40b9344b6d02fc3b6e66670c1d0.ctex"
+path="res://.godot/imported/PlayerIdle.png-c2d6fe26045d700d579ad32d80b40317.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Main_Character_Sheet.png"
-dest_files=["res://.godot/imported/Main_Character_Sheet.png-07abd40b9344b6d02fc3b6e66670c1d0.ctex"]
+source_file="res://Assets/Sprites/PlayerIdle.png"
+dest_files=["res://.godot/imported/PlayerIdle.png-c2d6fe26045d700d579ad32d80b40317.ctex"]
 
 [params]
 
