@@ -6,18 +6,13 @@
 [ext_resource type="TileSet" uid="uid://b0bpeg1j8o6y5" path="res://level-gen-testing/gen_tileset.tres" id="2_f4pg2"]
 [ext_resource type="Texture2D" uid="uid://dfso14lopsgdp" path="res://icon.svg" id="3_3mhv4"]
 [ext_resource type="TileSet" uid="uid://darw0lk61gky0" path="res://level-gen-testing/gen_tileset_16.tres" id="3_62b6n"]
-[ext_resource type="Shader" uid="uid://b0trosxtwv6cs" path="res://Scenes/transition.gdshader" id="6_0urlm"]
 [ext_resource type="PackedScene" uid="uid://immhh8kc3bfh" path="res://Dialogues/interactable.tscn" id="6_rfktq"]
+[ext_resource type="Material" uid="uid://08cwywbch6c2" path="res://neat_shader_material.tres" id="7_f4pg2"]
 [ext_resource type="PackedScene" uid="uid://dsb6purr30obl" path="res://Scenes/chest.tscn" id="8_77x7w"]
 [ext_resource type="PackedScene" uid="uid://tee0qdvvv8wu" path="res://Scenes/shroom_item.tscn" id="9_xoyoh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n0qsc"]
 size = Vector2(16, 16)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_g4v7s"]
-shader = ExtResource("6_0urlm")
-shader_parameter/progress = 0.0
-shader_parameter/diamondPixelSize = 32.0000014725
 
 [sub_resource type="Animation" id="Animation_77x7w"]
 length = 0.001
@@ -112,7 +107,7 @@ texture = ExtResource("3_3mhv4")
 process_mode = 3
 
 [node name="ColorRect" type="ColorRect" parent="UserInterface" unique_id=160836238]
-material = SubResource("ShaderMaterial_g4v7s")
+material = ExtResource("7_f4pg2")
 offset_right = 640.0
 offset_bottom = 352.0
 color = Color(0, 0, 0, 1)

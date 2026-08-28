@@ -3,7 +3,11 @@ class_name MainScene
 
 
 const NEW_LEVEL_1 = preload("uid://dpdin1o3kge0t")
-const LEVELS: Array[PackedScene] = [NEW_LEVEL_1, ]
+const NEW_LEVEL_2 = preload("uid://ddjoiwjg48q85")
+const LEVELS: Array[PackedScene] = [
+									NEW_LEVEL_1,
+									NEW_LEVEL_2,
+									]
 
 
 var current_level_idx: int = 0:
@@ -17,14 +21,14 @@ func _ready() -> void:
 
 
 func unload_current_level() -> void:
+	current_level_scene.end_reached.disconnect(_on_current_level_end_reached)
 	current_level_scene.queue_free()
 
 
 func load_level() -> void:
-	#if this throws errors after unload_current_level, maybe uncomment this
-	#await get_tree().process_frame
-	var level_to_load: NewLevel = LEVELS[current_level_idx].instantiate()
-	add_child(level_to_load)
+	current_level_scene = LEVELS[current_level_idx].instantiate()
+	add_child(current_level_scene)
+	current_level_scene.end_reached.connect(_on_current_level_end_reached)
 
 
 func increment_level_idx() -> bool:
@@ -34,7 +38,31 @@ func increment_level_idx() -> bool:
 	return true
 
 
+func handle_level_transition() -> void:
+	await get_tree().process_frame
+	var tween := get_tree().create_tween()
+	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	
+	get_tree().paused = true
+	
+	tween.tween_property(%ColorRectTransition, "instance_shader_parameters/progress", 1.0, 0.5).set_trans(Tween.TRANS_CUBIC)
+	
+	await tween.finished
+	
+	unload_current_level()
+	print("transition unloaded level")
+	
+	load_level()
+	print("transition loaded level")
+	
+	get_tree().paused = false
+	tween = get_tree().create_tween()
+	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	
+	tween.tween_property(%ColorRectTransition, "instance_shader_parameters/progress", 0.0, 0.5).set_trans(Tween.TRANS_CUBIC)
+	
+
+
 func _on_current_level_end_reached() -> void:
 	if increment_level_idx():
-		unload_current_level()
-		load_level()
+		handle_level_transition()

@@ -1,8 +1,19 @@
 [gd_scene format=3 uid="uid://cktbbgflq4ywj"]
 
 [ext_resource type="Script" uid="uid://dlmt6mj1pw44k" path="res://main_scene.gd" id="1_gvisc"]
+[ext_resource type="Material" uid="uid://08cwywbch6c2" path="res://neat_shader_material.tres" id="2_2c62f"]
 
 [node name="MainScene" type="Node2D" unique_id=208061159]
+process_mode = 3
 script = ExtResource("1_gvisc")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1247994403]
+process_mode = 3
+
+[node name="ColorRectTransition" type="ColorRect" parent="CanvasLayer" unique_id=592804253]
+unique_name_in_owner = true
+material = ExtResource("2_2c62f")
+instance_shader_parameters/progress = 0.0
+offset_right = 640.0
+offset_bottom = 352.0
+color = Color(0, 0, 0, 1)
