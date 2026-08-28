@@ -2,7 +2,8 @@ class_name Enemy
 extends CharacterBody2D
 
 const STUN_STARS = preload("uid://m32ggmldw4rb")
-
+#const STAR_OFFSET_Y = -12
+#const STAR_
 const COLLIDER_SIZE: Vector2 = Vector2(60.0, 57.0)
 const COLLIDER_OFFSET: Vector2 = Vector2(0.0, 1.5)
 const COLLIDER_SIZE_HURTBOX: Vector2 = Vector2(56.0, 54.0)
@@ -45,9 +46,10 @@ var stars: Node2D
 
 func _ready() -> void:
 	stars = STUN_STARS.instantiate()
-	add_child(stars)
+	sprite.add_child(stars)
 	stars.visible = false
 	stars.position.y = -45
+	stars.position.x = -12
 	hp = max_hp
 	add_to_group("hittable")
 	motion_mode = CharacterBody2D.MOTION_MODE_GROUNDED
@@ -75,7 +77,7 @@ func _physics_process(delta: float) -> void:
 			move_and_slide()
 			if is_on_wall() or (is_on_floor() and not sees_ground_ahead()):
 				direction *= -1
-				sprite.flip_h = direction < 0
+				sprite.scale.x *= -1
 		EnemyStateEnum.PROJECTILE:
 			move_projectile(delta)
 		EnemyStateEnum.BUBBLED:
