@@ -25,6 +25,7 @@ func _on_body_entered(body: Node2D) -> void:
 			asp.bus = &"SFX"
 			asp.autoplay = true
 			add_sibling(asp)
+			asp.finished.connect(asp.queue_free)
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:

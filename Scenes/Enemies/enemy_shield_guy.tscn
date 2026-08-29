@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://fac3sonbjr15"]
 
 [ext_resource type="Script" uid="uid://cnoeu6e0s6fat" path="res://Scenes/Enemies/enemy_shield_guy.gd" id="1_n5wax"]
+[ext_resource type="AudioStream" uid="uid://dwhhsgo60kook" path="res://Assets/Sound/Stun.ogg" id="2_k8cv1"]
 [ext_resource type="Texture2D" uid="uid://doub6jtnb8eqq" path="res://Assets/Sprites/shield-guy.png" id="2_n5wax"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k8cv1"]
@@ -45,6 +46,7 @@ script = ExtResource("1_n5wax")
 sprite = NodePath("AnimatedSprite2D")
 wall_ray_cast = NodePath("RayCast2D")
 hurtbox = NodePath("Hurtbox")
+stun_sound = ExtResource("2_k8cv1")
 metadata/_custom_type_script = "uid://r1ln74rer63n"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=853599883]

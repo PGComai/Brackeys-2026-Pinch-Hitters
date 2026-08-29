@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://r1ln74rer63n" path="res://Scenes/Enemies/enemy.gd" id="1_nvjdi"]
 [ext_resource type="Texture2D" uid="uid://t08vpsmx1h20" path="res://Assets/Sprites/TheGuy.png" id="2_e848x"]
+[ext_resource type="AudioStream" uid="uid://dwhhsgo60kook" path="res://Assets/Sound/Stun.ogg" id="2_nknt7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kvjxa"]
 size = Vector2(60, 57)
@@ -27,6 +28,7 @@ script = ExtResource("1_nvjdi")
 sprite = NodePath("AnimatedSprite2D")
 wall_ray_cast = NodePath("WallRayCast")
 hurtbox = NodePath("Hurtbox")
+stun_sound = ExtResource("2_nknt7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1639327769]
 position = Vector2(0, 1.5)
