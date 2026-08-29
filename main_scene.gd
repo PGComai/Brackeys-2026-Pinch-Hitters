@@ -19,6 +19,7 @@ var level_transitioning_flag := false
 
 func _ready() -> void:
 	load_level()
+	user_unpause()
 
 
 func _unhandled_input(event: InputEvent) -> void:
