@@ -373,7 +373,7 @@ func try_bounce() -> bool:
 	if velocity.y > 0.01:
 		velocity.y = -abs(velocity.y) - 2
 		if is_jump_pressed():
-			velocity.y += JUMP_VELOCITY / 2
+			velocity.y += JUMP_VELOCITY / 2.0
 		state_machine.change_state("Jump")
 		return true
 	return false
