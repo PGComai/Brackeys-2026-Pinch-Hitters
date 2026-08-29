@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bl56jtrqamaw1" path="res://Assets/Sprites/Sweedish_Fish.png" id="2_mtuoh"]
 [ext_resource type="Texture2D" uid="uid://dwg2p1472bmf8" path="res://Assets/Sprites/PlayerWalk.png" id="2_oikmp"]
 [ext_resource type="Texture2D" uid="uid://bimoggv1kbnb7" path="res://Assets/Sprites/PlayerIdle.png" id="3_xpcdj"]
+[ext_resource type="PackedScene" uid="uid://dhag7tgyi27al" path="res://new-level-format/camera_boundary_detector.tscn" id="5_htcer"]
 [ext_resource type="Script" uid="uid://drr22sgdamrsa" path="res://Scripts/Types/state_machine.gd" id="5_jhyir"]
 [ext_resource type="Script" uid="uid://bt708i1ai5oab" path="res://Scenes/Player/States/idle.gd" id="6_74mp2"]
 [ext_resource type="Script" uid="uid://tn15ujhpor8g" path="res://Scenes/Player/States/walk.gd" id="7_oikmp"]
@@ -446,3 +447,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 script = SubResource("GDScript_06tpx")
 state_machine = NodePath("../StateMachine")
+
+[node name="CameraBoundaryDetector" parent="." unique_id=1729657486 node_paths=PackedStringArray("player") instance=ExtResource("5_htcer")]
+player = NodePath("..")

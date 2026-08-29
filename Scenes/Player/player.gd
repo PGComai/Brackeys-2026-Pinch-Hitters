@@ -63,6 +63,10 @@ var blink_timer: float = 0.0
 var blink_tween: Tween
 var hitstop_active: bool = false
 var shoot_timer = 0.0
+
+var camera_man: CameraMan
+
+
 func _ready() -> void:
 	was_on_floor = is_on_floor()
 	
