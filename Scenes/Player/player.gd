@@ -37,8 +37,6 @@ const NO_AIM = -999.0
 
 @onready var anim_player: AnimationPlayer = $Visual/AnimationPlayer
 
-@onready var jump_sound: AudioStreamPlayer = $JumpSound
-
 const LANDPARTICLES = preload("res://Scenes/Player/land_particles.tscn")
 const PROJBUBBLE = preload("res://Scenes/Player/proj_bubble.tscn")
 
