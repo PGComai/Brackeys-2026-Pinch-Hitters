@@ -7,6 +7,8 @@ var destroyed = false
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
+@export var pop_sound: AudioStream
+
 func _physics_process(delta: float) -> void:
 	if destroyed:
 		return
@@ -17,6 +19,12 @@ func _on_body_entered(body: Node2D) -> void:
 	if body.has_method("bubble"):
 		body.bubble()
 		animation_player.play("new_animation_2")
+		if pop_sound:
+			var asp := AudioStreamPlayer.new()
+			asp.stream = pop_sound
+			asp.bus = &"SFX"
+			asp.autoplay = true
+			add_sibling(asp)
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:

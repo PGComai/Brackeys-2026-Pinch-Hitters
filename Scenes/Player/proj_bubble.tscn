@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dtfbcpqsrnigp" path="res://Scenes/Player/proj_bubble.gd" id="1_bspqj"]
 [ext_resource type="Texture2D" uid="uid://qbe2gy8dfnfp" path="res://Assets/Sprites/Bubble.png" id="2_0kavp"]
+[ext_resource type="AudioStream" uid="uid://b6rsdkhvr5ie3" path="res://Assets/Sound/BubblePop.ogg" id="2_qlu11"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_g4v7s"]
 animations = [{
@@ -111,6 +112,7 @@ _data = {
 [node name="ProjBubble" type="Area2D" unique_id=1635916461]
 collision_mask = 2
 script = ExtResource("1_bspqj")
+pop_sound = ExtResource("2_qlu11")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2117780262]
 sprite_frames = SubResource("SpriteFrames_g4v7s")
