@@ -2,10 +2,14 @@
 
 [ext_resource type="Script" uid="uid://cnoeu6e0s6fat" path="res://Scenes/Enemies/enemy_shield_guy.gd" id="1_n5wax"]
 [ext_resource type="AudioStream" uid="uid://dwhhsgo60kook" path="res://Assets/Sound/Stun.ogg" id="2_k8cv1"]
-[ext_resource type="Texture2D" uid="uid://doub6jtnb8eqq" path="res://Assets/Sprites/shield-guy.png" id="2_n5wax"]
+[ext_resource type="Texture2D" uid="uid://doub6jtnb8eqq" path="res://Assets/Sprites/ShieldDogWalk.png" id="2_n5wax"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k8cv1"]
 size = Vector2(60, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k8cv1"]
+atlas = ExtResource("2_n5wax")
+region = Rect2(81, 0, 81, 65)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_svo0c"]
 atlas = ExtResource("2_n5wax")
@@ -23,6 +27,14 @@ region = Rect2(162, 0, 81, 65)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_k8cv1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_svo0c")
 }, {
 "duration": 1.0,
@@ -30,9 +42,12 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_g0dl2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lccqb")
 }],
 "loop": true,
-"name": &"default",
+"name": &"walk",
 "speed": 5.0
 }]
 
@@ -43,7 +58,7 @@ size = Vector2(50, 50)
 collision_layer = 2
 collision_mask = 4
 script = ExtResource("1_n5wax")
-sprite = NodePath("AnimatedSprite2D")
+sprite = NodePath("Sprite")
 wall_ray_cast = NodePath("RayCast2D")
 hurtbox = NodePath("Hurtbox")
 stun_sound = ExtResource("2_k8cv1")
@@ -52,10 +67,10 @@ metadata/_custom_type_script = "uid://r1ln74rer63n"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=853599883]
 shape = SubResource("RectangleShape2D_k8cv1")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1750618877]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1750618877]
 sprite_frames = SubResource("SpriteFrames_4pctr")
-frame = 2
-frame_progress = 0.44422027
+animation = &"walk"
+autoplay = "idle"
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=1917083261]
 collision_layer = 2
@@ -65,3 +80,5 @@ shape = SubResource("RectangleShape2D_5o0rc")
 
 [node name="RayCast2D" type="RayCast2D" parent="." unique_id=838677732]
 target_position = Vector2(8, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1367958299]

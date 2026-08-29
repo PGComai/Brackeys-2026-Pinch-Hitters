@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://coh24671bqrt1"]
 
 [ext_resource type="Script" uid="uid://r1ln74rer63n" path="res://Scenes/Enemies/enemy.gd" id="1_nvjdi"]
-[ext_resource type="Texture2D" uid="uid://t08vpsmx1h20" path="res://Assets/Sprites/TheGuy.png" id="2_e848x"]
+[ext_resource type="Texture2D" uid="uid://t08vpsmx1h20" path="res://Assets/Sprites/SwordDogIdle.png" id="2_e848x"]
 [ext_resource type="AudioStream" uid="uid://dwhhsgo60kook" path="res://Assets/Sound/Stun.ogg" id="2_nknt7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kvjxa"]
