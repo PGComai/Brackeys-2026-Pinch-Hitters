@@ -110,29 +110,29 @@ func set_sound_vol(value: float) -> void:
 
 	save_settings()
 
-func _input(event: InputEvent) -> void:
-	if OS.has_feature("pc"):
-		if Input.is_action_just_pressed("F1"):
-			set_scale(scale.ONE)
-
-		elif Input.is_action_just_pressed("F2"):
-			set_scale(scale.TWO)
-
-		elif Input.is_action_just_pressed("F3"):
-			set_scale(scale.THREE)
-
-		elif Input.is_action_just_pressed("F4"):
-			if current_scale == scale.FULLSCREEN:
-				set_scale(scale.THREE)
-			else:
-				set_scale(scale.FULLSCREEN)
-
-	if OS.has_feature("web"):
-		if Input.is_action_just_pressed("F4"):
-			if current_scale == scale.FULLSCREEN:
-				set_scale(scale.THREE)
-			else:
-				set_scale(scale.FULLSCREEN)
-
-	if Input.is_action_just_pressed("PixelPerfect"):
-		set_pixel_perfect(!pixel_perfect)
+#func _input(event: InputEvent) -> void:
+	#if OS.has_feature("pc"):
+		#if Input.is_action_just_pressed("F1"):
+			#set_scale(scale.ONE)
+#
+		#elif Input.is_action_just_pressed("F2"):
+			#set_scale(scale.TWO)
+#
+		#elif Input.is_action_just_pressed("F3"):
+			#set_scale(scale.THREE)
+#
+		#elif Input.is_action_just_pressed("F4"):
+			#if current_scale == scale.FULLSCREEN:
+				#set_scale(scale.THREE)
+			#else:
+				#set_scale(scale.FULLSCREEN)
+#
+	#if OS.has_feature("web"):
+		#if Input.is_action_just_pressed("F4"):
+			#if current_scale == scale.FULLSCREEN:
+				#set_scale(scale.THREE)
+			#else:
+				#set_scale(scale.FULLSCREEN)
+#
+	#if Input.is_action_just_pressed("PixelPerfect"):
+		#set_pixel_perfect(!pixel_perfect)
