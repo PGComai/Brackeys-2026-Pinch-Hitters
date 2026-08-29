@@ -4,7 +4,6 @@ class_name PauseMenu
 
 signal resume_requested
 signal reset_requested
-signal quit_requested
 
 
 func activate() -> void:
@@ -22,7 +21,3 @@ func _on_button_resume_pressed() -> void:
 
 func _on_button_reset_pressed() -> void:
 	reset_requested.emit()
-
-
-func _on_button_quit_pressed() -> void:
-	quit_requested.emit()
