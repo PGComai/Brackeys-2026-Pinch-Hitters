@@ -1,7 +1,5 @@
 extends PlayerState
 
-@export var cancel_ray: RayCast2D
-
 func on_start(_msg := {}) -> void:
 	player.play_animation("climb_idle")
 
@@ -12,8 +10,8 @@ func physics_update(delta: float) -> void:
 	# no accel/velocity while climbing
 	player.velocity = Vector2.ZERO
 	
-	if not player.can_climb() or (cancel_ray and cancel_ray.is_colliding() and not Input.is_action_pressed(&"Up")):
-		state_machine.change_state("Fall")
+	if not player.can_climb() or (player.is_on_floor() and not Input.is_action_pressed(&"Up")):
+		state_machine.change_state("Idle")
 		return
 
 	if not dir.is_zero_approx():
