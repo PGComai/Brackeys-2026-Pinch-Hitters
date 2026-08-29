@@ -20,6 +20,7 @@
 [ext_resource type="Script" uid="uid://cic4xb685wwbi" path="res://Scenes/Player/States/jump.gd" id="8_06tpx"]
 [ext_resource type="Script" uid="uid://ywmnrtc18s1u" path="res://Scenes/Player/States/fall.gd" id="9_7g0yx"]
 [ext_resource type="Script" uid="uid://bw80gp1gu7x6j" path="res://Scenes/Player/States/skid.gd" id="10_dey5f"]
+[ext_resource type="AudioStream" uid="uid://db80g0j06mki4" path="res://Assets/Sound/Bubble.ogg" id="13_eksi1"]
 [ext_resource type="Script" uid="uid://btfq75au1qwa6" path="res://Scenes/Player/States/climb.gd" id="15_ks1b7"]
 
 [sub_resource type="Animation" id="Animation_dey5f"]
@@ -568,7 +569,7 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_jlvik"]
-resource_name = "new_animation"
+resource_name = "default"
 loop_mode = 2
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -586,28 +587,36 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gk6dx"]
 _data = {
 &"RESET": SubResource("Animation_0u5uq"),
-&"new_animation": SubResource("Animation_jlvik")
+&"default": SubResource("Animation_jlvik")
 }
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_htcer"]
-atlas = ExtResource("2_mtuoh")
-region = Rect2(0, 0, 36, 30)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dd0ac"]
 atlas = ExtResource("2_mtuoh")
 region = Rect2(0, 30, 36, 30)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_htcer"]
+atlas = ExtResource("2_mtuoh")
+region = Rect2(0, 0, 36, 30)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_g4v7s"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_htcer")
+"texture": SubResource("AtlasTexture_dd0ac")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_dd0ac")
+"texture": SubResource("AtlasTexture_htcer")
+}],
+"loop": false,
+"name": &"fire",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_htcer")
 }],
 "loop": true,
-"name": &"default",
+"name": &"idle",
 "speed": 5.0
 }]
 
@@ -639,13 +648,18 @@ position = Vector2(-40, 0)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Fish" unique_id=1213634975]
 libraries/ = SubResource("AnimationLibrary_gk6dx")
-autoplay = &"new_animation"
+autoplay = &"default"
 
 [node name="Sprite" type="AnimatedSprite2D" parent="Fish" unique_id=179344346]
 sprite_frames = SubResource("SpriteFrames_g4v7s")
+animation = &"fire"
+autoplay = "idle"
 frame = 1
-frame_progress = 0.70940226
+frame_progress = 1.0
 flip_h = true
+
+[node name="BubbleSFX" type="AudioStreamPlayer" parent="Fish" unique_id=1315821382]
+stream = ExtResource("13_eksi1")
 
 [node name="HammerTime" type="Node2D" parent="." unique_id=2046948035]
 
@@ -722,3 +736,6 @@ target_position = Vector2(0, 5)
 collision_mask = 4
 
 [node name="SFXPlayer" type="AudioStreamPlayer" parent="." unique_id=2024949468]
+
+[node name="AudioListener2D" type="AudioListener2D" parent="." unique_id=699910672]
+current = true

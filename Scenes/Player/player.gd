@@ -33,6 +33,7 @@ const NO_AIM = -999.0
 @onready var sprite: AnimatedSprite2D = $Visual/Sprite
 @onready var fish: Node2D = $Fish
 @onready var fish_sprite: AnimatedSprite2D = $Fish/Sprite
+@onready var bubble_sfx: AudioStreamPlayer = $Fish/BubbleSFX
 
 @onready var anim_player: AnimationPlayer = $Visual/AnimationPlayer
 
@@ -91,11 +92,8 @@ func _process(delta: float) -> void:
 
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_pressed("Bubble") and shoot_timer <= 0.0:
-		fish_sprite.frame = 1
 		shoot_timer = SHOOT_COOLDOWN
 		fisshe_bubble(-1 if visual.scale.x < 0 else 1)
-	else:
-		fish_sprite.frame = 0
 	#if Input.is_action_just_pressed("Restart"):
 	#	get_tree().reload_current_scene()
 	if not has_hammer:
@@ -318,6 +316,8 @@ func fisshe_bubble(direction):
 	bubble.z_index = z_index + 1
 	bubble.global_position = fish.global_position
 	bubble.global_position.y = fish.global_position.y - 6
+	fish_sprite.play("fire")
+	bubble_sfx.play()
 
 
 func fisshe_animate():
