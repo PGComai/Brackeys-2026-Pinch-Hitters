@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dlmt6mj1pw44k" path="res://main_scene.gd" id="1_gvisc"]
 [ext_resource type="Material" uid="uid://08cwywbch6c2" path="res://neat_shader_material.tres" id="2_2c62f"]
+[ext_resource type="PackedScene" uid="uid://d12p3fr2awrpp" path="res://ui/ControlHint.tscn" id="3_gyfs4"]
+[ext_resource type="Script" uid="uid://cp2x7dbr3w1mf" path="res://ui/pause_menu.gd" id="4_d5x1h"]
 
 [node name="MainScene" type="Node2D" unique_id=208061159]
 process_mode = 3
@@ -17,3 +19,90 @@ instance_shader_parameters/progress = 0.0
 offset_right = 640.0
 offset_bottom = 352.0
 color = Color(0, 0, 0, 1)
+
+[node name="UI" type="Control" parent="CanvasLayer" unique_id=518810606]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Controls" type="Control" parent="CanvasLayer/UI" unique_id=1733481755]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="ControlHintJump" parent="CanvasLayer/UI/Controls" unique_id=175961706 instance=ExtResource("3_gyfs4")]
+layout_mode = 1
+offset_left = -283.0
+offset_top = -24.0
+offset_right = -199.0
+offset_bottom = 1.0
+key_text = "Z"
+action_text = "Jump"
+
+[node name="ControlHintAttack" parent="CanvasLayer/UI/Controls" unique_id=676938116 instance=ExtResource("3_gyfs4")]
+layout_mode = 1
+offset_left = -177.0
+offset_top = -24.0
+offset_right = -93.0
+offset_bottom = 1.0
+key_text = "C"
+action_text = "Attack"
+
+[node name="ControlHintLeft" parent="CanvasLayer/UI/Controls" unique_id=2025203324 instance=ExtResource("3_gyfs4")]
+layout_mode = 1
+offset_left = 85.0
+offset_top = -24.0
+offset_right = 169.0
+offset_bottom = 1.0
+key_text = "←"
+action_text = "Left"
+
+[node name="ControlHintRight" parent="CanvasLayer/UI/Controls" unique_id=1037950127 instance=ExtResource("3_gyfs4")]
+layout_mode = 1
+offset_left = 191.0
+offset_top = -24.0
+offset_right = 275.0
+offset_bottom = 1.0
+key_text = "→"
+action_text = "Right"
+
+[node name="PauseMenu" type="PanelContainer" parent="CanvasLayer/UI" unique_id=1813660205]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_d5x1h")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/UI/PauseMenu" unique_id=728738384]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="ButtonResume" type="Button" parent="CanvasLayer/UI/PauseMenu/VBoxContainer" unique_id=1122040848]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Resume"
+
+[node name="ButtonReset" type="Button" parent="CanvasLayer/UI/PauseMenu/VBoxContainer" unique_id=500904534]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Reset"
+
+[connection signal="reset_requested" from="CanvasLayer/UI/PauseMenu" to="." method="_on_pause_menu_reset_requested"]
+[connection signal="resume_requested" from="CanvasLayer/UI/PauseMenu" to="." method="_on_pause_menu_resume_requested"]
+[connection signal="pressed" from="CanvasLayer/UI/PauseMenu/VBoxContainer/ButtonResume" to="CanvasLayer/UI/PauseMenu" method="_on_button_resume_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/PauseMenu/VBoxContainer/ButtonReset" to="CanvasLayer/UI/PauseMenu" method="_on_button_reset_pressed"]

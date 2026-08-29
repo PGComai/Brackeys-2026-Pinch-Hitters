@@ -19,7 +19,7 @@ var already_ended := false
 
 
 func _ready() -> void:
-	process_mode = Node.PROCESS_MODE_ALWAYS
+	process_mode = Node.PROCESS_MODE_PAUSABLE
 	spawn_player()
 	if level_end:
 		level_end.end_reached.connect(_on_level_end_end_reached)
