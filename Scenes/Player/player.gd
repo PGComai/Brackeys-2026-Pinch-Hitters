@@ -337,3 +337,12 @@ func get_movement_axis() -> float:
 
 func is_jump_pressed() -> bool:
 	return Input.is_action_just_pressed(&"Jump")
+
+func try_bounce() -> bool:
+	if velocity.y > 0.01:
+		velocity.y = -abs(velocity.y) - 2
+		if is_jump_pressed():
+			velocity.y += JUMP_VELOCITY / 2
+		$StateMachine.change_state("Jump")
+		return true
+	return false
