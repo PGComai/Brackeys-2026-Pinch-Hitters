@@ -48,13 +48,18 @@ func write_bindings() -> void:
 	var file := FileAccess.open(BINDING_FILE, FileAccess.WRITE)
 	
 	file.store_8(BINDING_FILE_VERSION)
-	
+
+	#file.store_var(InputMap)
 	for an: StringName in ACTION_NAMES:
-		var event: InputEvent = InputMap.action_get_events(an)[0]
-		print("writing event: %s" % event)
-		print(OS.get_keycode_string(event.keycode))
-		#file.store_string(OS.get_keycode_string(event.keycode))
-		file.store_line(OS.get_keycode_string(event.keycode))
+		var events = InputMap.action_get_events(an)
+		if events.size() > 0:
+			var event: InputEvent = events[0]
+			print("writing event: %s" % event)
+			file.store_pascal_string(an)
+			file.store_var(event, true)
+	#	print(OS.get_keycode_string(event.keycode))
+	#	#file.store_string(OS.get_keycode_string(event.keycode))
+	#	file.store_line(OS.get_keycode_string(event.keycode))
 	
 	file.close()
 
@@ -67,14 +72,19 @@ func read_bindings() -> void:
 	var file := FileAccess.open(BINDING_FILE, FileAccess.READ)
 	
 	var version: int = file.get_8()
+	while not file.eof_reached():
+		var an = file.get_pascal_string()
+		var ev = file.get_var(true)
+		print(ev)
+		set_action_event(an, ev)
 	
-	for an: StringName in ACTION_NAMES:
-		var text_keycode: String = file.get_pascal_string()
-		print(text_keycode)
-		var input_key := InputEventKey.new()
-		input_key.keycode = OS.find_keycode_from_string(text_keycode)
-		set_action_event(an, input_key)
-	
+	#for an: StringName in ACTION_NAMES:
+	#	var text_keycode: String = file.get_pascal_string()
+	#	print(text_keycode)
+	#	var input_key := InputEventKey.new()
+	#	input_key.keycode = OS.find_keycode_from_string(text_keycode)
+	#	set_action_event(an, input_key)
+	#InputMap = file.load_var()
 	file.close()
 
 
