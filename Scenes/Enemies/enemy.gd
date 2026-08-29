@@ -104,9 +104,8 @@ func check_hurtbox_overlaps() -> void:
 
 func _on_hurtbox_body_entered(body: Node2D) -> void:
 	if body is Player:
-		if body.velocity.y > 0.01:
+		if body.try_bounce():
 			stun()
-			body.velocity.y = -abs(body.velocity.y) - 2
 		else:
 			try_damage_player(body)
 
