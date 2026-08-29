@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dhag7tgyi27al"]
+
+[ext_resource type="Script" uid="uid://dqb8hogadvbl0" path="res://new-level-format/camera_boundary_detector.gd" id="1_enn22"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_enn22"]
+
+[node name="CameraBoundaryDetector" type="Area2D" unique_id=1729657486]
+collision_layer = 32
+collision_mask = 32
+script = ExtResource("1_enn22")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=655100820]
+shape = SubResource("RectangleShape2D_enn22")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]
