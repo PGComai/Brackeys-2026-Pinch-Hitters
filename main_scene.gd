@@ -14,10 +14,30 @@ var current_level_idx: int = 0:
 	set(value):
 		current_level_idx = clampi(value, 0, LEVELS.size() - 1)
 var current_level_scene: NewLevel
+var level_transitioning_flag := false
 
 
 func _ready() -> void:
 	load_level()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("Pause"):
+		if not level_transitioning_flag:
+			if get_tree().paused:
+				user_unpause()
+			else:
+				user_pause()
+
+
+func user_pause() -> void:
+	get_tree().paused = true
+	%PauseMenu.activate()
+
+
+func user_unpause() -> void:
+	%PauseMenu.deactivate()
+	get_tree().paused = false
 
 
 func unload_current_level() -> void:
@@ -39,6 +59,7 @@ func increment_level_idx() -> bool:
 
 
 func handle_level_transition() -> void:
+	level_transitioning_flag = true
 	await get_tree().process_frame
 	var tween := get_tree().create_tween()
 	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
@@ -60,9 +81,19 @@ func handle_level_transition() -> void:
 	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	
 	tween.tween_property(%ColorRectTransition, "instance_shader_parameters/progress", 0.0, 0.5).set_trans(Tween.TRANS_CUBIC)
-	
+	await tween.finished
+	level_transitioning_flag = false
 
 
 func _on_current_level_end_reached() -> void:
 	if increment_level_idx():
 		handle_level_transition()
+
+
+func _on_pause_menu_resume_requested() -> void:
+	user_unpause()
+
+
+func _on_pause_menu_reset_requested() -> void:
+	user_unpause()
+	handle_level_transition()
