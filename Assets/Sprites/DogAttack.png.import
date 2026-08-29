@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://t08vpsmx1h20"
-path="res://.godot/imported/TheGuy.png-90b765ae09243eb4c06e96ea0b3554c2.ctex"
+uid="uid://4o1uy1151cye"
+path="res://.godot/imported/DogAttack.png-f16bf949bfe2aaa43f852d139acbfd5e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/TheGuy.png"
-dest_files=["res://.godot/imported/TheGuy.png-90b765ae09243eb4c06e96ea0b3554c2.ctex"]
+source_file="res://Assets/Sprites/DogAttack.png"
+dest_files=["res://.godot/imported/DogAttack.png-f16bf949bfe2aaa43f852d139acbfd5e.ctex"]
 
 [params]
 

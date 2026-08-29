@@ -75,15 +75,18 @@ func _physics_process(delta: float) -> void:
 		EnemyStateEnum.PATROL:
 			velocity.y += gravity * delta
 			velocity.x = direction * patrol_speed
+			if sprite.sprite_frames.has_animation("walk"): sprite.play("walk")
 			move_and_slide()
 			if is_on_wall() or (is_on_floor() and not sees_ground_ahead()):
 				direction *= -1
 				sprite.scale.x *= -1
 		EnemyStateEnum.PROJECTILE:
+			sprite.play("idle")
 			move_projectile(delta)
 		EnemyStateEnum.BUBBLED:
 			process_bubbled(delta)
 		EnemyStateEnum.STUNNED:
+			sprite.play("idle")
 			stun_timer -= delta
 			if stun_timer < 0:
 				state = EnemyStateEnum.PATROL
