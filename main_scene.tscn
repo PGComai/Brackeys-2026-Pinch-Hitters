@@ -102,7 +102,14 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Reset"
 
+[node name="ButtonQuit" type="Button" parent="CanvasLayer/UI/PauseMenu/VBoxContainer" unique_id=1520556103]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Quit"
+
+[connection signal="quit_requested" from="CanvasLayer/UI/PauseMenu" to="." method="_on_pause_menu_quit_requested"]
 [connection signal="reset_requested" from="CanvasLayer/UI/PauseMenu" to="." method="_on_pause_menu_reset_requested"]
 [connection signal="resume_requested" from="CanvasLayer/UI/PauseMenu" to="." method="_on_pause_menu_resume_requested"]
 [connection signal="pressed" from="CanvasLayer/UI/PauseMenu/VBoxContainer/ButtonResume" to="CanvasLayer/UI/PauseMenu" method="_on_button_resume_pressed"]
 [connection signal="pressed" from="CanvasLayer/UI/PauseMenu/VBoxContainer/ButtonReset" to="CanvasLayer/UI/PauseMenu" method="_on_button_reset_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/PauseMenu/VBoxContainer/ButtonQuit" to="CanvasLayer/UI/PauseMenu" method="_on_button_quit_pressed"]
