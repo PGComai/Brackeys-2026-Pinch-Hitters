@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bimoggv1kbnb7"
-path="res://.godot/imported/Main_Character_Sheet.png-07abd40b9344b6d02fc3b6e66670c1d0.ctex"
+uid="uid://v6ngxeegriu2"
+path="res://.godot/imported/state.svg-06d7f748b80ee24dc9d89f573bbe193c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Main_Character_Sheet.png"
-dest_files=["res://.godot/imported/Main_Character_Sheet.png-07abd40b9344b6d02fc3b6e66670c1d0.ctex"]
+source_file="res://Scripts/Types/state.svg"
+dest_files=["res://.godot/imported/state.svg-06d7f748b80ee24dc9d89f573bbe193c.ctex"]
 
 [params]
 
@@ -38,3 +38,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

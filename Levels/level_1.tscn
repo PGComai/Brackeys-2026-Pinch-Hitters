@@ -70,6 +70,15 @@ tile_set = ExtResource("3_62b6n")
 process_mode = 1
 position = Vector2(104, 256)
 
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=306088709]
+process_callback = 0
+limit_left = 0
+limit_top = 0
+limit_right = 1472
+limit_bottom = 352
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
+
 [node name="DefaultBox" type="RigidBody2D" parent="." unique_id=1472342647]
 position = Vector2(-32, 32)
 gravity_scale = 0.2
