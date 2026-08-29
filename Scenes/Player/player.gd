@@ -78,6 +78,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _process(delta: float) -> void:
+	camera_man.position = global_position
 	update_hammer_rotation()
 	fisshe_animate()
 	shoot_timer -= delta

@@ -25,7 +25,6 @@ position = Vector2(320, 176)
 collision_layer = 32
 collision_mask = 32
 script = ExtResource("4_5xhh6")
-size_override = Vector2(640, 352)
 metadata/_custom_type_script = "uid://8u42oobowh5u"
 
 [node name="CameraBoundaryArea2" type="Area2D" parent="." unique_id=2140246489]
@@ -33,7 +32,6 @@ position = Vector2(960, 176)
 collision_layer = 32
 collision_mask = 32
 script = ExtResource("4_5xhh6")
-size_override = Vector2(640, 352)
 metadata/_custom_type_script = "uid://8u42oobowh5u"
 
 [node name="CameraBoundaryArea3" type="Area2D" parent="." unique_id=1085943769]
@@ -41,7 +39,6 @@ position = Vector2(960, 528)
 collision_layer = 32
 collision_mask = 32
 script = ExtResource("4_5xhh6")
-size_override = Vector2(640, 352)
 metadata/_custom_type_script = "uid://8u42oobowh5u"
 
 [node name="EnemyDog" parent="." unique_id=1152602573 instance=ExtResource("5_idrv6")]
