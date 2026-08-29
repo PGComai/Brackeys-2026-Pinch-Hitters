@@ -16,10 +16,10 @@ func _on_area_entered(area: Area2D) -> void:
 
 
 func _on_area_exited(area: Area2D) -> void:
-	if area != current_area:
+	if area == current_area:
 		if get_overlapping_areas():
 			var boundary_area: CameraBoundaryArea = get_overlapping_areas()[0]
-			if player.camera_man and boundary_area != current_area:
+			if player.camera_man:# and boundary_area != current_area:
 				apply_boundary_to_camera(player.camera_man, boundary_area)
 
 
