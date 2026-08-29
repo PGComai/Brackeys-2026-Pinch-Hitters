@@ -4,7 +4,7 @@ var direction = 1
 var speed = 200.0
 
 var destroyed = false
-@export var lifetime = 20.0
+@export var lifetime = 10.0
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
@@ -16,13 +16,13 @@ func _physics_process(delta: float) -> void:
 	position.x += speed * direction * delta
 	lifetime -= delta
 	if lifetime <= 0:
-		pop()
+		pop(true)
 
 
-func pop() -> void:
+func pop(mute: bool = false) -> void:
 	destroyed = true
 	animation_player.play("new_animation_2")
-	if pop_sound:
+	if pop_sound and not mute:
 		var asp := AudioStreamPlayer.new()
 		asp.stream = pop_sound
 		asp.bus = &"SFX"
