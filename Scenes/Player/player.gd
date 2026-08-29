@@ -12,6 +12,7 @@ var hp = 5
 @export var acceleration: float = 800.0
 @export var friction: float = 1200.0
 @export var air_friction: float = 80.0
+@export var climb_speed: float = 100.0
 const JUMP_VELOCITY = -300
 const JUMP_CUT = 2.5
 const SHOOT_COOLDOWN = 0.5
@@ -48,6 +49,11 @@ var was_on_floor = true
 @onready var hammer_time: Node2D = $HammerTime
 @onready var hammer_hitbox: Area2D = $HammerTime/HammerHitbox
 
+@onready var climb_hitbox: Area2D = $ClimbArea
+
+@onready var state_machine: StateMachine = $StateMachine
+
+
 var frames := 0
 
 @onready var spawn_point: Vector2 = global_position
@@ -64,13 +70,13 @@ var shoot_timer = 0.0
 
 var camera_man: CameraMan
 
-
 func _ready() -> void:
 	was_on_floor = is_on_floor()
 	
 
 func _physics_process(delta: float) -> void:
-	velocity.y += delta * gravity
+	if not state_machine.in_state("Climb"):
+		velocity.y += delta * gravity
 	#if Input.is_action_pressed("Jump"):
 	#	velocity.y = JUMP_VELOCITY
 	#jump()
@@ -115,6 +121,13 @@ func air_movement(delta: float, dir: float) -> void:
 		velocity.x = clamp(velocity.x, -speed, speed)
 	else:
 		velocity.x = move_toward(velocity.x, 0, air_friction * delta)
+
+
+func climb_check() -> bool:
+	if can_climb() and Input.is_action_pressed("Up"):
+		state_machine.change_state("Climb")
+		return true
+	return false
 
 
 func update_hammer_rotation() -> void:
@@ -301,6 +314,7 @@ func _on_death_animation_animation_finished(anim_name: StringName) -> void:
 			get_tree().paused = false
 			get_tree().reload_current_scene()
 
+
 func fisshe_bubble(direction):
 	var bubble := PROJBUBBLE.instantiate() as Node2D
 	bubble.direction = direction
@@ -331,18 +345,31 @@ func play_animation(anim_name: StringName) -> void:
 	anim_player.play(anim_name)
 
 
+func get_current_anim() -> StringName:
+	return anim_player.assigned_animation
+
+
 func get_movement_axis() -> float:
 	return Input.get_axis(&"Left", &"Right")
 
 
+func get_movement_vector() -> Vector2:
+	return Input.get_vector(&"Left", &"Right", &"Up", &"Down")
+
+
 func is_jump_pressed() -> bool:
 	return Input.is_action_just_pressed(&"Jump")
+
 
 func try_bounce() -> bool:
 	if velocity.y > 0.01:
 		velocity.y = -abs(velocity.y) - 2
 		if is_jump_pressed():
 			velocity.y += JUMP_VELOCITY / 2
-		$StateMachine.change_state("Jump")
+		state_machine.change_state("Jump")
 		return true
 	return false
+
+
+func can_climb() -> bool:
+	return climb_hitbox.has_overlapping_bodies()
