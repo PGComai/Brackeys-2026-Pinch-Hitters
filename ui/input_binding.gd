@@ -17,10 +17,12 @@ func _ready() -> void:
 	#set_anchors_and_offsets_preset(Control.PRESET_CENTER)
 	var events: Array[InputEvent] = InputMap.action_get_events(action_name)
 	print(events)
-	
-	var event: InputEvent = events[0]
+
+	var event: InputEvent = null
+	if events.size() > 0:
+		event = events[0]
 	var new_button := InputBindingButton.new()
-	#new_button.event_index = 1
+	new_button.event_index = 1
 	new_button.action_event = event
 	new_button.action_name = action_name
 	new_button.rebound.connect(_on_rebound)
