@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://ywmnrtc18s1u" path="res://Scenes/Player/States/fall.gd" id="9_7g0yx"]
 [ext_resource type="Script" uid="uid://bw80gp1gu7x6j" path="res://Scenes/Player/States/skid.gd" id="10_dey5f"]
 [ext_resource type="FontFile" uid="uid://boxvhat0jgchp" path="res://Assets/Fonts/alagard.ttf" id="11_74mp2"]
+[ext_resource type="Script" uid="uid://btfq75au1qwa6" path="res://Scenes/Player/States/climb.gd" id="15_ks1b7"]
 
 [sub_resource type="Animation" id="Animation_dey5f"]
 length = 0.001
@@ -72,6 +73,24 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_hnuln"]
+resource_name = "climb_idle"
+length = 0.5
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"climb"]
 }
 
 [sub_resource type="Animation" id="Animation_jhyir"]
@@ -251,6 +270,7 @@ tracks/1/keys = {
 _data = {
 &"RESET": SubResource("Animation_dey5f"),
 &"climb": SubResource("Animation_r5xpd"),
+&"climb_idle": SubResource("Animation_hnuln"),
 &"fall": SubResource("Animation_jhyir"),
 &"hurt": SubResource("Animation_ks1b7"),
 &"idle": SubResource("Animation_7g0yx"),
@@ -431,6 +451,9 @@ func _process(delta: float) -> void:
 		text = state_machine.get_state_path_name()
 "
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ks1b7"]
+size = Vector2(12, 39)
+
 [node name="Player" type="CharacterBody2D" unique_id=479796262 groups=["Player"]]
 collision_mask = 4
 script = ExtResource("1_v0iea")
@@ -512,6 +535,11 @@ metadata/_custom_type_script = "uid://d1piufhpnx5rw"
 script = ExtResource("10_dey5f")
 metadata/_custom_type_script = "uid://d1piufhpnx5rw"
 
+[node name="Climb" type="Node" parent="StateMachine" unique_id=403799742 node_paths=PackedStringArray("cancel_ray")]
+script = ExtResource("15_ks1b7")
+cancel_ray = NodePath("../../ClimbCancel")
+metadata/_custom_type_script = "uid://d1piufhpnx5rw"
+
 [node name="StateLabel" type="Label" parent="." unique_id=1744306636 node_paths=PackedStringArray("state_machine")]
 anchors_preset = 8
 anchor_left = 0.5
@@ -534,3 +562,17 @@ state_machine = NodePath("../StateMachine")
 
 [node name="CameraBoundaryDetector" parent="." unique_id=1729657486 node_paths=PackedStringArray("player") instance=ExtResource("5_htcer")]
 player = NodePath("..")
+
+[node name="ClimbArea" type="Area2D" parent="." unique_id=2061224402]
+collision_layer = 0
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClimbArea" unique_id=2080715996]
+position = Vector2(0, 9.5)
+shape = SubResource("RectangleShape2D_ks1b7")
+debug_color = Color(0.31723696, 0.62580127, 3.85046e-07, 0.41960785)
+
+[node name="ClimbCancel" type="RayCast2D" parent="." unique_id=1366187597]
+position = Vector2(0, 30)
+target_position = Vector2(0, 5)
+collision_mask = 4

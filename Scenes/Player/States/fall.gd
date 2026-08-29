@@ -9,6 +9,10 @@ func on_end() -> void:
 func physics_update(delta: float) -> void:
 	var dir := player.get_movement_axis()
 	player.air_movement(delta, dir)
+
+	if player.climb_check():
+		return
+
 	if !Input.is_action_pressed("Jump"):
 		player.velocity.y += player.gravity/50
 
