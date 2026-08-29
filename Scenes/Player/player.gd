@@ -52,8 +52,8 @@ var frames := 0
 
 @onready var spawn_point: Vector2 = global_position
 
-#@onready var user_interface: CanvasLayer = $"../UserInterface"
-#@onready var music_player: AudioStreamPlayer = $"../MusicPlayer"
+@onready var user_interface: CanvasLayer = $"../UserInterface"
+@onready var music_player: AudioStreamPlayer = $"../MusicPlayer"
 
 var is_invincible: bool = false
 var invincibility_timer: float = 0.0
