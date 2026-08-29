@@ -2,8 +2,11 @@
 
 [ext_resource type="Script" uid="uid://cgtppruwdu8nx" path="res://Scenes/Player/player.gd" id="1_v0iea"]
 [ext_resource type="Texture2D" uid="uid://dfso14lopsgdp" path="res://icon.svg" id="2_cvnsp"]
+[ext_resource type="Texture2D" uid="uid://b1bao8t5wid5n" path="res://Assets/Sprites/PlayerJump.png" id="2_dey5f"]
 [ext_resource type="Texture2D" uid="uid://bl56jtrqamaw1" path="res://Assets/Sprites/Sweedish_Fish.png" id="2_mtuoh"]
 [ext_resource type="Texture2D" uid="uid://dwg2p1472bmf8" path="res://Assets/Sprites/PlayerWalk.png" id="2_oikmp"]
+[ext_resource type="Texture2D" uid="uid://bhl1t2aegttbp" path="res://Assets/Sprites/PlayerClimb.png" id="2_r5xpd"]
+[ext_resource type="Texture2D" uid="uid://boaq0u0khxobf" path="res://Assets/Sprites/PlayerHurt.png" id="3_r5xpd"]
 [ext_resource type="Texture2D" uid="uid://bimoggv1kbnb7" path="res://Assets/Sprites/PlayerIdle.png" id="3_xpcdj"]
 [ext_resource type="PackedScene" uid="uid://dhag7tgyi27al" path="res://new-level-format/camera_boundary_detector.tscn" id="5_htcer"]
 [ext_resource type="Script" uid="uid://drr22sgdamrsa" path="res://Scripts/Types/state_machine.gd" id="5_jhyir"]
@@ -41,6 +44,36 @@ tracks/1/keys = {
 "values": [0]
 }
 
+[sub_resource type="Animation" id="Animation_r5xpd"]
+resource_name = "climb"
+length = 0.5
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"climb"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
 [sub_resource type="Animation" id="Animation_jhyir"]
 resource_name = "fall"
 length = 0.2
@@ -67,6 +100,35 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_ks1b7"]
+resource_name = "hurt"
+length = 0.8
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"hurt"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
 }
 
 [sub_resource type="Animation" id="Animation_7g0yx"]
@@ -188,7 +250,9 @@ tracks/1/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xpcdj"]
 _data = {
 &"RESET": SubResource("Animation_dey5f"),
+&"climb": SubResource("Animation_r5xpd"),
 &"fall": SubResource("Animation_jhyir"),
+&"hurt": SubResource("Animation_ks1b7"),
 &"idle": SubResource("Animation_7g0yx"),
 &"jump": SubResource("Animation_74mp2"),
 &"land": SubResource("Animation_a3d8c"),
@@ -196,21 +260,25 @@ _data = {
 &"walk": SubResource("Animation_06tpx")
 }
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_oikmp"]
-atlas = ExtResource("2_oikmp")
-region = Rect2(54, 0, 54, 62)
+[sub_resource type="AtlasTexture" id="AtlasTexture_rcvs5"]
+atlas = ExtResource("2_r5xpd")
+region = Rect2(0, 0, 45, 65)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_06tpx"]
-atlas = ExtResource("2_oikmp")
-region = Rect2(108, 0, 54, 62)
+[sub_resource type="AtlasTexture" id="AtlasTexture_h8ma5"]
+atlas = ExtResource("2_r5xpd")
+region = Rect2(45, 0, 45, 65)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hnuln"]
+atlas = ExtResource("2_dey5f")
+region = Rect2(0, 0, 55, 65)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xpcdj"]
 atlas = ExtResource("3_xpcdj")
 region = Rect2(0, 64, 96, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_7g0yx"]
-atlas = ExtResource("2_oikmp")
-region = Rect2(0, 0, 54, 62)
+[sub_resource type="AtlasTexture" id="AtlasTexture_aqm4k"]
+atlas = ExtResource("2_dey5f")
+region = Rect2(55, 0, 55, 65)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dey5f"]
 atlas = ExtResource("2_oikmp")
@@ -228,13 +296,29 @@ region = Rect2(108, 0, 54, 62)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_oikmp")
+"texture": SubResource("AtlasTexture_rcvs5")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_06tpx")
+"texture": SubResource("AtlasTexture_h8ma5")
+}],
+"loop": true,
+"name": &"climb",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hnuln")
 }],
 "loop": true,
 "name": &"fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_r5xpd")
+}],
+"loop": true,
+"name": &"hurt",
 "speed": 5.0
 }, {
 "frames": [{
@@ -247,7 +331,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_7g0yx")
+"texture": SubResource("AtlasTexture_aqm4k")
 }],
 "loop": true,
 "name": &"jump",
