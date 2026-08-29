@@ -59,7 +59,6 @@ var frames := 0
 @onready var spawn_point: Vector2 = global_position
 
 @onready var user_interface: CanvasLayer = $"../UserInterface"
-@onready var music_player: AudioStreamPlayer = $"../MusicPlayer"
 
 var is_invincible: bool = false
 var invincibility_timer: float = 0.0
@@ -299,9 +298,6 @@ func _on_death_animation_animation_finished(anim_name: StringName) -> void:
 		if spawn_point != Vector2.INF:
 			anim_player.play("RESET")
 
-			if music_player:
-				music_player.stream_paused = true
-
 			get_tree().current_scene.pausable = true
 			get_tree().paused = false
 
@@ -343,6 +339,10 @@ func set_facing(left: bool) -> void:
 func play_animation(anim_name: StringName) -> void:
 	# TODO: Animation player should change AnimatedSprite2D's animation.
 	anim_player.play(anim_name)
+
+
+func queue_animation(anim_name: StringName) -> void:
+	anim_player.queue(anim_name)
 
 
 func get_current_anim() -> StringName:

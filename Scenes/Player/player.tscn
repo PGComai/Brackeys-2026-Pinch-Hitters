@@ -1,13 +1,18 @@
 [gd_scene format=3 uid="uid://buvdkp3gc6t3a"]
 
 [ext_resource type="Script" uid="uid://cgtppruwdu8nx" path="res://Scenes/Player/player.gd" id="1_v0iea"]
+[ext_resource type="AudioStream" uid="uid://c406hntclliyf" path="res://Assets/Sound/Step1.ogg" id="2_aqm4k"]
 [ext_resource type="Texture2D" uid="uid://dfso14lopsgdp" path="res://icon.svg" id="2_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://b1bao8t5wid5n" path="res://Assets/Sprites/PlayerJump.png" id="2_dey5f"]
+[ext_resource type="AudioStream" uid="uid://du25hxcxjnusj" path="res://Assets/Sound/Climb.ogg" id="2_h8ma5"]
 [ext_resource type="Texture2D" uid="uid://bl56jtrqamaw1" path="res://Assets/Sprites/Sweedish_Fish.png" id="2_mtuoh"]
 [ext_resource type="Texture2D" uid="uid://dwg2p1472bmf8" path="res://Assets/Sprites/PlayerWalk.png" id="2_oikmp"]
 [ext_resource type="Texture2D" uid="uid://bhl1t2aegttbp" path="res://Assets/Sprites/PlayerClimb.png" id="2_r5xpd"]
+[ext_resource type="AudioStream" uid="uid://d2ujhp3baxh1n" path="res://Assets/Sound/Jump.wav" id="2_rcvs5"]
 [ext_resource type="Texture2D" uid="uid://boaq0u0khxobf" path="res://Assets/Sprites/PlayerHurt.png" id="3_r5xpd"]
+[ext_resource type="AudioStream" uid="uid://84hcocf64041" path="res://Assets/Sound/Step2.ogg" id="3_rcvs5"]
 [ext_resource type="Texture2D" uid="uid://bimoggv1kbnb7" path="res://Assets/Sprites/PlayerIdle.png" id="3_xpcdj"]
+[ext_resource type="AudioStream" uid="uid://elda0tica0kj" path="res://Assets/Sound/Land.ogg" id="4_eksi1"]
 [ext_resource type="PackedScene" uid="uid://dhag7tgyi27al" path="res://new-level-format/camera_boundary_detector.tscn" id="5_htcer"]
 [ext_resource type="Script" uid="uid://drr22sgdamrsa" path="res://Scripts/Types/state_machine.gd" id="5_jhyir"]
 [ext_resource type="Script" uid="uid://bt708i1ai5oab" path="res://Scenes/Player/States/idle.gd" id="6_74mp2"]
@@ -49,7 +54,7 @@ tracks/1/keys = {
 resource_name = "climb"
 length = 0.5
 loop_mode = 1
-step = 0.1
+step = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -74,6 +79,25 @@ tracks/1/keys = {
 "update": 1,
 "values": [0, 1]
 }
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SFXPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("2_h8ma5")
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("2_h8ma5")
+}],
+"times": PackedFloat32Array(0, 0.25)
+}
+tracks/2/use_blend = true
 
 [sub_resource type="Animation" id="Animation_hnuln"]
 resource_name = "climb_idle"
@@ -115,10 +139,10 @@ tracks/1/path = NodePath("Visual/Sprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0, 1]
+"values": [0]
 }
 
 [sub_resource type="Animation" id="Animation_ks1b7"]
@@ -179,7 +203,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_74mp2"]
 resource_name = "jump"
-length = 0.2
+length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -204,10 +228,25 @@ tracks/1/keys = {
 "update": 1,
 "values": [0]
 }
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SFXPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("2_rcvs5")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/2/use_blend = true
 
 [sub_resource type="Animation" id="Animation_a3d8c"]
 resource_name = "land"
-length = 0.2
+length = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -232,15 +271,30 @@ tracks/1/keys = {
 "update": 1,
 "values": [0]
 }
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SFXPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("4_eksi1")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/2/use_blend = true
 
 [sub_resource type="Animation" id="Animation_oikmp"]
 resource_name = "skid"
 
 [sub_resource type="Animation" id="Animation_06tpx"]
 resource_name = "walk"
-length = 0.8
+length = 0.4
 loop_mode = 1
-step = 0.1
+step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -260,11 +314,30 @@ tracks/1/path = NodePath("Visual/Sprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 1]
 }
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SFXPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("2_aqm4k")
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("3_rcvs5")
+}],
+"times": PackedFloat32Array(0.1, 0.3)
+}
+tracks/2/use_blend = true
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xpcdj"]
 _data = {
@@ -509,8 +582,6 @@ one_shot = true
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_kvjxa")
 
-[node name="JumpSound" type="AudioStreamPlayer" parent="." unique_id=667999448]
-
 [node name="StateMachine" type="Node" parent="." unique_id=827472277 node_paths=PackedStringArray("default_state")]
 script = ExtResource("5_jhyir")
 default_state = NodePath("Idle")
@@ -576,3 +647,5 @@ debug_color = Color(0.31723696, 0.62580127, 3.85046e-07, 0.41960785)
 position = Vector2(0, 30)
 target_position = Vector2(0, 5)
 collision_mask = 4
+
+[node name="SFXPlayer" type="AudioStreamPlayer" parent="." unique_id=2024949468]

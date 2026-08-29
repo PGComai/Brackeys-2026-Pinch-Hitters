@@ -1,7 +1,11 @@
 extends PlayerState
 
-func on_start(_msg := {}) -> void:
-	player.play_animation("idle")
+func on_start(msg := {}) -> void:
+	if msg.get("landed"):
+		player.play_animation("land")
+		player.queue_animation("idle")
+	else:
+		player.play_animation("idle")
 
 
 func physics_update(delta: float) -> void:

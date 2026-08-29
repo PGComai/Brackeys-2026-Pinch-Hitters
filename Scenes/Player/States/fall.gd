@@ -20,6 +20,6 @@ func physics_update(delta: float) -> void:
 		if not is_zero_approx(dir):
 			state_machine.change_state("Walk", {landed = true})
 		else:
-			state_machine.change_state("Idle")
+			state_machine.change_state("Idle", {landed = true})
 	else:
 		state_machine.change_state("Fall")
