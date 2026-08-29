@@ -17,4 +17,6 @@ mono_crash.*.json
 # User-specific ignores
 # - ceriole
 .vscode/settings.json
+
+#game-specific ignores
 config.cfg
