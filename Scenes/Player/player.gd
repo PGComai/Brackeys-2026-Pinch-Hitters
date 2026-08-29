@@ -17,9 +17,11 @@ const JUMP_VELOCITY = -300
 const JUMP_CUT = 2.5
 const SHOOT_COOLDOWN = 0.5
 
-@export var has_hammer = true
+# TODO: Replace with globals or inventory?
+@export var has_hammer: bool = true
 @export var hammer_damage = 1
 @export var hammer_knockback = 300.0
+@export var has_fish: bool = true
 
 @export var invincibility_duration: float = 1.2
 @export var blink_interval: float = 0.08
@@ -34,6 +36,7 @@ const NO_AIM = -999.0
 @onready var fish: Node2D = $Fish
 @onready var fish_sprite: AnimatedSprite2D = $Fish/Sprite
 @onready var bubble_sfx: AudioStreamPlayer = $Fish/BubbleSFX
+@onready var hammer_sprite: Sprite2D = $Visual/Hammer
 
 @onready var anim_player: AnimationPlayer = $Visual/AnimationPlayer
 
@@ -51,7 +54,6 @@ var was_on_floor = true
 @onready var climb_hitbox: Area2D = $ClimbArea
 
 @onready var state_machine: StateMachine = $StateMachine
-
 
 var frames := 0
 
@@ -84,20 +86,21 @@ func _physics_process(delta: float) -> void:
 func _process(delta: float) -> void:
 	camera_man.position = global_position
 	update_hammer_rotation()
-	fisshe_animate()
+	visual_update()
 	shoot_timer -= delta
 
 
 func _input(_event: InputEvent) -> void:
-	if Input.is_action_pressed("Bubble") and shoot_timer <= 0.0:
-		shoot_timer = SHOOT_COOLDOWN
-		fisshe_bubble(-1 if visual.scale.x < 0 else 1)
+	if has_fish:
+		if Input.is_action_pressed("Bubble") and shoot_timer <= 0.0:
+			shoot_timer = SHOOT_COOLDOWN
+			fisshe_bubble(-1 if visual.scale.x < 0 else 1)
 	#if Input.is_action_just_pressed("Restart"):
 	#	get_tree().reload_current_scene()
 	if not has_hammer:
 		return
 	#if Input.is_action_just_pressed("Fire"):
-   #	hammer_hit()
+   	#	hammer_hit()
 
 
 func ground_movement(delta: float, dir: float) -> void:
@@ -318,16 +321,19 @@ func fisshe_bubble(direction):
 	bubble_sfx.play()
 
 
-func fisshe_animate():
-	var facing_sign = visual.scale.x
-	var duration = 0.05
-	
-	var tween = create_tween()
-	tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	tween.set_parallel(true)
-	
-	tween.tween_property(fish, "scale:x", facing_sign, duration)
-	tween.tween_property(fish, "position:x", -facing_sign * 42.0, duration)
+func visual_update():
+	hammer_sprite.visible = has_hammer
+	fish.visible = has_fish
+	if has_fish:
+		var facing_sign = visual.scale.x
+		var duration = 0.05
+		
+		var tween = create_tween()
+		tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		tween.set_parallel(true)
+		
+		tween.tween_property(fish, "scale:x", facing_sign, duration)
+		tween.tween_property(fish, "position:x", -facing_sign * 42.0, duration)
 
 
 func set_facing(left: bool) -> void:
