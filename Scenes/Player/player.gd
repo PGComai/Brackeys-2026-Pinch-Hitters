@@ -36,7 +36,6 @@ const NO_AIM = -999.0
 @onready var fish: Node2D = $Fish
 @onready var fish_sprite: AnimatedSprite2D = $Fish/Sprite
 @onready var bubble_sfx: AudioStreamPlayer = $Fish/BubbleSFX
-@onready var hammer_sprite: Sprite2D = $Visual/Hammer
 
 @onready var anim_player: AnimationPlayer = $Visual/AnimationPlayer
 
@@ -322,7 +321,6 @@ func fisshe_bubble(direction):
 
 
 func visual_update():
-	hammer_sprite.visible = has_hammer
 	fish.visible = has_fish
 	if has_fish:
 		var facing_sign = visual.scale.x
@@ -340,13 +338,19 @@ func set_facing(left: bool) -> void:
 	visual.scale.x = -1 if left else 1
 
 
+func get_anim_name(anim_name: StringName) -> StringName:
+	if has_hammer:
+		anim_name = "hammer/" + anim_name
+	return anim_name 
+
+
 func play_animation(anim_name: StringName) -> void:
 	# TODO: Animation player should change AnimatedSprite2D's animation.
-	anim_player.play(anim_name)
+	anim_player.play(get_anim_name(anim_name))
 
 
 func queue_animation(anim_name: StringName) -> void:
-	anim_player.queue(anim_name)
+	anim_player.queue(get_anim_name(anim_name))
 
 
 func get_current_anim() -> StringName:
