@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://cgtppruwdu8nx" path="res://Scenes/Player/player.gd" id="1_v0iea"]
 [ext_resource type="AudioStream" uid="uid://c406hntclliyf" path="res://Assets/Sound/Step1.ogg" id="2_aqm4k"]
-[ext_resource type="Texture2D" uid="uid://dfso14lopsgdp" path="res://icon.svg" id="2_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://b1bao8t5wid5n" path="res://Assets/Sprites/PlayerJump.png" id="2_dey5f"]
 [ext_resource type="AudioStream" uid="uid://du25hxcxjnusj" path="res://Assets/Sound/Climb.ogg" id="2_h8ma5"]
 [ext_resource type="Texture2D" uid="uid://bl56jtrqamaw1" path="res://Assets/Sprites/Sweedish_Fish.png" id="2_mtuoh"]
@@ -20,6 +19,7 @@
 [ext_resource type="Script" uid="uid://tn15ujhpor8g" path="res://Scenes/Player/States/walk.gd" id="7_oikmp"]
 [ext_resource type="Script" uid="uid://cic4xb685wwbi" path="res://Scenes/Player/States/jump.gd" id="8_06tpx"]
 [ext_resource type="Texture2D" uid="uid://3g05jlr7gsl1" path="res://Assets/Sprites/PlayerDefeat.png" id="8_jincj"]
+[ext_resource type="Texture2D" uid="uid://bhknb744ru40a" path="res://Assets/Sprites/Hammer.png" id="8_rqdc0"]
 [ext_resource type="Script" uid="uid://ywmnrtc18s1u" path="res://Scenes/Player/States/fall.gd" id="9_7g0yx"]
 [ext_resource type="Script" uid="uid://bw80gp1gu7x6j" path="res://Scenes/Player/States/skid.gd" id="10_dey5f"]
 [ext_resource type="AudioStream" uid="uid://db80g0j06mki4" path="res://Assets/Sound/Bubble.ogg" id="13_eksi1"]
@@ -62,6 +62,42 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Visual/Hammer:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-9, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Visual/Hammer:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.7853982]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Visual/Hammer:z_index")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
 }
 
 [sub_resource type="Animation" id="Animation_r5xpd"]
@@ -124,6 +160,42 @@ tracks/3/keys = {
 "update": 1,
 "values": [Vector2(-1, 0), Vector2(0, 0), Vector2(1, 0), Vector2(0, 0)]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Visual/Hammer:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0.7853982]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Visual/Hammer:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.25, 0.45000002),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(-1, 4), Vector2(0, 4), Vector2(1, 4), Vector2(0, 4)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Visual/Hammer:z_index")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
 
 [sub_resource type="Animation" id="Animation_hnuln"]
 resource_name = "climb_idle"
@@ -153,6 +225,42 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visual/Hammer:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(0, 4)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Visual/Hammer:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0.7853982]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Visual/Hammer:z_index")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
 }
 
 [sub_resource type="Animation" id="Animation_rqdc0"]
@@ -209,6 +317,42 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0)
 }
 tracks/3/use_blend = true
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Visual/Hammer:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [-2.3561945]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Visual/Hammer:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(-25, 6.9999995)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Visual/Hammer:z_index")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
 [sub_resource type="Animation" id="Animation_jhyir"]
 resource_name = "fall"
@@ -246,8 +390,44 @@ tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [Vector2(-5, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Visual/Hammer:z_index")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Visual/Hammer:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(-9, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Visual/Hammer:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [-0.7853982]
 }
 
 [sub_resource type="Animation" id="Animation_ks1b7"]
@@ -290,6 +470,42 @@ tracks/2/keys = {
 "update": 1,
 "values": [Vector2(-7, 0), Vector2(-5, 0), Vector2(-7, 0), Vector2(-5, 0), Vector2(-6, 0)]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Visual/Hammer:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(-12, -3), Vector2(-9, -3), Vector2(-12, -3), Vector2(-9, -3), Vector2(-11, -3)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Visual/Hammer:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [-0.7853982]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Visual/Hammer:z_index")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
 [sub_resource type="Animation" id="Animation_7g0yx"]
 resource_name = "idle"
@@ -327,8 +543,44 @@ tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Visual/Hammer:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(-9, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Visual/Hammer:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [-0.7853982]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Visual/Hammer:z_index")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
 }
 
 [sub_resource type="Animation" id="Animation_74mp2"]
@@ -382,8 +634,44 @@ tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [Vector2(-6, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Visual/Hammer:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(-9, -1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Visual/Hammer:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [-0.7853982]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Visual/Hammer:z_index")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
 }
 
 [sub_resource type="Animation" id="Animation_a3d8c"]
@@ -440,6 +728,42 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [Vector2(1, 0), Vector2(0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Visual/Hammer:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.05),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(-8, 2), Vector2(-9, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Visual/Hammer:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [-0.7853982]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Visual/Hammer:z_index")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
 }
 
 [sub_resource type="Animation" id="Animation_oikmp"]
@@ -504,6 +828,42 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [Vector2(-8, 0), Vector2(-8, 0), Vector2(-8, -2), Vector2(-8, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Visual/Hammer:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.15, 0.2, 0.3, 0.35000002),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(-10, -1), Vector2(-10, 0), Vector2(-10, 1), Vector2(-10, -1), Vector2(-10, 0), Vector2(-10, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Visual/Hammer:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [-0.7853982]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Visual/Hammer:z_index")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xpcdj"]
@@ -707,6 +1067,11 @@ script = ExtResource("1_v0iea")
 root_node = NodePath("../..")
 libraries/ = SubResource("AnimationLibrary_xpcdj")
 
+[node name="Hammer" type="Sprite2D" parent="Visual" unique_id=1994683769]
+position = Vector2(-9, 1)
+rotation = -0.7853982
+texture = ExtResource("8_rqdc0")
+
 [node name="Sprite" type="AnimatedSprite2D" parent="Visual" unique_id=1000360803]
 sprite_frames = SubResource("SpriteFrames_kvjxa")
 animation = &"idle"
@@ -739,12 +1104,6 @@ collision_mask = 2
 position = Vector2(36, 0)
 shape = SubResource("RectangleShape2D_1ndb7")
 debug_color = Color(0.9878606, 0, 0.31348816, 0.41960785)
-
-[node name="Icon" type="Sprite2D" parent="HammerTime/HammerHitbox" unique_id=1994683769]
-visible = false
-position = Vector2(36, 0)
-scale = Vector2(0.5625, 0.375)
-texture = ExtResource("2_cvnsp")
 
 [node name="CoyoteTimer" type="Timer" parent="." unique_id=1677229009]
 wait_time = 0.1
@@ -782,9 +1141,8 @@ metadata/_custom_type_script = "uid://d1piufhpnx5rw"
 script = ExtResource("10_dey5f")
 metadata/_custom_type_script = "uid://d1piufhpnx5rw"
 
-[node name="Climb" type="Node" parent="StateMachine" unique_id=403799742 node_paths=PackedStringArray("cancel_ray")]
+[node name="Climb" type="Node" parent="StateMachine" unique_id=403799742]
 script = ExtResource("15_ks1b7")
-cancel_ray = NodePath("../../ClimbArea/ClimbCancel")
 metadata/_custom_type_script = "uid://d1piufhpnx5rw"
 
 [node name="CameraBoundaryDetector" parent="." unique_id=1729657486 node_paths=PackedStringArray("player") instance=ExtResource("5_htcer")]
@@ -798,11 +1156,6 @@ collision_mask = 128
 position = Vector2(0, 9.5)
 shape = SubResource("RectangleShape2D_ks1b7")
 debug_color = Color(0.31723696, 0.62580127, 3.85046e-07, 0.41960785)
-
-[node name="ClimbCancel" type="RayCast2D" parent="ClimbArea" unique_id=1366187597]
-position = Vector2(0, 30)
-target_position = Vector2(0, 5)
-collision_mask = 4
 
 [node name="SFXPlayer" type="AudioStreamPlayer" parent="." unique_id=2024949468]
 bus = &"SFX"
