@@ -4,9 +4,18 @@ class_name MainScene
 
 const NEW_LEVEL_1 = preload("uid://dpdin1o3kge0t")
 const NEW_LEVEL_2 = preload("uid://ddjoiwjg48q85")
+const NEW_LEVEL_3 = preload("uid://clu4b44ufdonv")
+const NEW_LEVEL_4 = preload("uid://c4wc542g45kya")
+const NEW_LEVEL_5 = preload("uid://c6jhqticy87b6")
+const NEW_LEVEL_6 = preload("uid://0iv8w0fbfcc3")
+
 const LEVELS: Array[PackedScene] = [
 									NEW_LEVEL_1,
 									NEW_LEVEL_2,
+									NEW_LEVEL_3,
+									NEW_LEVEL_4,
+									NEW_LEVEL_5,
+									NEW_LEVEL_6
 									]
 
 
