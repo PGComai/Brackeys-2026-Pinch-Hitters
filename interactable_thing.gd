@@ -1,8 +1,9 @@
+@abstract
 extends Area2D
 class_name InteractableThing
 
 
-enum InteractableType{CHEST}
+enum InteractableType{CHEST, CHEST_OPEN, GATE, GATE_OPEN, NONE}
 
 
 var interactable_type: InteractableType
@@ -20,3 +21,6 @@ func set_collision_layer_and_mask(layer: int, mask: int) -> void:
 		set_collision_mask_value(i + 1, false)
 	set_collision_layer_value(layer, true)
 	set_collision_mask_value(mask, true)
+
+
+@abstract func do_interaction()
