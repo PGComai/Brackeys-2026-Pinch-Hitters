@@ -24,3 +24,6 @@ func set_collision_layer_and_mask(layer: int, mask: int) -> void:
 
 
 @abstract func do_interaction()
+
+
+@abstract func is_interactable()

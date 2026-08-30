@@ -3,6 +3,8 @@ extends CharacterBody2D
 
 
 signal entered_gate
+signal interactable_entered
+signal interactable_exited
 
 
 @export var gravity: float = 500.0
@@ -22,7 +24,7 @@ const JUMP_CUT = 2.5
 const SHOOT_COOLDOWN = 0.5
 
 # TODO: Replace with globals or inventory?
-@export var has_hammer: bool = true
+@export var has_hammer: bool = false
 @export var hammer_damage = 1
 @export var hammer_knockback = 300.0
 @export var has_fish: bool = true
@@ -73,13 +75,23 @@ var shoot_timer = 0.0
 
 var camera_man: CameraMan
 var chests_opened: int = 0
+var has_heart := false
+var climb_grab_lock := false
 
 
 func apply_data(data: Dictionary) -> void:
 	print("data applied: %s" % data)
 	chests_opened = data["chests opened"]
-	if chests_opened > 0:
-		has_fish = true
+	match chests_opened:
+		1:
+			has_fish = true
+		2:
+			has_heart = true
+			has_fish = false
+		3:
+			has_hammer = true
+			has_heart = false
+			has_fish = false
 
 
 func _ready() -> void:
@@ -113,23 +125,37 @@ func handle_interactable(interactable: InteractableThing, event: InputEvent) -> 
 		InteractableThing.InteractableType.GATE_OPEN:
 			entered_gate.emit()
 		InteractableThing.InteractableType.CHEST:
-			match chests_opened:
-				0:
-					has_fish = true
 			chests_opened += 1
+			match chests_opened:
+				1:
+					has_fish = true
+				2:
+					has_heart = true
+					has_fish = false
+				3:
+					has_hammer = true
+					has_heart = false
+					has_fish = false
+			print("chests: %s" % chests_opened)
+			interactable_exited.emit()
 		InteractableThing.InteractableType.CHEST_OPEN:
 			pass
 
 
 func _input(_event: InputEvent) -> void:
 	if _event.is_action_pressed("Bubble"):
+		prints(has_fish, has_heart, has_hammer)
 		var interact_or_null: InteractableThing = %InteractableArea.get_interactable()
 		if interact_or_null:
-			handle_interactable(interact_or_null, _event)
-		elif has_fish:
+			if interact_or_null.is_interactable():
+				handle_interactable(interact_or_null, _event)
+				return
+		if has_fish:
 			if Input.is_action_pressed("Bubble") and shoot_timer <= 0.0:
 				shoot_timer = SHOOT_COOLDOWN
 				fisshe_bubble(-1 if visual.scale.x < 0 else 1)
+		elif has_hammer:
+			hammer_hit()
 	#if Input.is_action_just_pressed("Restart"):
 	#	get_tree().reload_current_scene()
 	if not has_hammer:
@@ -158,6 +184,7 @@ func air_movement(delta: float, dir: float) -> void:
 
 func climb_check() -> bool:
 	if can_climb() and Input.is_action_pressed("Up"):
+		print("change to climb")
 		state_machine.change_state("Climb")
 		return true
 	return false
@@ -212,6 +239,7 @@ func hammer_hit() -> void:
 
 	var aim_direction: Vector2 = get_hammer_aim_direction()
 	var hit_something := false
+	anim_player.play("hammer/hit")
 
 	var bodies := hammer_hitbox.get_overlapping_bodies()
 	for body in bodies:
@@ -398,4 +426,23 @@ func try_bounce() -> bool:
 
 
 func can_climb() -> bool:
-	return climb_hitbox.has_overlapping_bodies()
+	return climb_hitbox.has_overlapping_bodies() and not climb_grab_lock
+
+
+func _on_interactable_area_area_entered(area: Area2D) -> void:
+	var interact_or_null: InteractableThing = %InteractableArea.get_interactable()
+	if interact_or_null:
+		if interact_or_null.is_interactable():
+			interactable_entered.emit()
+
+
+func _on_interactable_area_area_exited(area: Area2D) -> void:
+	interactable_exited.emit()
+
+
+func jumped_off_climb() -> void:
+	climb_grab_lock = true
+	
+	await get_tree().create_timer(0.3).timeout
+	
+	climb_grab_lock = false

@@ -49,8 +49,10 @@ offset_right = -199.0
 offset_bottom = 1.0
 key_text = "Z"
 action_text = "Jump"
+alternate_text = null
 
 [node name="ControlHintAttack" parent="CanvasLayer/UI/Controls" unique_id=676938116 instance=ExtResource("3_gyfs4")]
+unique_name_in_owner = true
 layout_mode = 1
 offset_left = -177.0
 offset_top = -24.0
@@ -58,6 +60,7 @@ offset_right = -93.0
 offset_bottom = 1.0
 key_text = "C"
 action_text = "Attack"
+alternate_text = "Interact"
 
 [node name="ControlHintLeft" parent="CanvasLayer/UI/Controls" unique_id=2025203324 instance=ExtResource("3_gyfs4")]
 layout_mode = 1
@@ -67,6 +70,7 @@ offset_right = 169.0
 offset_bottom = 1.0
 key_text = "←"
 action_text = "Left"
+alternate_text = null
 
 [node name="ControlHintRight" parent="CanvasLayer/UI/Controls" unique_id=1037950127 instance=ExtResource("3_gyfs4")]
 layout_mode = 1
@@ -76,6 +80,7 @@ offset_right = 275.0
 offset_bottom = 1.0
 key_text = "→"
 action_text = "Right"
+alternate_text = null
 
 [node name="PauseMenu" type="PanelContainer" parent="CanvasLayer/UI" unique_id=1813660205]
 unique_name_in_owner = true

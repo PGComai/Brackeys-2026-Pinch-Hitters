@@ -53,7 +53,9 @@ func user_unpause() -> void:
 
 func unload_current_level() -> void:
 	current_level_scene.end_reached.disconnect(_on_current_level_end_reached)
+	current_level_scene.toggle_interactable_input.disconnect(_on_level_toggle_interactable_input)
 	current_level_scene.queue_free()
+	_on_level_toggle_interactable_input(false)
 
 
 func load_level() -> void:
@@ -62,6 +64,11 @@ func load_level() -> void:
 	if player_data:
 		current_level_scene.apply_player_data(player_data)
 	current_level_scene.end_reached.connect(_on_current_level_end_reached)
+	current_level_scene.toggle_interactable_input.connect(_on_level_toggle_interactable_input)
+
+
+func _on_level_toggle_interactable_input(on: bool) -> void:
+	%ControlHintAttack.toggle_alternate_text(on)
 
 
 func increment_level_idx() -> bool:

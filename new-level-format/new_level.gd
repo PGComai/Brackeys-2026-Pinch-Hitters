@@ -4,6 +4,7 @@ class_name NewLevel
 
 signal end_reached(data: Dictionary)
 signal player_spawned
+signal toggle_interactable_input(on: bool)
 
 
 const PLAYER = preload("uid://buvdkp3gc6t3a")
@@ -36,7 +37,17 @@ func spawn_player() -> void:
 	add_child(camera_man)
 	player.camera_man = camera_man
 	player.entered_gate.connect(_on_player_gate_entered)
+	player.interactable_entered.connect(_on_player_interactable_entered)
+	player.interactable_exited.connect(_on_player_interactable_exited)
 	player_spawned.emit()
+
+
+func _on_player_interactable_entered() -> void:
+	toggle_interactable_input.emit(true)
+
+
+func _on_player_interactable_exited() -> void:
+	toggle_interactable_input.emit(false)
 
 
 func _on_player_gate_entered() -> void:
