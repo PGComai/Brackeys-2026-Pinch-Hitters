@@ -2,6 +2,7 @@ class_name Enemy
 extends CharacterBody2D
 
 const STUN_STARS = preload("uid://m32ggmldw4rb")
+const DUST_POOF = preload("uid://d1hc2j1seapf2")
 #const STAR_OFFSET_Y = -12
 #const STAR_
 const COLLIDER_SIZE: Vector2 = Vector2(60.0, 57.0)
@@ -179,7 +180,17 @@ func process_bubbled(delta: float) -> void:
 		state = EnemyStateEnum.PATROL
 
 func take_damage(amount: int) -> void:
-	modulate.r += 0.5
+	sprite.self_modulate.r *= 1.25
+	sprite.self_modulate.g *= 0.75
+	sprite.self_modulate.b *= 0.75
+	sprite.play("hurt")
 	hp -= amount
 	if hp <= 0:
-		queue_free()
+		explode_and_die_in_a_hole()
+
+func explode_and_die_in_a_hole() -> void:
+	var dust := DUST_POOF.instantiate() as CPUParticles2D
+	dust.emitting = true
+	add_sibling(dust)
+	dust.global_position = global_position
+	queue_free()

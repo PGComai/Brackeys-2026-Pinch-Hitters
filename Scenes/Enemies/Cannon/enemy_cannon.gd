@@ -70,7 +70,7 @@ func _physics_process(delta: float) -> void:
 	
 	velocity.y += gravity * delta
 
-	if not state_machine.in_state(["Aim", "Fire", "Stun"]) and detection_area.has_overlapping_bodies():
+	if not state_machine.in_state(["Aim", "Fire", "Stun", "Hurt"]) and detection_area.has_overlapping_bodies():
 		var first_body := detection_area.get_overlapping_bodies().front() as Player
 		if first_body:
 			state_machine.change_state("Aim", {target=first_body})
@@ -83,3 +83,12 @@ func _physics_process(delta: float) -> void:
 func stun():
 	super()
 	state_machine.change_state("Stun")
+
+func take_damage(amount: int) -> void:
+	visual.modulate.r *= 1.25
+	visual.modulate.g *= 0.75
+	visual.modulate.b *= 0.75
+	state_machine.change_state("Hurt")
+	hp -= amount
+	if hp <= 0:
+		explode_and_die_in_a_hole()

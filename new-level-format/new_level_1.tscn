@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://cgirqvnbto42o" path="res://new-level-format/level_end.gd" id="6_qidma"]
 [ext_resource type="PackedScene" uid="uid://dsb6purr30obl" path="res://Scenes/chest.tscn" id="7_nshqk"]
 [ext_resource type="PackedScene" uid="uid://onrf4ydasxcd" path="res://Scenes/Enemies/Cannon/enemy_cannon.tscn" id="8_i187g"]
+[ext_resource type="PackedScene" uid="uid://b4urmlkfh3an0" path="res://Scenes/Enemies/Cannon/enemy_cannon_alt.tscn" id="9_q1611"]
 
 [node name="NewLevel" type="Node2D" unique_id=1581404091 node_paths=PackedStringArray("player_spawn", "level_end")]
 script = ExtResource("1_fi1tt")
@@ -57,7 +58,18 @@ metadata/_custom_type_script = "uid://cgirqvnbto42o"
 
 [node name="Chest" parent="." unique_id=729216827 instance=ExtResource("7_nshqk")]
 position = Vector2(336, 264)
-chest_type = null
 
-[node name="EnemyCannon" parent="." unique_id=1129418410 instance=ExtResource("8_i187g")]
-position = Vector2(1048, 289)
+[node name="EnemyCannonAlt2" parent="." unique_id=1129418410 instance=ExtResource("9_q1611")]
+position = Vector2(1129, 271)
+
+[node name="EnemyCannonAlt" parent="." unique_id=2047802730 instance=ExtResource("9_q1611")]
+position = Vector2(849, 271)
+
+[node name="EnemyCannon" parent="." unique_id=39763888 instance=ExtResource("8_i187g")]
+position = Vector2(931, 271)
+
+[node name="EnemyCannon2" parent="." unique_id=1370312694 instance=ExtResource("8_i187g")]
+position = Vector2(998, 270)
+
+[node name="EnemyCannon3" parent="." unique_id=1609109875 instance=ExtResource("8_i187g")]
+position = Vector2(1214, 272)

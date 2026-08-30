@@ -1,0 +1,98 @@
+[gd_scene format=3 uid="uid://b4urmlkfh3an0"]
+
+[ext_resource type="PackedScene" uid="uid://onrf4ydasxcd" path="res://Scenes/Enemies/Cannon/enemy_cannon.tscn" id="1_byd8o"]
+[ext_resource type="PackedScene" uid="uid://gqib527rbb03" path="res://Scenes/Enemies/Cannon/proj_cannonball_alt.tscn" id="2_5l4dw"]
+[ext_resource type="Texture2D" uid="uid://ce2dy88c2op1o" path="res://Assets/Sprites/CannonAlt.png" id="2_o1722"]
+[ext_resource type="Texture2D" uid="uid://b4hwn36tx17xm" path="res://Assets/Sprites/CannonAltHappy.png" id="3_5l4dw"]
+[ext_resource type="Texture2D" uid="uid://c1r0ilboooob5" path="res://Assets/Sprites/CannonHurtAlt.png" id="4_kegsf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0q88c"]
+atlas = ExtResource("2_o1722")
+region = Rect2(0, 0, 44, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q8x7t"]
+atlas = ExtResource("2_o1722")
+region = Rect2(44, 0, 44, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hpmku"]
+atlas = ExtResource("2_o1722")
+region = Rect2(0, 40, 44, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qfep6"]
+atlas = ExtResource("2_o1722")
+region = Rect2(44, 40, 44, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mk6wg"]
+atlas = ExtResource("2_o1722")
+region = Rect2(0, 75, 44, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_udgev"]
+atlas = ExtResource("2_o1722")
+region = Rect2(44, 75, 44, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4m5aq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0q88c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q8x7t")
+}],
+"loop": true,
+"name": &"front",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hpmku")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qfep6")
+}],
+"loop": true,
+"name": &"half_up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_5l4dw")
+}],
+"loop": true,
+"name": &"happy",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_kegsf")
+}],
+"loop": true,
+"name": &"hurt",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mk6wg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_udgev")
+}],
+"loop": true,
+"name": &"up",
+"speed": 5.0
+}]
+
+[node name="EnemyCannonAlt" unique_id=1129418410 instance=ExtResource("1_byd8o")]
+projectile_scene = ExtResource("2_5l4dw")
+can_move = false
+can_aim_up = false
+max_hp = 5
+
+[node name="Sprite" parent="Visual" parent_id_path=PackedInt32Array(1411124584) index="0" unique_id=1431022221]
+sprite_frames = SubResource("SpriteFrames_4m5aq")
+
+[node name="AnimationPlayer" parent="Visual" parent_id_path=PackedInt32Array(1411124584) index="1" unique_id=1630956923]
+speed_scale = 1.25
+
+[node name="Aim" parent="StateMachine" parent_id_path=PackedInt32Array(1201126396) index="5" unique_id=446483072]
+aim_time = 1.5

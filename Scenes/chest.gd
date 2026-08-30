@@ -7,7 +7,7 @@ enum Type {HATE, LOVE}
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	interactable_type = InteractableType.CHEST
+	#interactable_type = InteractableType.CHEST
 	if chest_type == Type.HATE:
 		animated_sprite_2d.play("dont")
 	if chest_type == Type.LOVE:

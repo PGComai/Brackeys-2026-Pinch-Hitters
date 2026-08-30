@@ -23,7 +23,8 @@ func _physics_process(delta: float) -> void:
 				var knock_vec := Vector2.ZERO
 				if knockback > 0:
 					knock_vec = global_position.direction_to(body.global_position) * knockback
-				body.hit(damage, knock_vec)
+					knock_vec += velocity / 3.0
+				body.hit(damage, velocity)
 		destroy()
 
 func destroy() -> void:
