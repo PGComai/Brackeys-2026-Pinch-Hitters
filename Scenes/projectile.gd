@@ -20,11 +20,7 @@ func _physics_process(delta: float) -> void:
 	if has_overlapping_bodies():
 		for body in get_overlapping_bodies():
 			if body.has_method("hit"):
-				var knock_vec := Vector2.ZERO
-				if knockback > 0:
-					knock_vec = global_position.direction_to(body.global_position) * knockback
-					knock_vec += velocity / 3.0
-				body.hit(damage, velocity)
+				body.hit(damage, velocity * knockback)
 		destroy()
 
 func destroy() -> void:
