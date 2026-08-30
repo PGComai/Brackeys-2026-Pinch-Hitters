@@ -25,6 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://c1qyq3s3214oq" path="res://Assets/Sprites/PlayerDefeatHammer.png" id="12_rukb4"]
 [ext_resource type="AudioStream" uid="uid://db80g0j06mki4" path="res://Assets/Sound/Bubble.ogg" id="13_eksi1"]
 [ext_resource type="Texture2D" uid="uid://cvmdcj42v345j" path="res://Assets/Sprites/PlayerJumpHammer.png" id="14_4no11"]
+[ext_resource type="Texture2D" uid="uid://djej6px0kavdm" path="res://Assets/Sprites/Hammer_Strike.png" id="14_fcwna"]
 [ext_resource type="Script" uid="uid://btfq75au1qwa6" path="res://Scenes/Player/States/climb.gd" id="15_ks1b7"]
 [ext_resource type="Texture2D" uid="uid://dmx7dexx4e1nm" path="res://Assets/Sprites/PlayerHurtHammer.png" id="16_fcwna"]
 [ext_resource type="Texture2D" uid="uid://ddkbm7radkqbf" path="res://Assets/Sprites/PlayerWalkHammer.png" id="18_1agin"]
@@ -713,6 +714,34 @@ tracks/2/keys = {
 "values": [Vector2(-10, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_ogmfp"]
+resource_name = "hit"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"hammer_hit"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
 [sub_resource type="Animation" id="Animation_1agin"]
 resource_name = "hurt"
 length = 0.2
@@ -975,6 +1004,7 @@ _data = {
 &"climb_idle": SubResource("Animation_rukb4"),
 &"defeat": SubResource("Animation_4no11"),
 &"fall": SubResource("Animation_fcwna"),
+&"hit": SubResource("Animation_ogmfp"),
 &"hurt": SubResource("Animation_1agin"),
 &"idle": SubResource("Animation_m6ahd"),
 &"jump": SubResource("Animation_2jnj1"),
@@ -1006,6 +1036,30 @@ region = Rect2(0, 0, 55, 65)
 [sub_resource type="AtlasTexture" id="AtlasTexture_mwii3"]
 atlas = ExtResource("14_4no11")
 region = Rect2(0, 0, 64, 65)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1agin"]
+atlas = ExtResource("14_fcwna")
+region = Rect2(0, 0, 109, 61)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ei2r2"]
+atlas = ExtResource("14_fcwna")
+region = Rect2(109, 0, 109, 61)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j6uq4"]
+atlas = ExtResource("14_fcwna")
+region = Rect2(218, 0, 109, 61)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h5u0x"]
+atlas = ExtResource("14_fcwna")
+region = Rect2(327, 0, 109, 61)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_po18e"]
+atlas = ExtResource("14_fcwna")
+region = Rect2(436, 0, 109, 61)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v37cr"]
+atlas = ExtResource("14_fcwna")
+region = Rect2(545, 0, 109, 61)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xpcdj"]
 atlas = ExtResource("3_xpcdj")
@@ -1098,6 +1152,29 @@ animations = [{
 "loop": true,
 "name": &"fall_hammer",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1agin")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ei2r2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j6uq4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h5u0x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_po18e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v37cr")
+}],
+"loop": false,
+"name": &"hammer_hit",
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,

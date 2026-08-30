@@ -26,6 +26,10 @@ func do_interaction() -> InteractableThing.InteractableType:
 	return InteractableType.NONE
 
 
+func is_interactable() -> bool:
+	return not opened
+
+
 func open_chest() -> void:
 	opened = true
 	animated_sprite_2d.play(ANIMS[chest_type])
@@ -34,3 +38,4 @@ func open_chest() -> void:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	animated_sprite_2d.animation = ANIMS[chest_type]
+	animated_sprite_2d.set_frame_and_progress(0, 0.0)

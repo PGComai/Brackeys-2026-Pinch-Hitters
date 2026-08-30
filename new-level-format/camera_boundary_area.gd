@@ -8,6 +8,9 @@ const PHYSICS_LAYER: int = 6
 const PHYSICS_MASK: int = 6
 
 
+@export var pause := true
+
+
 func _ready() -> void:
 	set_collision_layer_and_mask(PHYSICS_LAYER, PHYSICS_MASK)
 

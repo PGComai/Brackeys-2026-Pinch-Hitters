@@ -33,7 +33,8 @@ static func apply_boundary_to_camera(camera: CameraMan, boundary_area: CameraBou
 			boundary_dict["top"],
 			boundary_dict["right"],
 			boundary_dict["bottom"],
-			duration
+			duration,
+			boundary_area.pause
 		)
 	else:
 		camera.instant_limit_to(

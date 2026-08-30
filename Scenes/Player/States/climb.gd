@@ -26,5 +26,6 @@ func physics_update(delta: float) -> void:
 		if dir.y >= 0.1: # pressing down
 			state_machine.change_state("Fall")
 		else: # not pressing down
+			player.jumped_off_climb()
 			state_machine.change_state("Jump")
 	

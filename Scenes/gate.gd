@@ -20,6 +20,10 @@ func do_interaction() -> InteractableThing.InteractableType:
 	return InteractableType.NONE
 
 
+func is_interactable() -> bool:
+	return not disabled
+
+
 func open() -> void:
 	is_open = true
 	%AnimatedSprite2D.play("default")
