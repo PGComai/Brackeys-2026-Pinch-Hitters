@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://cm1f3mwqq3usk"]
+
+[ext_resource type="Texture2D" uid="uid://5kn2oegq737l" path="res://Assets/Sprites/Cannonball.png" id="1_6sx4m"]
+[ext_resource type="Script" uid="uid://cggyjmyal5sds" path="res://Scenes/projectile.gd" id="1_jrba7"]
+[ext_resource type="PackedScene" uid="uid://fdraqj66wl5w" path="res://Scenes/Particles/dust_trail.tscn" id="1_t5p8j"]
+[ext_resource type="PackedScene" uid="uid://d1hc2j1seapf2" path="res://Scenes/Particles/dust_poof.tscn" id="2_2lpkp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6sx4m"]
+size = Vector2(12, 12)
+
+[node name="ProjCannonball" type="Area2D" unique_id=185658826]
+collision_layer = 0
+script = ExtResource("1_jrba7")
+destroy_particles = ExtResource("2_2lpkp")
+
+[node name="DustTrail" parent="." unique_id=508398539 instance=ExtResource("1_t5p8j")]
+modulate = Color(0.14634591, 0.19555512, 0.279203, 1)
+amount = 16
+
+[node name="Cannonball" type="Sprite2D" parent="." unique_id=294930448]
+texture = ExtResource("1_6sx4m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1911999273]
+shape = SubResource("RectangleShape2D_6sx4m")

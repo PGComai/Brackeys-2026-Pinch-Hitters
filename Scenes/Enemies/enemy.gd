@@ -33,6 +33,7 @@ enum EnemyStateEnum { PATROL, PROJECTILE, BUBBLED, STUNNED }
 @export var wall_ray_cast: RayCast2D
 @export var hurtbox: Area2D
 
+@export var stun_sound: AudioStream
 
 var hp: int
 var state: EnemyStateEnum = EnemyStateEnum.PATROL
@@ -74,18 +75,21 @@ func _physics_process(delta: float) -> void:
 		EnemyStateEnum.PATROL:
 			velocity.y += gravity * delta
 			velocity.x = direction * patrol_speed
+			if sprite.sprite_frames.has_animation("walk"): sprite.play("walk")
 			move_and_slide()
 			if is_on_wall() or (is_on_floor() and not sees_ground_ahead()):
 				direction *= -1
 				sprite.scale.x *= -1
 		EnemyStateEnum.PROJECTILE:
+			sprite.play("idle")
 			move_projectile(delta)
 		EnemyStateEnum.BUBBLED:
 			process_bubbled(delta)
 		EnemyStateEnum.STUNNED:
+			sprite.play("idle")
 			stun_timer -= delta
 			if stun_timer < 0:
-				EnemyStateEnum.PATROL
+				state = EnemyStateEnum.PATROL
 				stars.visible = false
 
 	if state != EnemyStateEnum.BUBBLED:
@@ -110,9 +114,17 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 			try_damage_player(body)
 
 func stun():
-	state = EnemyStateEnum.STUNNED
-	stun_timer = 5.0
-	stars.visible = true
+	if state != EnemyStateEnum.STUNNED:
+		state = EnemyStateEnum.STUNNED
+		stun_timer = 5.0
+		stars.visible = true
+		if stun_sound:
+			var asp := AudioStreamPlayer.new()
+			asp.stream = stun_sound
+			asp.bus = &"SFX"
+			asp.autoplay = true
+			add_sibling(asp)
+			asp.finished.connect(asp.queue_free)
 
 func try_damage_player(player: Player) -> void:
 	if touch_timer > 0.0 or state == EnemyStateEnum.STUNNED:

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://t08vpsmx1h20"
-path="res://.godot/imported/TheGuy.png-90b765ae09243eb4c06e96ea0b3554c2.ctex"
+uid="uid://bopbrogwxhpt4"
+path="res://.godot/imported/SwordDogHurt.png-cf39e57760f27168dca203f2c02f19b9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/TheGuy.png"
-dest_files=["res://.godot/imported/TheGuy.png-90b765ae09243eb4c06e96ea0b3554c2.ctex"]
+source_file="res://Assets/Sprites/SwordDogHurt.png"
+dest_files=["res://.godot/imported/SwordDogHurt.png-cf39e57760f27168dca203f2c02f19b9.ctex"]
 
 [params]
 

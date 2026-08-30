@@ -19,6 +19,7 @@ var level_transitioning_flag := false
 
 func _ready() -> void:
 	load_level()
+	user_unpause()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -97,3 +98,7 @@ func _on_pause_menu_resume_requested() -> void:
 func _on_pause_menu_reset_requested() -> void:
 	user_unpause()
 	handle_level_transition()
+
+
+func _on_pause_menu_quit_requested() -> void:
+	get_tree().quit()

@@ -17,9 +17,11 @@ const JUMP_VELOCITY = -300
 const JUMP_CUT = 2.5
 const SHOOT_COOLDOWN = 0.5
 
-@export var has_hammer = true
+# TODO: Replace with globals or inventory?
+@export var has_hammer: bool = true
 @export var hammer_damage = 1
 @export var hammer_knockback = 300.0
+@export var has_fish: bool = true
 
 @export var invincibility_duration: float = 1.2
 @export var blink_interval: float = 0.08
@@ -52,6 +54,7 @@ var was_on_floor = true
 
 @onready var state_machine: StateMachine = $StateMachine
 
+@onready var dust_trail: CPUParticles2D = $Visual/DustTrail
 
 var frames := 0
 
@@ -78,26 +81,28 @@ func _physics_process(delta: float) -> void:
 	#if Input.is_action_pressed("Jump"):
 	#	velocity.y = JUMP_VELOCITY
 	#jump()
+	dust_trail.emitting = is_on_floor() and abs(velocity.x) > (speed / 2.0)
 	move_and_slide()
 
 
 func _process(delta: float) -> void:
 	camera_man.position = global_position
 	update_hammer_rotation()
-	fisshe_animate()
+	visual_update()
 	shoot_timer -= delta
 
 
 func _input(_event: InputEvent) -> void:
-	if Input.is_action_pressed("Bubble") and shoot_timer <= 0.0:
-		shoot_timer = SHOOT_COOLDOWN
-		fisshe_bubble(-1 if visual.scale.x < 0 else 1)
+	if has_fish:
+		if Input.is_action_pressed("Bubble") and shoot_timer <= 0.0:
+			shoot_timer = SHOOT_COOLDOWN
+			fisshe_bubble(-1 if visual.scale.x < 0 else 1)
 	#if Input.is_action_just_pressed("Restart"):
 	#	get_tree().reload_current_scene()
 	if not has_hammer:
 		return
 	#if Input.is_action_just_pressed("Fire"):
-   #	hammer_hit()
+   	#	hammer_hit()
 
 
 func ground_movement(delta: float, dir: float) -> void:
@@ -318,29 +323,37 @@ func fisshe_bubble(direction):
 	bubble_sfx.play()
 
 
-func fisshe_animate():
-	var facing_sign = visual.scale.x
-	var duration = 0.05
-	
-	var tween = create_tween()
-	tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	tween.set_parallel(true)
-	
-	tween.tween_property(fish, "scale:x", facing_sign, duration)
-	tween.tween_property(fish, "position:x", -facing_sign * 42.0, duration)
+func visual_update():
+	fish.visible = has_fish
+	if has_fish:
+		var facing_sign = visual.scale.x
+		var duration = 0.05
+		
+		var tween = create_tween()
+		tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		tween.set_parallel(true)
+		
+		tween.tween_property(fish, "scale:x", facing_sign, duration)
+		tween.tween_property(fish, "position:x", -facing_sign * 42.0, duration)
 
 
 func set_facing(left: bool) -> void:
 	visual.scale.x = -1 if left else 1
 
 
+func get_anim_name(anim_name: StringName) -> StringName:
+	if has_hammer:
+		anim_name = "hammer/" + anim_name
+	return anim_name 
+
+
 func play_animation(anim_name: StringName) -> void:
 	# TODO: Animation player should change AnimatedSprite2D's animation.
-	anim_player.play(anim_name)
+	anim_player.play(get_anim_name(anim_name))
 
 
 func queue_animation(anim_name: StringName) -> void:
-	anim_player.queue(anim_name)
+	anim_player.queue(get_anim_name(anim_name))
 
 
 func get_current_anim() -> StringName:
@@ -363,7 +376,7 @@ func try_bounce() -> bool:
 	if velocity.y > 0.01:
 		velocity.y = -abs(velocity.y) - 2
 		if is_jump_pressed():
-			velocity.y += JUMP_VELOCITY / 2
+			velocity.y += JUMP_VELOCITY / 2.0
 		state_machine.change_state("Jump")
 		return true
 	return false

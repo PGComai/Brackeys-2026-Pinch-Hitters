@@ -4,6 +4,7 @@
 [ext_resource type="Material" uid="uid://08cwywbch6c2" path="res://neat_shader_material.tres" id="2_2c62f"]
 [ext_resource type="PackedScene" uid="uid://d12p3fr2awrpp" path="res://ui/ControlHint.tscn" id="3_gyfs4"]
 [ext_resource type="Script" uid="uid://cp2x7dbr3w1mf" path="res://ui/pause_menu.gd" id="4_d5x1h"]
+[ext_resource type="Script" uid="uid://tbwelc1n06cw" path="res://ui/rebind_menu.gd" id="5_8mm7a"]
 
 [node name="MainScene" type="Node2D" unique_id=208061159]
 process_mode = 3
@@ -78,7 +79,6 @@ action_text = "Right"
 
 [node name="PauseMenu" type="PanelContainer" parent="CanvasLayer/UI" unique_id=1813660205]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -102,7 +102,20 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Reset"
 
+[node name="ButtonQuit" type="Button" parent="CanvasLayer/UI/PauseMenu/VBoxContainer" unique_id=1811852377]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Quit"
+
+[node name="VBoxContainerRebind" type="VBoxContainer" parent="CanvasLayer/UI/PauseMenu" unique_id=1679219768]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+script = ExtResource("5_8mm7a")
+
+[connection signal="quit_requested" from="CanvasLayer/UI/PauseMenu" to="." method="_on_pause_menu_quit_requested"]
 [connection signal="reset_requested" from="CanvasLayer/UI/PauseMenu" to="." method="_on_pause_menu_reset_requested"]
 [connection signal="resume_requested" from="CanvasLayer/UI/PauseMenu" to="." method="_on_pause_menu_resume_requested"]
 [connection signal="pressed" from="CanvasLayer/UI/PauseMenu/VBoxContainer/ButtonResume" to="CanvasLayer/UI/PauseMenu" method="_on_button_resume_pressed"]
 [connection signal="pressed" from="CanvasLayer/UI/PauseMenu/VBoxContainer/ButtonReset" to="CanvasLayer/UI/PauseMenu" method="_on_button_reset_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/PauseMenu/VBoxContainer/ButtonQuit" to="CanvasLayer/UI/PauseMenu" method="_on_button_quit_pressed"]

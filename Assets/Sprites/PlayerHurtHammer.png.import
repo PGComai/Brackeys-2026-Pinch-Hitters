@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://doub6jtnb8eqq"
-path="res://.godot/imported/shield-guy.png-4cbfda4a1686994abeb9d3ce0c99b1f4.ctex"
+uid="uid://dmx7dexx4e1nm"
+path="res://.godot/imported/PlayerHurtHammer.png-a4da284a047a04bc765800f4ca6ec808.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/shield-guy.png"
-dest_files=["res://.godot/imported/shield-guy.png-4cbfda4a1686994abeb9d3ce0c99b1f4.ctex"]
+source_file="res://Assets/Sprites/PlayerHurtHammer.png"
+dest_files=["res://.godot/imported/PlayerHurtHammer.png-a4da284a047a04bc765800f4ca6ec808.ctex"]
 
 [params]
 

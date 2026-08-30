@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://cgtppruwdu8nx" path="res://Scenes/Player/player.gd" id="1_v0iea"]
 [ext_resource type="AudioStream" uid="uid://c406hntclliyf" path="res://Assets/Sound/Step1.ogg" id="2_aqm4k"]
-[ext_resource type="Texture2D" uid="uid://dfso14lopsgdp" path="res://icon.svg" id="2_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://b1bao8t5wid5n" path="res://Assets/Sprites/PlayerJump.png" id="2_dey5f"]
 [ext_resource type="AudioStream" uid="uid://du25hxcxjnusj" path="res://Assets/Sound/Climb.ogg" id="2_h8ma5"]
 [ext_resource type="Texture2D" uid="uid://bl56jtrqamaw1" path="res://Assets/Sprites/Sweedish_Fish.png" id="2_mtuoh"]
@@ -11,6 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://d2ujhp3baxh1n" path="res://Assets/Sound/Jump.wav" id="2_rcvs5"]
 [ext_resource type="Texture2D" uid="uid://boaq0u0khxobf" path="res://Assets/Sprites/PlayerHurt.png" id="3_r5xpd"]
 [ext_resource type="AudioStream" uid="uid://84hcocf64041" path="res://Assets/Sound/Step2.ogg" id="3_rcvs5"]
+[ext_resource type="AudioStream" uid="uid://8x3vu4yowh1t" path="res://Assets/Sound/Death.ogg" id="3_rqdc0"]
 [ext_resource type="Texture2D" uid="uid://bimoggv1kbnb7" path="res://Assets/Sprites/PlayerIdle.png" id="3_xpcdj"]
 [ext_resource type="AudioStream" uid="uid://elda0tica0kj" path="res://Assets/Sound/Land.ogg" id="4_eksi1"]
 [ext_resource type="PackedScene" uid="uid://dhag7tgyi27al" path="res://new-level-format/camera_boundary_detector.tscn" id="5_htcer"]
@@ -18,10 +18,17 @@
 [ext_resource type="Script" uid="uid://bt708i1ai5oab" path="res://Scenes/Player/States/idle.gd" id="6_74mp2"]
 [ext_resource type="Script" uid="uid://tn15ujhpor8g" path="res://Scenes/Player/States/walk.gd" id="7_oikmp"]
 [ext_resource type="Script" uid="uid://cic4xb685wwbi" path="res://Scenes/Player/States/jump.gd" id="8_06tpx"]
+[ext_resource type="Texture2D" uid="uid://3g05jlr7gsl1" path="res://Assets/Sprites/PlayerDefeat.png" id="8_jincj"]
 [ext_resource type="Script" uid="uid://ywmnrtc18s1u" path="res://Scenes/Player/States/fall.gd" id="9_7g0yx"]
+[ext_resource type="Texture2D" uid="uid://gbs0jm1o2hvm" path="res://Assets/Sprites/PlayerClimbHammer.png" id="10_2ahak"]
 [ext_resource type="Script" uid="uid://bw80gp1gu7x6j" path="res://Scenes/Player/States/skid.gd" id="10_dey5f"]
+[ext_resource type="Texture2D" uid="uid://c1qyq3s3214oq" path="res://Assets/Sprites/PlayerDefeatHammer.png" id="12_rukb4"]
 [ext_resource type="AudioStream" uid="uid://db80g0j06mki4" path="res://Assets/Sound/Bubble.ogg" id="13_eksi1"]
+[ext_resource type="Texture2D" uid="uid://cvmdcj42v345j" path="res://Assets/Sprites/PlayerJumpHammer.png" id="14_4no11"]
 [ext_resource type="Script" uid="uid://btfq75au1qwa6" path="res://Scenes/Player/States/climb.gd" id="15_ks1b7"]
+[ext_resource type="Texture2D" uid="uid://dmx7dexx4e1nm" path="res://Assets/Sprites/PlayerHurtHammer.png" id="16_fcwna"]
+[ext_resource type="Texture2D" uid="uid://ddkbm7radkqbf" path="res://Assets/Sprites/PlayerWalkHammer.png" id="18_1agin"]
+[ext_resource type="PackedScene" uid="uid://fdraqj66wl5w" path="res://Scenes/Particles/dust_trail.tscn" id="19_2ahak"]
 
 [sub_resource type="Animation" id="Animation_dey5f"]
 length = 0.001
@@ -66,7 +73,7 @@ tracks/2/keys = {
 resource_name = "climb"
 length = 0.5
 loop_mode = 1
-step = 0.25
+step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -117,10 +124,10 @@ tracks/3/path = NodePath("Visual/Sprite:offset")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
+"times": PackedFloat32Array(0, 0.2, 0.25, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(-1, 0), Vector2(0, 0), Vector2(1, 0), Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_hnuln"]
@@ -149,9 +156,64 @@ tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [Vector2(0, 0)]
 }
+
+[sub_resource type="Animation" id="Animation_rqdc0"]
+resource_name = "defeat"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"defeat"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/Sprite:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.049999997, 0.1, 0.15, 0.2, 0.25, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(3, 16), Vector2(-3, 16), Vector2(3, 16), Vector2(-3, 16), Vector2(2, 16), Vector2(-2, 16), Vector2(0, 16)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visual/Sprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/3/type = "audio"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("SFXPlayer")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("3_rqdc0")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/3/use_blend = true
 
 [sub_resource type="Animation" id="Animation_jhyir"]
 resource_name = "fall"
@@ -189,14 +251,14 @@ tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [Vector2(-5, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_ks1b7"]
 resource_name = "hurt"
-length = 0.8
-step = 0.1
+length = 0.2
+step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -228,14 +290,15 @@ tracks/2/path = NodePath("Visual/Sprite:offset")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-5, 0)]
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(-7, 0), Vector2(-5, 0), Vector2(-7, 0), Vector2(-5, 0), Vector2(-6, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_7g0yx"]
 resource_name = "idle"
+length = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -269,7 +332,7 @@ tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [Vector2(0, 0)]
 }
 
@@ -324,13 +387,14 @@ tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [Vector2(-6, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_a3d8c"]
 resource_name = "land"
 length = 0.05
+step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -377,10 +441,10 @@ tracks/3/path = NodePath("Visual/Sprite:offset")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
+"times": PackedFloat32Array(0, 0.05),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(1, 0), Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_oikmp"]
@@ -441,10 +505,10 @@ tracks/3/path = NodePath("Visual/Sprite:offset")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-8, 0)]
+"times": PackedFloat32Array(0, 0.05, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(-8, -1), Vector2(-8, 1), Vector2(-8, -1), Vector2(-8, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xpcdj"]
@@ -452,6 +516,7 @@ _data = {
 &"RESET": SubResource("Animation_dey5f"),
 &"climb": SubResource("Animation_r5xpd"),
 &"climb_idle": SubResource("Animation_hnuln"),
+&"defeat": SubResource("Animation_rqdc0"),
 &"fall": SubResource("Animation_jhyir"),
 &"hurt": SubResource("Animation_ks1b7"),
 &"idle": SubResource("Animation_7g0yx"),
@@ -459,6 +524,462 @@ _data = {
 &"land": SubResource("Animation_a3d8c"),
 &"skid": SubResource("Animation_oikmp"),
 &"walk": SubResource("Animation_06tpx")
+}
+
+[sub_resource type="Animation" id="Animation_2ahak"]
+resource_name = "climb"
+length = 0.5
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"climb_hammer"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SFXPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("2_h8ma5")
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("2_h8ma5")
+}],
+"times": PackedFloat32Array(0, 0.25)
+}
+tracks/2/use_blend = true
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Visual/Sprite:offset")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.25, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(6, 0), Vector2(5, 0), Vector2(4, 0), Vector2(5, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_rukb4"]
+resource_name = "climb_idle"
+length = 0.5
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"climb_hammer"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/Sprite:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(5, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_4no11"]
+resource_name = "defeat"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"defeat_hammer"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/Sprite:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.049999997, 0.1, 0.15, 0.2, 0.25, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(3, 8.5), Vector2(-3, 8.5), Vector2(3, 8.5), Vector2(-3, 8.5), Vector2(2, 8.5), Vector2(-2, 8.5), Vector2(0, 8.5)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visual/Sprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/3/type = "audio"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("SFXPlayer")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("3_rqdc0")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/3/use_blend = true
+
+[sub_resource type="Animation" id="Animation_fcwna"]
+resource_name = "fall"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"fall_hammer"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visual/Sprite:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(-10, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_1agin"]
+resource_name = "hurt"
+length = 0.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"hurt_hammer"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visual/Sprite:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(-12, 0), Vector2(-10, 0), Vector2(-12, 0), Vector2(-10, 0), Vector2(-11, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_m6ahd"]
+resource_name = "idle"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle_hammer"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visual/Sprite:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(-11, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_2jnj1"]
+resource_name = "jump"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"jump_hammer"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SFXPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("2_rcvs5")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/2/use_blend = true
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Visual/Sprite:offset")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(-10, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_enij7"]
+resource_name = "land"
+length = 0.05
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle_hammer"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SFXPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("4_eksi1")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/2/use_blend = true
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Visual/Sprite:offset")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.05),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(-10, 1), Vector2(-11, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_mwii3"]
+resource_name = "skid"
+
+[sub_resource type="Animation" id="Animation_2aanf"]
+resource_name = "walk"
+length = 0.4
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"walk_hammer"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 1]
+}
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SFXPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("2_aqm4k")
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("3_rcvs5")
+}],
+"times": PackedFloat32Array(0.1, 0.3)
+}
+tracks/2/use_blend = true
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Visual/Sprite:offset")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(-13, -1), Vector2(-13, 1), Vector2(-13, -1), Vector2(-13, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_m6ahd"]
+_data = {
+&"climb": SubResource("Animation_2ahak"),
+&"climb_idle": SubResource("Animation_rukb4"),
+&"defeat": SubResource("Animation_4no11"),
+&"fall": SubResource("Animation_fcwna"),
+&"hurt": SubResource("Animation_1agin"),
+&"idle": SubResource("Animation_m6ahd"),
+&"jump": SubResource("Animation_2jnj1"),
+&"land": SubResource("Animation_enij7"),
+&"skid": SubResource("Animation_mwii3"),
+&"walk": SubResource("Animation_2aanf")
 }
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rcvs5"]
@@ -469,17 +990,37 @@ region = Rect2(0, 0, 45, 65)
 atlas = ExtResource("2_r5xpd")
 region = Rect2(45, 0, 45, 65)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_2jnj1"]
+atlas = ExtResource("10_2ahak")
+region = Rect2(0, 0, 56, 65)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_enij7"]
+atlas = ExtResource("10_2ahak")
+region = Rect2(56, 0, 56, 65)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_hnuln"]
 atlas = ExtResource("2_dey5f")
 region = Rect2(0, 0, 55, 65)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mwii3"]
+atlas = ExtResource("14_4no11")
+region = Rect2(0, 0, 64, 65)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xpcdj"]
 atlas = ExtResource("3_xpcdj")
 region = Rect2(0, 64, 96, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_2aanf"]
+atlas = ExtResource("18_1agin")
+region = Rect2(63, 0, 63, 62)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_aqm4k"]
 atlas = ExtResource("2_dey5f")
 region = Rect2(55, 0, 55, 65)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m6ahd"]
+atlas = ExtResource("14_4no11")
+region = Rect2(64, 0, 64, 65)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dey5f"]
 atlas = ExtResource("2_oikmp")
@@ -492,6 +1033,14 @@ region = Rect2(54, 0, 54, 62)
 [sub_resource type="AtlasTexture" id="AtlasTexture_ks1b7"]
 atlas = ExtResource("2_oikmp")
 region = Rect2(108, 0, 54, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ogmfp"]
+atlas = ExtResource("18_1agin")
+region = Rect2(0, 0, 63, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ixrbb"]
+atlas = ExtResource("18_1agin")
+region = Rect2(126, 0, 63, 62)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_kvjxa"]
 animations = [{
@@ -508,10 +1057,45 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_2jnj1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_enij7")
+}],
+"loop": true,
+"name": &"climb_hammer",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_jincj")
+}],
+"loop": true,
+"name": &"defeat",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_rukb4")
+}],
+"loop": true,
+"name": &"defeat_hammer",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_hnuln")
 }],
 "loop": true,
 "name": &"fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mwii3")
+}],
+"loop": true,
+"name": &"fall_hammer",
 "speed": 5.0
 }, {
 "frames": [{
@@ -524,6 +1108,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("16_fcwna")
+}],
+"loop": true,
+"name": &"hurt_hammer",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_xpcdj")
 }],
 "loop": true,
@@ -532,10 +1124,26 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_2aanf")
+}],
+"loop": true,
+"name": &"idle_hammer",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_aqm4k")
 }],
 "loop": true,
 "name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m6ahd")
+}],
+"loop": true,
+"name": &"jump_hammer",
 "speed": 5.0
 }, {
 "frames": [{
@@ -550,6 +1158,20 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ogmfp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2aanf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ixrbb")
+}],
+"loop": true,
+"name": &"walk_hammer",
 "speed": 5.0
 }]
 
@@ -638,10 +1260,16 @@ script = ExtResource("1_v0iea")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Visual" unique_id=845261753]
 root_node = NodePath("../..")
 libraries/ = SubResource("AnimationLibrary_xpcdj")
+libraries/hammer = SubResource("AnimationLibrary_m6ahd")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="Visual" unique_id=1000360803]
 sprite_frames = SubResource("SpriteFrames_kvjxa")
 animation = &"idle"
+
+[node name="DustTrail" parent="Visual" unique_id=508398539 instance=ExtResource("19_2ahak")]
+position = Vector2(0, 32)
+randomness = 1.0
+emission_shape = 0
 
 [node name="Fish" type="Node2D" parent="." unique_id=1308272739]
 position = Vector2(-40, 0)
@@ -660,6 +1288,7 @@ flip_h = true
 
 [node name="BubbleSFX" type="AudioStreamPlayer" parent="Fish" unique_id=1315821382]
 stream = ExtResource("13_eksi1")
+bus = &"SFX"
 
 [node name="HammerTime" type="Node2D" parent="." unique_id=2046948035]
 
@@ -670,12 +1299,6 @@ collision_mask = 2
 position = Vector2(36, 0)
 shape = SubResource("RectangleShape2D_1ndb7")
 debug_color = Color(0.9878606, 0, 0.31348816, 0.41960785)
-
-[node name="Icon" type="Sprite2D" parent="HammerTime/HammerHitbox" unique_id=1994683769]
-visible = false
-position = Vector2(36, 0)
-scale = Vector2(0.5625, 0.375)
-texture = ExtResource("2_cvnsp")
 
 [node name="CoyoteTimer" type="Timer" parent="." unique_id=1677229009]
 wait_time = 0.1
@@ -713,9 +1336,8 @@ metadata/_custom_type_script = "uid://d1piufhpnx5rw"
 script = ExtResource("10_dey5f")
 metadata/_custom_type_script = "uid://d1piufhpnx5rw"
 
-[node name="Climb" type="Node" parent="StateMachine" unique_id=403799742 node_paths=PackedStringArray("cancel_ray")]
+[node name="Climb" type="Node" parent="StateMachine" unique_id=403799742]
 script = ExtResource("15_ks1b7")
-cancel_ray = NodePath("../../ClimbArea/ClimbCancel")
 metadata/_custom_type_script = "uid://d1piufhpnx5rw"
 
 [node name="CameraBoundaryDetector" parent="." unique_id=1729657486 node_paths=PackedStringArray("player") instance=ExtResource("5_htcer")]
@@ -730,12 +1352,8 @@ position = Vector2(0, 9.5)
 shape = SubResource("RectangleShape2D_ks1b7")
 debug_color = Color(0.31723696, 0.62580127, 3.85046e-07, 0.41960785)
 
-[node name="ClimbCancel" type="RayCast2D" parent="ClimbArea" unique_id=1366187597]
-position = Vector2(0, 30)
-target_position = Vector2(0, 5)
-collision_mask = 4
-
 [node name="SFXPlayer" type="AudioStreamPlayer" parent="." unique_id=2024949468]
+bus = &"SFX"
 
 [node name="AudioListener2D" type="AudioListener2D" parent="." unique_id=699910672]
 current = true
