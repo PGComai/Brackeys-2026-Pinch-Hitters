@@ -29,7 +29,6 @@ position = Vector2(-736, -176)
 collision_layer = 32
 collision_mask = 32
 script = ExtResource("4_5xhh6")
-pause = null
 metadata/_custom_type_script = "uid://8u42oobowh5u"
 
 [node name="CameraBoundaryArea" type="Area2D" parent="." unique_id=1614855774]
@@ -80,3 +79,11 @@ position = Vector2(560, -160)
 
 [node name="EnemyCannon" parent="." unique_id=1129418410 instance=ExtResource("8_5xhh6")]
 position = Vector2(144, 144)
+
+[node name="EnemyCannon2" parent="." unique_id=67539171 instance=ExtResource("8_5xhh6")]
+position = Vector2(496, 48)
+can_move = false
+
+[node name="EnemyCannon3" parent="." unique_id=1566893620 instance=ExtResource("8_5xhh6")]
+position = Vector2(368, -48)
+can_move = false

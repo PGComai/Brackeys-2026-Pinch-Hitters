@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://d12p3fr2awrpp"]
 
 [ext_resource type="Script" uid="uid://21t7o746b5lj" path="res://ui/control_hint.gd" id="1_gqwjx"]
+[ext_resource type="LabelSettings" uid="uid://cdmnu0mw1xrpi" path="res://label_settings_big.tres" id="2_k0sq5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qel0x"]
 bg_color = Color(1, 1, 1, 0.21960784)
@@ -24,9 +25,6 @@ fill = 2
 fill_from = Vector2(0.5, 0.5)
 metadata/_snap_enabled = true
 
-[sub_resource type="LabelSettings" id="LabelSettings_k0sq5"]
-font_size = 12
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qel0x"]
 
 [node name="ControlHint" type="PanelContainer" unique_id=175961706]
@@ -42,6 +40,7 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_qel0x")
 script = ExtResource("1_gqwjx")
+key_text_scale = 1.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1120752011]
 layout_mode = 2
@@ -67,7 +66,7 @@ offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "A"
-label_settings = SubResource("LabelSettings_k0sq5")
+label_settings = ExtResource("2_k0sq5")
 horizontal_alignment = 1
 vertical_alignment = 1
 
