@@ -23,15 +23,15 @@ tile_set = ExtResource("3_q1u4k")
 [node name="PlayerSpawn" type="Marker2D" parent="." unique_id=2102359337]
 position = Vector2(132, 246)
 
-[node name="CameraBoundaryArea" type="Area2D" parent="." unique_id=1614855774]
-position = Vector2(320, 176)
+[node name="CameraBoundaryAreaTemplate" type="Area2D" parent="." unique_id=323889942]
+position = Vector2(-736, -176)
 collision_layer = 32
 collision_mask = 32
 script = ExtResource("4_mppdu")
 metadata/_custom_type_script = "uid://8u42oobowh5u"
 
-[node name="CameraBoundaryAreaTemplate" type="Area2D" parent="." unique_id=323889942]
-position = Vector2(-736, -176)
+[node name="CameraBoundaryArea" type="Area2D" parent="." unique_id=1614855774]
+position = Vector2(320, 176)
 collision_layer = 32
 collision_mask = 32
 script = ExtResource("4_mppdu")
@@ -45,7 +45,7 @@ script = ExtResource("4_mppdu")
 size_override_tiles = Vector2i(34, 11)
 metadata/_custom_type_script = "uid://8u42oobowh5u"
 
-[node name="EnemyDog" parent="." unique_id=1152602573 instance=ExtResource("5_q1u4k")]
+[node name="EnemyDogWithKey" parent="." unique_id=1152602573 instance=ExtResource("5_q1u4k")]
 position = Vector2(1568, 256)
 
 [node name="LevelEnd" type="Area2D" parent="." unique_id=1377046977]
