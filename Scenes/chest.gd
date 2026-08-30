@@ -1,4 +1,4 @@
-extends Area2D
+extends InteractableThing
 
 enum Type {FISH, HATE, LOVE}
 
