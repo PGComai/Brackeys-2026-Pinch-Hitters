@@ -54,6 +54,8 @@ var was_on_floor = true
 
 @onready var state_machine: StateMachine = $StateMachine
 
+@onready var dust_trail: CPUParticles2D = $Visual/DustTrail
+
 var frames := 0
 
 @onready var spawn_point: Vector2 = global_position
@@ -79,6 +81,7 @@ func _physics_process(delta: float) -> void:
 	#if Input.is_action_pressed("Jump"):
 	#	velocity.y = JUMP_VELOCITY
 	#jump()
+	dust_trail.emitting = is_on_floor() and abs(velocity.x) > (speed / 2.0)
 	move_and_slide()
 
 

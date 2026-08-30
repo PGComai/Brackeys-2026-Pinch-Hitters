@@ -28,6 +28,7 @@
 [ext_resource type="Script" uid="uid://btfq75au1qwa6" path="res://Scenes/Player/States/climb.gd" id="15_ks1b7"]
 [ext_resource type="Texture2D" uid="uid://dmx7dexx4e1nm" path="res://Assets/Sprites/PlayerHurtHammer.png" id="16_fcwna"]
 [ext_resource type="Texture2D" uid="uid://ddkbm7radkqbf" path="res://Assets/Sprites/PlayerWalkHammer.png" id="18_1agin"]
+[ext_resource type="PackedScene" uid="uid://fdraqj66wl5w" path="res://Scenes/Particles/dust_trail.tscn" id="19_2ahak"]
 
 [sub_resource type="Animation" id="Animation_dey5f"]
 length = 0.001
@@ -1264,6 +1265,11 @@ libraries/hammer = SubResource("AnimationLibrary_m6ahd")
 [node name="Sprite" type="AnimatedSprite2D" parent="Visual" unique_id=1000360803]
 sprite_frames = SubResource("SpriteFrames_kvjxa")
 animation = &"idle"
+
+[node name="DustTrail" parent="Visual" unique_id=508398539 instance=ExtResource("19_2ahak")]
+position = Vector2(0, 32)
+randomness = 1.0
+emission_shape = 0
 
 [node name="Fish" type="Node2D" parent="." unique_id=1308272739]
 position = Vector2(-40, 0)

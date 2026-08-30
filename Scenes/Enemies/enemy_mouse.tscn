@@ -3,18 +3,96 @@
 [ext_resource type="Script" uid="uid://r1ln74rer63n" path="res://Scenes/Enemies/enemy.gd" id="1_nvjdi"]
 [ext_resource type="Texture2D" uid="uid://t08vpsmx1h20" path="res://Assets/Sprites/SwordDogIdle.png" id="2_e848x"]
 [ext_resource type="AudioStream" uid="uid://dwhhsgo60kook" path="res://Assets/Sound/Stun.ogg" id="2_nknt7"]
+[ext_resource type="Texture2D" uid="uid://4o1uy1151cye" path="res://Assets/Sprites/DogAttack.png" id="3_qxp1u"]
+[ext_resource type="Texture2D" uid="uid://kdcst7vfpvjv" path="res://Assets/Sprites/SwordDogWalk.png" id="5_yecrr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kvjxa"]
 size = Vector2(60, 57)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_24jmm"]
+atlas = ExtResource("3_qxp1u")
+region = Rect2(0, 0, 91, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bd1me"]
+atlas = ExtResource("3_qxp1u")
+region = Rect2(91, 0, 91, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3cnrw"]
+atlas = ExtResource("3_qxp1u")
+region = Rect2(182, 0, 91, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v2nt7"]
+atlas = ExtResource("3_qxp1u")
+region = Rect2(273, 0, 91, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4r0dr"]
+atlas = ExtResource("3_qxp1u")
+region = Rect2(364, 0, 91, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vx8ja"]
+atlas = ExtResource("3_qxp1u")
+region = Rect2(455, 0, 91, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_31tqb"]
+atlas = ExtResource("5_yecrr")
+region = Rect2(0, 0, 81, 65)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0rf4f"]
+atlas = ExtResource("5_yecrr")
+region = Rect2(81, 0, 81, 65)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lhbae"]
+atlas = ExtResource("5_yecrr")
+region = Rect2(162, 0, 81, 65)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_1ndb7"]
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_24jmm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bd1me")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3cnrw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v2nt7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4r0dr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vx8ja")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("2_e848x")
 }],
 "loop": true,
-"name": &"default",
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_31tqb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0rf4f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lhbae")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0rf4f")
+}],
+"loop": true,
+"name": &"walk",
 "speed": 5.0
 }]
 
@@ -36,6 +114,8 @@ shape = SubResource("RectangleShape2D_kvjxa")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=29908297]
 sprite_frames = SubResource("SpriteFrames_1ndb7")
+animation = &"walk"
+frame_progress = 0.02964176
 
 [node name="WallRayCast" type="RayCast2D" parent="." unique_id=1478833176]
 target_position = Vector2(8, 0)
