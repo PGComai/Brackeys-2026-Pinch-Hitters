@@ -34,6 +34,13 @@ func spawn_player() -> void:
 		player.global_position = DEFAULT_PLAYER_SPAWN
 	add_child(camera_man)
 	player.camera_man = camera_man
+	player.entered_gate.connect(_on_player_gate_entered)
+
+
+func _on_player_gate_entered() -> void:
+	if not already_ended:
+		end_reached.emit()
+		already_ended = true
 
 
 func _on_level_end_end_reached() -> void:

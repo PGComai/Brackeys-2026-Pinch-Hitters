@@ -2,17 +2,21 @@ extends InteractableThing
 class_name Gate
 
 
+@export var disabled := false
+
+
 var is_open := false
 var is_entered := false
 
 
 func do_interaction() -> InteractableThing.InteractableType:
-	if not is_open:
-		open()
-		return InteractableType.GATE
-	elif not is_entered:
-		is_entered = true
-		return InteractableType.GATE_OPEN
+	if not disabled:
+		if not is_open:
+			open()
+			return InteractableType.GATE
+		elif not is_entered:
+			is_entered = true
+			return InteractableType.GATE_OPEN
 	return InteractableType.NONE
 
 

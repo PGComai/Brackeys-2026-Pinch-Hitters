@@ -3,7 +3,7 @@ extends Area2D
 class_name InteractableThing
 
 
-enum InteractableType{CHEST, GATE, GATE_OPEN, NONE}
+enum InteractableType{CHEST, CHEST_OPEN, GATE, GATE_OPEN, NONE}
 
 
 var interactable_type: InteractableType
