@@ -60,5 +60,3 @@ position = Vector2(336, 264)
 
 [node name="EnemyCannon" parent="." unique_id=1129418410 instance=ExtResource("8_i187g")]
 position = Vector2(1048, 289)
-can_move = false
-can_aim_up = false
