@@ -1,0 +1,95 @@
+[gd_scene format=3 uid="uid://bxikbtqka6onx"]
+
+[ext_resource type="Texture2D" uid="uid://b7vv382wmtcpb" path="res://Assets/Sprites/Gate_Open.png" id="1_1lkl7"]
+[ext_resource type="Script" uid="uid://1cdgj5gcl715" path="res://Scenes/gate.gd" id="2_hn85u"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hn85u"]
+atlas = ExtResource("1_1lkl7")
+region = Rect2(0, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kfxhe"]
+atlas = ExtResource("1_1lkl7")
+region = Rect2(96, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4dmbs"]
+atlas = ExtResource("1_1lkl7")
+region = Rect2(192, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dyksl"]
+atlas = ExtResource("1_1lkl7")
+region = Rect2(288, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_03n5m"]
+atlas = ExtResource("1_1lkl7")
+region = Rect2(384, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_atm3l"]
+atlas = ExtResource("1_1lkl7")
+region = Rect2(480, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r3dsh"]
+atlas = ExtResource("1_1lkl7")
+region = Rect2(576, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_23fo7"]
+atlas = ExtResource("1_1lkl7")
+region = Rect2(672, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pmoae"]
+atlas = ExtResource("1_1lkl7")
+region = Rect2(768, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c2w7r"]
+atlas = ExtResource("1_1lkl7")
+region = Rect2(864, 0, 96, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_oktvy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hn85u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kfxhe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4dmbs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dyksl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_03n5m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_atm3l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r3dsh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_23fo7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pmoae")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c2w7r")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hogs3"]
+size = Vector2(64, 64)
+
+[node name="Gate" type="AnimatedSprite2D" unique_id=510370816]
+sprite_frames = SubResource("SpriteFrames_oktvy")
+script = ExtResource("2_hn85u")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=993471177]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1609045865]
+unique_name_in_owner = true
+shape = SubResource("RectangleShape2D_hogs3")
