@@ -17,7 +17,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_cjfl1")
 }],
-"loop": 1,
+"loop": true,
 "name": &"dont",
 "speed": 5.0
 }, {
@@ -25,7 +25,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_bagqn")
 }],
-"loop": 1,
+"loop": true,
 "name": &"love",
 "speed": 5.0
 }]
@@ -36,5 +36,6 @@ script = ExtResource("1_cjfl1")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=863777213]
 sprite_frames = SubResource("SpriteFrames_g4v7s")
 animation = &"dont"
+frame_progress = 0.99741197
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2012159422]
