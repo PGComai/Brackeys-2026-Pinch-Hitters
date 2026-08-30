@@ -97,7 +97,7 @@ offset_left = 108.0
 offset_top = -24.0
 offset_right = 192.0
 offset_bottom = 1.0
-key_text = "←"
+key_text = "<"
 action_text = "Left"
 
 [node name="ControlHintRight" parent="CanvasLayer/UI/Controls" unique_id=1037950127 instance=ExtResource("3_gyfs4")]
@@ -107,7 +107,7 @@ offset_left = 214.0
 offset_top = -24.0
 offset_right = 298.0
 offset_bottom = 1.0
-key_text = "→"
+key_text = ">"
 action_text = "Right"
 alternate_text = "Continue"
 
