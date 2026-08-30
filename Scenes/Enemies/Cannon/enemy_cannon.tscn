@@ -9,12 +9,16 @@
 [ext_resource type="AudioStream" uid="uid://dwhhsgo60kook" path="res://Assets/Sound/Stun.ogg" id="5_rosip"]
 [ext_resource type="Texture2D" uid="uid://jhl01uk70nru" path="res://Assets/Sprites/CannonFlash.png" id="6_jd037"]
 [ext_resource type="Script" uid="uid://drr22sgdamrsa" path="res://Scripts/Types/state_machine.gd" id="7_e2g8w"]
-[ext_resource type="Script" uid="uid://c7qwmtxsik0lo" path="res://States/move.gd" id="10_utn5w"]
 [ext_resource type="Script" uid="uid://dcgya7y8mi4ul" path="res://Scripts/Types/delay_state.gd" id="11_eb2pt"]
+[ext_resource type="Script" uid="uid://bjw60jlqt11nu" path="res://Scenes/Enemies/Cannon/States/move.gd" id="11_thmn2"]
 [ext_resource type="Script" uid="uid://dssa00haabhka" path="res://Scenes/Enemies/Cannon/States/fire.gd" id="12_utn5w"]
+[ext_resource type="Script" uid="uid://ca07nevkiw4hd" path="res://Scenes/Enemies/stun_state.gd" id="13_eb2pt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g4v7s"]
 size = Vector2(24, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_utn5w"]
+size = Vector2(28, 27)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5i7xi"]
 atlas = ExtResource("1_v8340")
@@ -1009,13 +1013,26 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="EnemyCannon" type="CharacterBody2D" unique_id=1129418410]
+[node name="EnemyCannon" type="CharacterBody2D" unique_id=1129418410 node_paths=PackedStringArray("sprite", "wall_ray_cast", "hurtbox")]
+collision_layer = 2
+collision_mask = 4
 script = ExtResource("1_r0tif")
 projectile_scene = ExtResource("2_jd037")
+sprite = NodePath("Visual/Sprite")
+wall_ray_cast = NodePath("Visual/MoveInterruptRay")
+hurtbox = NodePath("Hurtbox")
+stun_sound = ExtResource("5_rosip")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1667707872]
 position = Vector2(0, -12)
 shape = SubResource("RectangleShape2D_g4v7s")
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=899704475]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=417946131]
+position = Vector2(0, -13.5)
+shape = SubResource("RectangleShape2D_utn5w")
 
 [node name="Visual" type="Node2D" parent="." unique_id=1411124584]
 
@@ -1056,13 +1073,21 @@ delay = 2.0
 next_state = NodePath("../Move")
 metadata/_custom_type_script = "uid://dcgya7y8mi4ul"
 
-[node name="Move" type="Node" parent="StateMachine" unique_id=984006042 node_paths=PackedStringArray("next_state", "interrupt")]
-script = ExtResource("10_utn5w")
+[node name="Move" type="Node" parent="StateMachine" unique_id=984006042 node_paths=PackedStringArray("next_state", "interrupt", "visual")]
+script = ExtResource("11_thmn2")
 next_state = NodePath("../Fire")
 interrupt = NodePath("../../Visual/MoveInterruptRay")
+visual = NodePath("../../Visual")
 metadata/_custom_type_script = "uid://cuq5r6ap865ua"
 
 [node name="Fire" type="Node" parent="StateMachine" unique_id=944349719 node_paths=PackedStringArray("next_state")]
 script = ExtResource("12_utn5w")
 next_state = NodePath("../Wait")
 metadata/_custom_type_script = "uid://cuq5r6ap865ua"
+
+[node name="Stun" type="Node" parent="StateMachine" unique_id=940929158 node_paths=PackedStringArray("next_state", "anim_player")]
+script = ExtResource("13_eb2pt")
+next_state = NodePath("../Move")
+anim_player = NodePath("../../Visual/AnimationPlayer")
+anim = &"hurt"
+metadata/_custom_type_script = "uid://ca07nevkiw4hd"

@@ -9,10 +9,13 @@ extends EnemyState
 @export var visual: Node2D
 
 
-var timer
+var timer: float
 
 
 func on_start(_msg := {}) -> void:
+	timer = length
+
+func on_end(_msg := {}) -> void:
 	timer = length
 
 
@@ -27,6 +30,3 @@ func physics_update(_delta: float) -> void:
 	
 	if visual:
 		visual.scale.x = -1 if direction.x < 0 else 1
-	
-	enemy.move_and_slide()
-

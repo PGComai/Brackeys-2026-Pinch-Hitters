@@ -9,6 +9,8 @@ extends Enemy
 
 @onready var anim_player: AnimationPlayer = $Visual/AnimationPlayer
 
+@onready var state_machine: StateMachine = $StateMachine
+
 enum CannonTilt { FRONT, HALF_UP, UP }
 var current_tilt := CannonTilt.FRONT
 
@@ -50,12 +52,21 @@ func spawn_projectile() -> void:
 	if not proj:
 		push_error("EnemyCannon: projectile_scene is not type of Projectile!")
 		return
+	print(CannonTilt.keys()[current_tilt], " ", dir)
 	proj.velocity = projectile_speed * dir
 	add_sibling(proj)
+	proj.global_position = projectile_spawn.global_position
 
 
 func _physics_process(delta: float) -> void:
 	if touch_timer > 0.0:
 		touch_timer -= delta
 	
+	velocity.y += gravity * delta
 	
+	move_and_slide()
+
+
+func stun():
+	super()
+	state_machine.change_state("Stun")

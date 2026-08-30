@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://coh24671bqrt1" path="res://Scenes/Enemies/enemy_mouse.tscn" id="5_q1u4k"]
 [ext_resource type="Script" uid="uid://cgirqvnbto42o" path="res://new-level-format/level_end.gd" id="6_qidma"]
 [ext_resource type="PackedScene" uid="uid://dsb6purr30obl" path="res://Scenes/chest.tscn" id="7_nshqk"]
+[ext_resource type="PackedScene" uid="uid://onrf4ydasxcd" path="res://Scenes/Enemies/Cannon/enemy_cannon.tscn" id="8_i187g"]
 
 [node name="NewLevel" type="Node2D" unique_id=1581404091 node_paths=PackedStringArray("player_spawn", "level_end")]
 script = ExtResource("1_fi1tt")
@@ -56,3 +57,6 @@ metadata/_custom_type_script = "uid://cgirqvnbto42o"
 
 [node name="Chest" parent="." unique_id=729216827 instance=ExtResource("7_nshqk")]
 position = Vector2(336, 264)
+
+[node name="EnemyCannon" parent="." unique_id=1129418410 instance=ExtResource("8_i187g")]
+position = Vector2(811, 289)

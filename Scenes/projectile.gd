@@ -6,6 +6,7 @@ extends Area2D
 @export var damage: int = 1
 @export var knockback: float = 0
 
+@export var hit_sound: AudioStream
 @export var destroy_particles: PackedScene 
 
 func _process(delta: float) -> void:
@@ -32,4 +33,12 @@ func destroy() -> void:
 			particles.emitting = true
 			add_sibling(particles)
 			particles.global_position = global_position
+	if hit_sound:
+		var asp := AudioStreamPlayer2D.new()
+		asp.stream = hit_sound
+		asp.bus = "SFX"
+		add_sibling(asp)
+		asp.global_position = global_position
+		asp.play()
+		asp.finished.connect(asp.queue_free)
 	queue_free()
