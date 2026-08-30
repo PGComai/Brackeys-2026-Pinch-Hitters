@@ -6,6 +6,8 @@ extends EnemyState
 @export var direction: Vector2 = Vector2.RIGHT
 @export var next_state: State
 @export var interrupt: RayCast2D
+@export var visual: Node2D
+
 
 var timer
 
@@ -20,7 +22,11 @@ func update(delta: float) -> void:
 		state_machine.change_state(next_state.name)
 
 
-func physics_update(delta: float) -> void:
+func physics_update(_delta: float) -> void:
 	enemy.velocity = direction.normalized() * enemy.patrol_speed 
+	
+	if visual:
+		visual.scale.x = -1 if direction.x < 0 else 1
+	
 	enemy.move_and_slide()
 

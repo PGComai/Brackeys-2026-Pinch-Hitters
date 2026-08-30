@@ -1062,6 +1062,7 @@ next_state = NodePath("../Fire")
 interrupt = NodePath("../../Visual/MoveInterruptRay")
 metadata/_custom_type_script = "uid://cuq5r6ap865ua"
 
-[node name="Fire" type="Node" parent="StateMachine" unique_id=944349719]
+[node name="Fire" type="Node" parent="StateMachine" unique_id=944349719 node_paths=PackedStringArray("next_state")]
 script = ExtResource("12_utn5w")
+next_state = NodePath("../Wait")
 metadata/_custom_type_script = "uid://cuq5r6ap865ua"
