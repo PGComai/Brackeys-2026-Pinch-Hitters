@@ -15,9 +15,6 @@ var timer: float
 func on_start(_msg := {}) -> void:
 	timer = length
 
-func on_end(_msg := {}) -> void:
-	timer = length
-
 
 func update(delta: float) -> void:
 	timer -= delta

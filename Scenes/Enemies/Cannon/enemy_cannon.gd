@@ -9,6 +9,8 @@ extends Enemy
 
 @onready var anim_player: AnimationPlayer = $Visual/AnimationPlayer
 
+@onready var detection_area: Area2D = $DetectionArea
+
 @onready var state_machine: StateMachine = $StateMachine
 
 enum CannonTilt { FRONT, HALF_UP, UP }
@@ -63,6 +65,11 @@ func _physics_process(delta: float) -> void:
 		touch_timer -= delta
 	
 	velocity.y += gravity * delta
+
+	if not state_machine.in_state(["Aim", "Fire", "Stun"]) and detection_area.has_overlapping_bodies():
+		var first_body := detection_area.get_overlapping_bodies().front() as Player
+		if first_body:
+			state_machine.change_state("Aim", {target=first_body})
 	
 	move_and_slide()
 

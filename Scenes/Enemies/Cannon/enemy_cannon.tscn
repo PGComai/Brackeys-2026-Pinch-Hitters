@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://bjw60jlqt11nu" path="res://Scenes/Enemies/Cannon/States/move.gd" id="11_thmn2"]
 [ext_resource type="Script" uid="uid://dssa00haabhka" path="res://Scenes/Enemies/Cannon/States/fire.gd" id="12_utn5w"]
 [ext_resource type="Script" uid="uid://ca07nevkiw4hd" path="res://Scenes/Enemies/stun_state.gd" id="13_eb2pt"]
+[ext_resource type="Script" uid="uid://beh10iyamx24f" path="res://Scenes/Enemies/Cannon/States/aim.gd" id="14_thmn2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g4v7s"]
 size = Vector2(24, 24)
@@ -1013,6 +1014,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_eb2pt"]
+radius = 300.0
+
 [node name="EnemyCannon" type="CharacterBody2D" unique_id=1129418410 node_paths=PackedStringArray("sprite", "wall_ray_cast", "hurtbox")]
 collision_layer = 2
 collision_mask = 4
@@ -1069,13 +1073,13 @@ metadata/_custom_type_script = "uid://drr22sgdamrsa"
 
 [node name="Wait" type="Node" parent="StateMachine" unique_id=413435199 node_paths=PackedStringArray("next_state")]
 script = ExtResource("11_eb2pt")
-delay = 2.0
+delay = 1.0
 next_state = NodePath("../Move")
 metadata/_custom_type_script = "uid://dcgya7y8mi4ul"
 
 [node name="Move" type="Node" parent="StateMachine" unique_id=984006042 node_paths=PackedStringArray("next_state", "interrupt", "visual")]
 script = ExtResource("11_thmn2")
-next_state = NodePath("../Fire")
+next_state = NodePath("../Wait")
 interrupt = NodePath("../../Visual/MoveInterruptRay")
 visual = NodePath("../../Visual")
 metadata/_custom_type_script = "uid://cuq5r6ap865ua"
@@ -1091,3 +1095,20 @@ next_state = NodePath("../Move")
 anim_player = NodePath("../../Visual/AnimationPlayer")
 anim = &"hurt"
 metadata/_custom_type_script = "uid://ca07nevkiw4hd"
+
+[node name="Aim" type="Node" parent="StateMachine" unique_id=446483072 node_paths=PackedStringArray("visual", "aim_origin")]
+script = ExtResource("14_thmn2")
+visual = NodePath("../../Visual")
+aim_origin = NodePath("../../AimOrigin")
+metadata/_custom_type_script = "uid://c2h3310ojylhe"
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=2030988157]
+position = Vector2(0, -12)
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=93644730]
+shape = SubResource("CircleShape2D_eb2pt")
+
+[node name="AimOrigin" type="Marker2D" parent="." unique_id=2002445809]
+position = Vector2(0, -16)

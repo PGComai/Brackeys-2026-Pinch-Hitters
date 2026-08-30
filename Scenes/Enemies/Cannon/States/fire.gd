@@ -1,8 +1,6 @@
-extends EnemyState
+extends CannonState
 
 @export var next_state: State
-
-@onready var cannon := owner as EnemyCannon
 
 func on_start(_msg := {}) -> void:
 	cannon.fire()
