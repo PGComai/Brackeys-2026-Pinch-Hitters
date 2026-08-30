@@ -92,7 +92,16 @@ func _process(delta: float) -> void:
 	shoot_timer -= delta
 
 
+func handle_interactable(interactable: InteractableArea, event: InputEvent) -> void:
+	pass
+
+
 func _input(_event: InputEvent) -> void:
+	var interact_or_null: InteractableArea = %InteractableArea.get_interactable()
+	if interact_or_null:
+		if Input.is_action_pressed("Bubble"):
+			handle_interactable(interact_or_null, _event)
+			return
 	if has_fish:
 		if Input.is_action_pressed("Bubble") and shoot_timer <= 0.0:
 			shoot_timer = SHOOT_COOLDOWN
