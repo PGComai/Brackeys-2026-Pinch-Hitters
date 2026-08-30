@@ -30,15 +30,23 @@ var player_data: Dictionary
 func _ready() -> void:
 	load_level()
 	user_unpause()
+	%AudioStreamPlayerLevel.volume_db = -80.0
+	%AudioStreamPlayerLevel.play()
+	var tween := get_tree().create_tween()
+	tween.tween_property(%AudioStreamPlayerLevel, "volume_db", -20.0, 2.0)
+	#end_surprise()
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("Pause"):
-		if not level_transitioning_flag:
+		if not level_transitioning_flag and not %MoralOfTheStory.active:
 			if get_tree().paused:
 				user_unpause()
 			else:
 				user_pause()
+	if %MoralOfTheStory.paused:
+		if event.is_action_pressed("Right"):
+			moral_next_sentence()
 
 
 func user_pause() -> void:
@@ -68,6 +76,8 @@ func load_level() -> void:
 
 
 func _on_level_toggle_interactable_input(on: bool) -> void:
+	if on:
+		%AudioStreamPlayerInteract.play()
 	%ControlHintAttack.toggle_alternate_text(on)
 
 
@@ -109,6 +119,41 @@ func _on_current_level_end_reached(data: Dictionary) -> void:
 	player_data = data
 	if increment_level_idx():
 		handle_level_transition()
+	else:
+		end_surprise()
+
+
+func end_surprise() -> void:
+	get_tree().paused = true
+	%PanelContainerMoral.visible = true
+	%ControlHintRight.toggle_alternate_text(true)
+	%ControlHintPause.visible = false
+	%ControlHintRight.visible = false
+	%ControlHintJump.visible = false
+	%ControlHintAttack.visible = false
+	%ControlHintLeft.visible = false
+	music_fade()
+	
+
+
+func music_fade() -> void:
+	var tween := get_tree().create_tween()
+	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	
+	tween.tween_property(%AudioStreamPlayerLevel, "volume_db", -80.0, 2.0)
+	
+	await tween.finished
+	%AudioStreamPlayerLevel.stop()
+	%AudioStreamPlayerEndMusic.volume_db = -80.0
+	
+	
+	%AudioStreamPlayerEndMusic.play()
+	
+	tween = get_tree().create_tween()
+	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tween.tween_property(%AudioStreamPlayerEndMusic, "volume_db", -20.0, 2.0)
+	await tween.finished
+	%MoralOfTheStory.active = true
 
 
 func _on_pause_menu_resume_requested() -> void:
@@ -122,3 +167,23 @@ func _on_pause_menu_reset_requested() -> void:
 
 func _on_pause_menu_quit_requested() -> void:
 	get_tree().quit()
+
+
+func _on_moral_of_the_story_text_paused() -> void:
+	%ControlHintRight.visible = true
+
+
+func moral_next_sentence() -> void:
+	if not %MoralOfTheStory.is_done():
+		%MoralOfTheStory.paused = false
+		%ControlHintRight.visible = false
+	else:
+		%MoralOfTheStory.active = false
+		%PanelContainerMoral.visible = false
+		get_tree().paused = false
+		%ControlHintRight.toggle_alternate_text(false)
+		%ControlHintPause.visible = true
+		%ControlHintRight.visible = true
+		%ControlHintJump.visible = true
+		%ControlHintAttack.visible = true
+		%ControlHintLeft.visible = true
