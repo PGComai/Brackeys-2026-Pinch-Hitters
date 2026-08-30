@@ -4,14 +4,25 @@ extends Area2D
 @export var velocity: Vector2 = Vector2.RIGHT
 @export_range(0.0, 30.0, 0.5, "or_greater") var lifetime: float = 5.0
 @export var damage: int = 1
+@export var knockback: float = 0
 
 @export var destroy_particles: PackedScene 
 
+func _process(delta: float) -> void:
+	if lifetime > 0:
+		lifetime -= delta
+		if lifetime <= 0:
+			destroy()
+
 func _physics_process(delta: float) -> void:
+	position += velocity * delta
 	if has_overlapping_bodies():
 		for body in get_overlapping_bodies():
-			if body.has_method("damage"):
-				body.damage(damage)
+			if body.has_method("hit"):
+				var knock_vec := Vector2.ZERO
+				if knockback > 0:
+					knock_vec = global_position.direction_to(body.global_position) * knockback
+				body.hit(damage, knock_vec)
 		destroy()
 
 func destroy() -> void:

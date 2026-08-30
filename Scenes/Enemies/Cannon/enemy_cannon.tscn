@@ -3,11 +3,15 @@
 [ext_resource type="Script" uid="uid://h3chxm4kge33" path="res://Scenes/Enemies/Cannon/enemy_cannon.gd" id="1_r0tif"]
 [ext_resource type="Texture2D" uid="uid://djnrgf25son3a" path="res://Assets/Sprites/Cannon.png" id="1_v8340"]
 [ext_resource type="Texture2D" uid="uid://cp7s4lbpolyox" path="res://Assets/Sprites/CannonHappy.png" id="2_e2g8w"]
+[ext_resource type="PackedScene" uid="uid://cm1f3mwqq3usk" path="res://Scenes/Enemies/Cannon/proj_cannonball.tscn" id="2_jd037"]
 [ext_resource type="Texture2D" uid="uid://cr6617n6ytjvc" path="res://Assets/Sprites/CannonHurt.png" id="3_r0tif"]
 [ext_resource type="AudioStream" uid="uid://d4jba7wanlr5f" path="res://Assets/Sound/CannonShot.ogg" id="4_gydeg"]
 [ext_resource type="AudioStream" uid="uid://dwhhsgo60kook" path="res://Assets/Sound/Stun.ogg" id="5_rosip"]
 [ext_resource type="Texture2D" uid="uid://jhl01uk70nru" path="res://Assets/Sprites/CannonFlash.png" id="6_jd037"]
 [ext_resource type="Script" uid="uid://drr22sgdamrsa" path="res://Scripts/Types/state_machine.gd" id="7_e2g8w"]
+[ext_resource type="Script" uid="uid://c7qwmtxsik0lo" path="res://States/move.gd" id="10_utn5w"]
+[ext_resource type="Script" uid="uid://dcgya7y8mi4ul" path="res://Scripts/Types/delay_state.gd" id="11_eb2pt"]
+[ext_resource type="Script" uid="uid://dssa00haabhka" path="res://Scenes/Enemies/Cannon/States/fire.gd" id="12_utn5w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g4v7s"]
 size = Vector2(24, 24)
@@ -306,7 +310,7 @@ tracks/8/path = NodePath("Visual/ProjectileSpawn:position")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0.65000004),
+"times": PackedFloat32Array(0.6),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(9, -16)]
@@ -326,6 +330,20 @@ tracks/9/keys = {
 "times": PackedFloat32Array(0.65000004)
 }
 tracks/9/use_blend = true
+tracks/10/type = "method"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath(".")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0.65),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"spawn_projectile"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_sx7o5"]
 resource_name = "fire_half_up"
@@ -434,7 +452,7 @@ tracks/8/path = NodePath("Visual/ProjectileSpawn:position")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0.65000004),
+"times": PackedFloat32Array(0.6),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(5, -27)]
@@ -454,6 +472,20 @@ tracks/9/keys = {
 "times": PackedFloat32Array(0.65000004)
 }
 tracks/9/use_blend = true
+tracks/10/type = "method"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath(".")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0.65),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"spawn_projectile"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_b7bwi"]
 resource_name = "fire_up"
@@ -562,7 +594,7 @@ tracks/8/path = NodePath("Visual/ProjectileSpawn:position")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0.65000004),
+"times": PackedFloat32Array(0.6),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(-4, -33)]
@@ -582,6 +614,20 @@ tracks/9/keys = {
 "times": PackedFloat32Array(0.65)
 }
 tracks/9/use_blend = true
+tracks/10/type = "method"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath(".")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0.65),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"spawn_projectile"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_3ly6c"]
 resource_name = "front"
@@ -965,9 +1011,10 @@ animations = [{
 
 [node name="EnemyCannon" type="CharacterBody2D" unique_id=1129418410]
 script = ExtResource("1_r0tif")
+projectile_scene = ExtResource("2_jd037")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1667707872]
-position = Vector2(-4, -12)
+position = Vector2(0, -12)
 shape = SubResource("RectangleShape2D_g4v7s")
 
 [node name="Visual" type="Node2D" parent="." unique_id=1411124584]
@@ -993,6 +1040,28 @@ position = Vector2(9, -16)
 [node name="SFXPlayer" type="AudioStreamPlayer2D" parent="Visual" unique_id=1948372247]
 bus = &"SFX"
 
-[node name="StateMachine" type="Node" parent="." unique_id=1201126396]
+[node name="MoveInterruptRay" type="RayCast2D" parent="Visual" unique_id=1718552135]
+position = Vector2(0, -13)
+target_position = Vector2(19, 0)
+collision_mask = 4
+
+[node name="StateMachine" type="Node" parent="." unique_id=1201126396 node_paths=PackedStringArray("default_state")]
 script = ExtResource("7_e2g8w")
+default_state = NodePath("Wait")
 metadata/_custom_type_script = "uid://drr22sgdamrsa"
+
+[node name="Wait" type="Node" parent="StateMachine" unique_id=413435199 node_paths=PackedStringArray("next_state")]
+script = ExtResource("11_eb2pt")
+delay = 2.0
+next_state = NodePath("../Move")
+metadata/_custom_type_script = "uid://dcgya7y8mi4ul"
+
+[node name="Move" type="Node" parent="StateMachine" unique_id=984006042 node_paths=PackedStringArray("next_state", "interrupt")]
+script = ExtResource("10_utn5w")
+next_state = NodePath("../Fire")
+interrupt = NodePath("../../Visual/MoveInterruptRay")
+metadata/_custom_type_script = "uid://cuq5r6ap865ua"
+
+[node name="Fire" type="Node" parent="StateMachine" unique_id=944349719]
+script = ExtResource("12_utn5w")
+metadata/_custom_type_script = "uid://cuq5r6ap865ua"
