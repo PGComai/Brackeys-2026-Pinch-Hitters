@@ -3,6 +3,8 @@ extends CharacterBody2D
 
 
 signal entered_gate
+signal interactable_entered
+signal interactable_exited
 
 
 @export var gravity: float = 500.0
@@ -399,3 +401,13 @@ func try_bounce() -> bool:
 
 func can_climb() -> bool:
 	return climb_hitbox.has_overlapping_bodies()
+
+
+func _on_interactable_area_area_entered(area: Area2D) -> void:
+	var interact_or_null: InteractableThing = %InteractableArea.get_interactable()
+	if interact_or_null:
+		interactable_entered.emit()
+
+
+func _on_interactable_area_area_exited(area: Area2D) -> void:
+	interactable_exited.emit()

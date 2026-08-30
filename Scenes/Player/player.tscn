@@ -1372,3 +1372,6 @@ metadata/_custom_type_script = "uid://duaegl162ax24"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableArea" unique_id=1723743062]
 shape = SubResource("RectangleShape2D_4no11")
+
+[connection signal="area_entered" from="InteractableArea" to="." method="_on_interactable_area_area_entered"]
+[connection signal="area_exited" from="InteractableArea" to="." method="_on_interactable_area_area_exited"]

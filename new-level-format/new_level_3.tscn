@@ -45,7 +45,7 @@ metadata/_custom_type_script = "uid://cgirqvnbto42o"
 
 [node name="Chest" parent="." unique_id=729216827 instance=ExtResource("6_ni86y")]
 position = Vector2(320, 200)
-chest_type = 1
+chest_type = 2
 
 [node name="Gate" parent="." unique_id=510370816 instance=ExtResource("7_cvs0s")]
 position = Vector2(112, 256)
