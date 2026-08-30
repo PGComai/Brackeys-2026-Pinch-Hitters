@@ -1361,12 +1361,3 @@ bus = &"SFX"
 
 [node name="AudioListener2D" type="AudioListener2D" parent="." unique_id=699910672]
 current = true
-
-[node name="InteractableArea" type="Area2D" parent="." unique_id=838341153]
-unique_name_in_owner = true
-collision_layer = 64
-collision_mask = 64
-script = ExtResource("30_rukb4")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableArea" unique_id=1866543134]
-shape = SubResource("RectangleShape2D_2ahak")

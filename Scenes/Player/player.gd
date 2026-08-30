@@ -92,19 +92,11 @@ func _process(delta: float) -> void:
 	shoot_timer -= delta
 
 
-func handle_interactable(interactable: InteractableThing, event: InputEvent) -> void:
-	pass
-
-
 func _input(_event: InputEvent) -> void:
-	if _event.is_action_pressed("Bubble"):
-		var interact_or_null: InteractableThing = %InteractableArea.get_interactable()
-		if interact_or_null:
-			handle_interactable(interact_or_null, _event)
-		elif has_fish:
-			if Input.is_action_pressed("Bubble") and shoot_timer <= 0.0:
-				shoot_timer = SHOOT_COOLDOWN
-				fisshe_bubble(-1 if visual.scale.x < 0 else 1)
+	if has_fish:
+		if Input.is_action_pressed("Bubble") and shoot_timer <= 0.0:
+			shoot_timer = SHOOT_COOLDOWN
+			fisshe_bubble(-1 if visual.scale.x < 0 else 1)
 	#if Input.is_action_just_pressed("Restart"):
 	#	get_tree().reload_current_scene()
 	if not has_hammer:
@@ -154,7 +146,7 @@ func update_hammer_rotation() -> void:
 		hammer_time.scale.x = 1
 
 
-func get_aim_angle(up: bool, down: bool, left: bool, right: bool) -> float:
+func get_aim_angle(up: bool, _down: bool, left: bool, right: bool) -> float:
 	#if up and right:
 		#return deg_to_rad(-45)
 	#elif up and left:

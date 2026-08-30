@@ -1,4 +1,4 @@
-extends InteractableThing
+extends Area2D
 
 enum Type {HATE, LOVE}
 @export var chest_type = Type.HATE

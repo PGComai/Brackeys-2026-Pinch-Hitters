@@ -162,8 +162,8 @@ func clean_normal(normal: Vector2) -> Vector2:
 	else:
 		return Vector2(0, sign(normal.y))
 
-func hit(damage: int, knockback: Vector2) -> void:
-	take_damage(1)
+func hit(damage: int, knockback: Vector2 = Vector2.ZERO) -> void:
+	take_damage(damage)
 	state = EnemyStateEnum.PROJECTILE
 	motion_mode = CharacterBody2D.MOTION_MODE_GROUNDED
 	velocity = knockback
