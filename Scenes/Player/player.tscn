@@ -29,7 +29,6 @@
 [ext_resource type="Texture2D" uid="uid://dmx7dexx4e1nm" path="res://Assets/Sprites/PlayerHurtHammer.png" id="16_fcwna"]
 [ext_resource type="Texture2D" uid="uid://ddkbm7radkqbf" path="res://Assets/Sprites/PlayerWalkHammer.png" id="18_1agin"]
 [ext_resource type="PackedScene" uid="uid://fdraqj66wl5w" path="res://Scenes/Particles/dust_trail.tscn" id="19_2ahak"]
-[ext_resource type="Script" uid="uid://duaegl162ax24" path="res://Scenes/Player/interactable_area.gd" id="30_rukb4"]
 
 [sub_resource type="Animation" id="Animation_dey5f"]
 length = 0.001
@@ -1252,9 +1251,6 @@ size = Vector2(20, 56)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ks1b7"]
 size = Vector2(12, 39)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2ahak"]
-size = Vector2(64, 64)
-
 [node name="Player" type="CharacterBody2D" unique_id=479796262 groups=["Player"]]
 collision_mask = 4
 script = ExtResource("1_v0iea")
@@ -1361,12 +1357,3 @@ bus = &"SFX"
 
 [node name="AudioListener2D" type="AudioListener2D" parent="." unique_id=699910672]
 current = true
-
-[node name="InteractableArea" type="Area2D" parent="." unique_id=838341153]
-unique_name_in_owner = true
-collision_layer = 64
-collision_mask = 64
-script = ExtResource("30_rukb4")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableArea" unique_id=1866543134]
-shape = SubResource("RectangleShape2D_2ahak")

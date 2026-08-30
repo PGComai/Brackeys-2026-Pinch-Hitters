@@ -62,8 +62,6 @@ var was_on_floor = true
 
 var frames := 0
 
-@onready var spawn_point: Vector2 = global_position
-
 @onready var user_interface: CanvasLayer = $"../UserInterface"
 
 var is_invincible: bool = false
@@ -92,6 +90,7 @@ func _physics_process(delta: float) -> void:
 func _process(delta: float) -> void:
 	camera_man.position = global_position
 	update_hammer_rotation()
+	update_invincibility(delta)
 	visual_update()
 	shoot_timer -= delta
 
@@ -107,14 +106,10 @@ func handle_interactable(interactable: InteractableThing, event: InputEvent) -> 
 
 
 func _input(_event: InputEvent) -> void:
-	if _event.is_action_pressed("Bubble"):
-		var interact_or_null: InteractableThing = %InteractableArea.get_interactable()
-		if interact_or_null:
-			handle_interactable(interact_or_null, _event)
-		elif has_fish:
-			if Input.is_action_pressed("Bubble") and shoot_timer <= 0.0:
-				shoot_timer = SHOOT_COOLDOWN
-				fisshe_bubble(-1 if visual.scale.x < 0 else 1)
+	if has_fish:
+		if Input.is_action_pressed("Bubble") and shoot_timer <= 0.0:
+			shoot_timer = SHOOT_COOLDOWN
+			fisshe_bubble(-1 if visual.scale.x < 0 else 1)
 	#if Input.is_action_just_pressed("Restart"):
 	#	get_tree().reload_current_scene()
 	if not has_hammer:
@@ -164,7 +159,7 @@ func update_hammer_rotation() -> void:
 		hammer_time.scale.x = 1
 
 
-func get_aim_angle(up: bool, down: bool, left: bool, right: bool) -> float:
+func get_aim_angle(up: bool, _down: bool, left: bool, right: bool) -> float:
 	#if up and right:
 		#return deg_to_rad(-45)
 	#elif up and left:
@@ -300,34 +295,16 @@ func update_invincibility(delta: float) -> void:
 		sprite.self_modulate = Color.WHITE
 
 func die() -> void:
-	get_tree().reload_current_scene()
-
-	#hurt_sound.play()
-	#anim_player.play("RESET")
-	#death_animation.play("death")
-	#game_over.play()
-	#
-	#modulate = Color.DIM_GRAY
-	#
+	anim_player.play("defeat")
+	anim_player.animation_finished.connect(_on_death_animation_animation_finished, CONNECT_ONE_SHOT)
+	anim_player.process_mode = Node.PROCESS_MODE_ALWAYS
 	#get_tree().current_scene.pausable = false
-	#get_tree().paused = true
+	get_tree().paused = true
 
 func _on_death_animation_animation_finished(anim_name: StringName) -> void:
-	if anim_name == "death":
-		if spawn_point != Vector2.INF:
-			anim_player.play("RESET")
-
-			get_tree().current_scene.pausable = true
-			get_tree().paused = false
-
-			modulate = Color.WHITE
-
-			position = spawn_point
-			inverted = false
-			velocity = Vector2(0, 0)
-		else:
-			get_tree().paused = false
-			get_tree().reload_current_scene()
+	if anim_name == "defeat":
+		get_tree().paused = false
+		get_tree().reload_current_scene()
 
 
 func fisshe_bubble(direction):

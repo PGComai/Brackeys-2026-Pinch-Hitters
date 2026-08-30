@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cnoeu6e0s6fat" path="res://Scenes/Enemies/enemy_shield_guy.gd" id="1_n5wax"]
 [ext_resource type="AudioStream" uid="uid://dwhhsgo60kook" path="res://Assets/Sound/Stun.ogg" id="2_k8cv1"]
 [ext_resource type="Texture2D" uid="uid://doub6jtnb8eqq" path="res://Assets/Sprites/ShieldDogWalk.png" id="2_n5wax"]
+[ext_resource type="Texture2D" uid="uid://bhhly1nerd588" path="res://Assets/Sprites/ShieldDogHurt.png" id="3_svo0c"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k8cv1"]
 size = Vector2(60, 60)
@@ -25,6 +26,14 @@ region = Rect2(162, 0, 81, 65)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_4pctr"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_svo0c")
+}],
+"loop": true,
+"name": &"hurt",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_k8cv1")
@@ -69,7 +78,7 @@ shape = SubResource("RectangleShape2D_k8cv1")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1750618877]
 sprite_frames = SubResource("SpriteFrames_4pctr")
-animation = &"walk"
+animation = &"hurt"
 autoplay = "idle"
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=1917083261]
