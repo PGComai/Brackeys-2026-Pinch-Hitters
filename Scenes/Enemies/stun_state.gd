@@ -31,5 +31,5 @@ func update(delta: float) -> void:
 			state_machine.change_state(next_state.name)
 
 
-func physics_update(delta: float) -> void:
+func physics_update(_delta: float) -> void:
 	enemy.velocity.x = 0

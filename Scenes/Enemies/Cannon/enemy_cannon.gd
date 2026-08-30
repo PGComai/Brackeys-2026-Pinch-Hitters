@@ -13,6 +13,9 @@ extends Enemy
 
 @onready var state_machine: StateMachine = $StateMachine
 
+@export var can_move: bool = true
+@export var can_aim_up: bool = true
+
 enum CannonTilt { FRONT, HALF_UP, UP }
 var current_tilt := CannonTilt.FRONT
 
@@ -29,6 +32,8 @@ func random_tilt() -> void:
 
 
 func set_tilt(tilt: CannonTilt) -> void:
+	if not can_aim_up:
+		tilt = CannonTilt.FRONT
 	current_tilt = tilt
 	match current_tilt:
 		CannonTilt.FRONT: anim_player.play("front")
@@ -54,7 +59,6 @@ func spawn_projectile() -> void:
 	if not proj:
 		push_error("EnemyCannon: projectile_scene is not type of Projectile!")
 		return
-	print(CannonTilt.keys()[current_tilt], " ", dir)
 	proj.velocity = projectile_speed * dir
 	add_sibling(proj)
 	proj.global_position = projectile_spawn.global_position
@@ -71,6 +75,8 @@ func _physics_process(delta: float) -> void:
 		if first_body:
 			state_machine.change_state("Aim", {target=first_body})
 	
+	if not can_move:
+		velocity.x = 0
 	move_and_slide()
 
 

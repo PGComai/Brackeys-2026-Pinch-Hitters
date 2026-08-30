@@ -155,7 +155,7 @@ func update_hammer_rotation() -> void:
 		hammer_time.scale.x = 1
 
 
-func get_aim_angle(up: bool, down: bool, left: bool, right: bool) -> float:
+func get_aim_angle(up: bool, _down: bool, left: bool, right: bool) -> float:
 	#if up and right:
 		#return deg_to_rad(-45)
 	#elif up and left:
