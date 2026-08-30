@@ -5,9 +5,13 @@ enum Type {HATE, LOVE}
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
+
+func do_interaction() -> InteractableThing.InteractableType:
+	return InteractableType.CHEST
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	interactable_type = InteractableType.CHEST
 	if chest_type == Type.HATE:
 		animated_sprite_2d.play("dont")
 	if chest_type == Type.LOVE:

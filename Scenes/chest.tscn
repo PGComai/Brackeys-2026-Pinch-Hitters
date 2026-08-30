@@ -34,6 +34,8 @@ animations = [{
 size = Vector2(64, 64)
 
 [node name="Chest" type="Area2D" unique_id=729216827]
+collision_layer = 64
+collision_mask = 64
 script = ExtResource("1_cjfl1")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=863777213]

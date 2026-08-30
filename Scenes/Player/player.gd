@@ -1,6 +1,10 @@
 class_name Player
 extends CharacterBody2D
 
+
+signal entered_gate
+
+
 @export var gravity: float = 500.0
 @export var inverted = false
 
@@ -93,7 +97,13 @@ func _process(delta: float) -> void:
 
 
 func handle_interactable(interactable: InteractableThing, event: InputEvent) -> void:
-	pass
+	var interaction_result: InteractableThing.InteractableType = interactable.do_interaction()
+	print("player interaction type: %s" % InteractableThing.InteractableType.keys()[interaction_result])
+	match interaction_result:
+		InteractableThing.InteractableType.GATE:
+			pass
+		InteractableThing.InteractableType.GATE_OPEN:
+			entered_gate.emit()
 
 
 func _input(_event: InputEvent) -> void:
