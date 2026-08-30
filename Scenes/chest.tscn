@@ -30,6 +30,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cjfl1"]
+size = Vector2(64, 64)
+
 [node name="Chest" type="Area2D" unique_id=729216827]
 script = ExtResource("1_cjfl1")
 
@@ -39,3 +42,4 @@ animation = &"dont"
 frame_progress = 0.99741197
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2012159422]
+shape = SubResource("RectangleShape2D_cjfl1")
