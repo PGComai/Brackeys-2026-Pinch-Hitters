@@ -15,6 +15,7 @@ var current_level_idx: int = 0:
 		current_level_idx = clampi(value, 0, LEVELS.size() - 1)
 var current_level_scene: NewLevel
 var level_transitioning_flag := false
+var player_data: Dictionary
 
 
 func _ready() -> void:
@@ -49,6 +50,8 @@ func unload_current_level() -> void:
 func load_level() -> void:
 	current_level_scene = LEVELS[current_level_idx].instantiate()
 	add_child(current_level_scene)
+	if player_data:
+		current_level_scene.apply_player_data(player_data)
 	current_level_scene.end_reached.connect(_on_current_level_end_reached)
 
 
@@ -86,7 +89,8 @@ func handle_level_transition() -> void:
 	level_transitioning_flag = false
 
 
-func _on_current_level_end_reached() -> void:
+func _on_current_level_end_reached(data: Dictionary) -> void:
+	player_data = data
 	if increment_level_idx():
 		handle_level_transition()
 

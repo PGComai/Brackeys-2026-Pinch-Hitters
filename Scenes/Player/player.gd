@@ -72,6 +72,15 @@ var hitstop_active: bool = false
 var shoot_timer = 0.0
 
 var camera_man: CameraMan
+var chests_opened: int = 0
+
+
+func apply_data(data: Dictionary) -> void:
+	print("data applied: %s" % data)
+	chests_opened = data["chests opened"]
+	if chests_opened > 0:
+		has_fish = true
+
 
 func _ready() -> void:
 	was_on_floor = is_on_floor()
@@ -103,6 +112,13 @@ func handle_interactable(interactable: InteractableThing, event: InputEvent) -> 
 			pass
 		InteractableThing.InteractableType.GATE_OPEN:
 			entered_gate.emit()
+		InteractableThing.InteractableType.CHEST:
+			match chests_opened:
+				0:
+					has_fish = true
+			chests_opened += 1
+		InteractableThing.InteractableType.CHEST_OPEN:
+			pass
 
 
 func _input(_event: InputEvent) -> void:

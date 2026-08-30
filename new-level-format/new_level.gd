@@ -2,7 +2,8 @@ extends Node2D
 class_name NewLevel
 
 
-signal end_reached
+signal end_reached(data: Dictionary)
+signal player_spawned
 
 
 const PLAYER = preload("uid://buvdkp3gc6t3a")
@@ -35,15 +36,28 @@ func spawn_player() -> void:
 	add_child(camera_man)
 	player.camera_man = camera_man
 	player.entered_gate.connect(_on_player_gate_entered)
+	player_spawned.emit()
 
 
 func _on_player_gate_entered() -> void:
 	if not already_ended:
-		end_reached.emit()
+		end_reached.emit(get_player_data())
 		already_ended = true
 
 
 func _on_level_end_end_reached() -> void:
 	if not already_ended:
-		end_reached.emit()
+		end_reached.emit(get_player_data())
 		already_ended = true
+
+
+func get_player_data() -> Dictionary:
+	return {
+		"chests opened": player.chests_opened
+	}
+
+
+func apply_player_data(data: Dictionary) -> void:
+	if not player:
+		await player_spawned
+	player.apply_data(data)

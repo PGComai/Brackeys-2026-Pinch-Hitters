@@ -1258,6 +1258,7 @@ size = Vector2(64, 64)
 [node name="Player" type="CharacterBody2D" unique_id=479796262 groups=["Player"]]
 collision_mask = 4
 script = ExtResource("1_v0iea")
+has_fish = false
 
 [node name="Visual" type="Node2D" parent="." unique_id=1315353103]
 
